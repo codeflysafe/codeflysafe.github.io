@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>感知机 - 魔法沉思录</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="魔法沉思录"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="魔法沉思录"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="感知机(Perceptron), 是一种二分类的线性分类器。 其输入是一个待分类的实例，输出为该实例对应的类型。"><meta property="og:type" content="blog"><meta property="og:title" content="感知机"><meta property="og:url" content="https://codeflysafe.github.io/2021/03/28/%E6%84%9F%E7%9F%A5%E6%9C%BA/"><meta property="og:site_name" content="魔法沉思录"><meta property="og:description" content="感知机(Perceptron), 是一种二分类的线性分类器。 其输入是一个待分类的实例，输出为该实例对应的类型。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://images.pexels.com/photos/1714208/pexels-photo-1714208.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;w=500"><meta property="article:published_time" content="2021-03-28T08:14:19.000Z"><meta property="article:modified_time" content="2022-02-18T07:38:04.483Z"><meta property="article:author" content="sjhuang"><meta property="article:tag" content="machine learning"><meta property="article:tag" content="classification"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="https://images.pexels.com/photos/1714208/pexels-photo-1714208.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;w=500"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://codeflysafe.github.io/2021/03/28/%E6%84%9F%E7%9F%A5%E6%9C%BA/"},"headline":"感知机","image":[],"datePublished":"2021-03-28T08:14:19.000Z","dateModified":"2022-02-18T07:38:04.483Z","author":{"@type":"Person","name":"sjhuang"},"publisher":{"@type":"Organization","name":"魔法沉思录","logo":{"@type":"ImageObject","url":"https://codeflysafe.github.io/img/logo.svg"}},"description":"感知机(Perceptron), 是一种二分类的线性分类器。 其输入是一个待分类的实例，输出为该实例对应的类型。"}</script><link rel="canonical" href="https://codeflysafe.github.io/2021/03/28/%E6%84%9F%E7%9F%A5%E6%9C%BA/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><!--!--><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><meta name="generator" content="Hexo 5.4.0"></head><body class="is-1-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="魔法沉思录" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-12"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="fill" src="https://images.pexels.com/photos/1714208/pexels-photo-1714208.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;w=500" alt="感知机"></span></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2021-03-28T08:14:19.000Z" title="2021/3/28 下午4:14:19">2021-03-28</time>发表</span><span class="level-item"><time dateTime="2022-02-18T07:38:04.483Z" title="2022/2/18 下午3:38:04">2022-02-18</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/machine-learning/">machine learning</a></span><span class="level-item">9 分钟读完 (大约1385个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">感知机</h1><div class="content"><p>感知机(Perceptron), 是一种二分类的线性分类器。 其输入是一个待分类的实例，输出为该实例对应的类型。</p>
+<span id="more"></span>
+<p><br />根据模型、策略和算法三部曲，来说：<br><a name="muWZA"></a></p>
+<h2 id="1-模型"><a href="#1-模型" class="headerlink" title="1. 模型"></a>1. 模型</h2><p>由于是一个分类器，其函数模型为：<br /></p>
+
+$$
+{\begin{aligned}
+&z = w^Tx + b \\
+&f(x) = sign(z) = 
+\begin{cases} 
+    1, & \text{if z > 0} \\
+   -1, & \text{if z < 0}
+\end{cases}
+\end{aligned}}
+$$
+
+<p><a name="LfOcb"></a></p>
+<h2 id="2-策略"><a href="#2-策略" class="headerlink" title="2. 策略"></a>2. 策略</h2><p><br />分类问题的误差函数，可以采用误分类个数之和<br /><br><br /></p>
+$$Loss(w,b) = \sum_i I(y_i,f(x_i)) \\
+I(y_i,f(x_i)) = \begin{cases}
+  1, &\text{if $y_i\neq f(x_i)$ } \\
+  0, &\text{if $y_i = f(x_i)$}  \\
+\end{cases}$$ 
+
+<p>但是，该函数无法使用梯度下降法来进行求解。可以考虑一下，每个点到该分类器超平点的距离。</p>
+<p><a name="WV6ml"></a></p>
+<h3 id="2-1-损失函数"><a href="#2-1-损失函数" class="headerlink" title="2.1 损失函数"></a>2.1 损失函数</h3><p><br />假设存在一个超平面 S: $w^Tx + b = 0$ ，将特征划分为正、负两个超平面。超平面 S，其中 w是法向量，b为截距，如下图绿线</p>
+<p><img src="https://s4.ax1x.com/2022/02/18/HTKEoq.png" alt="HTKEoq.png"></p>
+<p><br />此时，我们采用误分类点到超平面的距离之和来作为损失函数。向量空间的任意一点 x 到超平面S的距离为<br /></p>
+$ dis = \frac{1}{||w||}|w^Tx_i + b| \\$
+<p><br />由于， 对于误分类的点有：<br /><br><br /></p>
+$$
+\begin{cases}
+w^Tx + b < 0,&\text{if $y = 1$} \\
+w^Tx + b > 0,&\text{if $y = -1$} \\
+\end{cases} \\
+-y(w^Tx + b) > 0 , x\subset M \\
+$$
+<br />
+<br />因此损失函数为：<br />
+<br />$L(w,b) = \sum_i^M -y_i(w^Tx_i + b) \qquad (3) \\$
+> 这里省略掉了 ||w|| 或者说是加了约束条件 ||w|| = 1, 思考为什么可以？
+> 答案见附录 B-1
+<br />明显是一个无约束的线性优化问题，转化为优化问题为：<br />
+<br />$\arg\min_{w,b} L(w,b)  \\
+s.t \rightarrow  x\in M \qquad (4)$<br />
+<br />M 是所有误分类的集合，即：
+ $$ M = {x| y(w^Tx + b ) <= 0}$$ 
+要求解式（4）对应得到优化问题，可以采取随机梯度下降法（SGD），参数更新为:<br />
+<br />$$\frac{dL}{dw} = \sum_i^M -y_ix_i  \\
+\frac{dL}{db} = \sum_i^M -y_i \\
+\bbox[yellow,5px,border:2px solid red]
+{
+  w \leftarrow w + \eta y_ix_i  \\
+  b \leftarrow + \eta y_i \\
+  x_i \in M \qquad (5)
+}$$<br />
+<br />
+<br />
+
+<p><a name="TS1Ma"></a></p>
+<h2 id="3-算法"><a href="#3-算法" class="headerlink" title="3. 算法"></a>3. 算法</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1. init w and b </span><br><span class="line">2. sample an point (x, y) from dataset:</span><br><span class="line">3. if (w^Tx + b)y &lt;= 0</span><br><span class="line">   update parameters w and b as following:</span><br><span class="line">       w = w + lr*y*x</span><br><span class="line">       b = b + lr*y</span><br><span class="line">4. to (2) util 没有误分类点结束</span><br></pre></td></tr></table></figure>
+<p><a name="TcMJE"></a></p>
+<h3 id="3-1-Show-me-code"><a href="#3-1-Show-me-code" class="headerlink" title="3.1 Show me code"></a>3.1 Show me code</h3><blockquote>
+<p>下面使用了 epoch, 其实完全不用，只需要将 <code>error == 0</code> 作为结束条件也一样，因为如果数据是线性可分的话，可以证明能够通过有限次的迭代更新来找到一个超平面的。<br>使用 epoch 主要是为了方便控制。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(epochs):</span><br><span class="line">    x, y = shuffle(x, y) <span class="comment"># 这里每次都重新拍不一下数据</span></span><br><span class="line">    error = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(l):</span><br><span class="line">        y_i = y[i]*f(x[i],w,b)</span><br><span class="line">        <span class="keyword">if</span> y_i &lt;= <span class="number">0</span>:</span><br><span class="line">            error = error + <span class="number">1</span></span><br><span class="line">            w = w + lr*y[i]*x[i]</span><br><span class="line">            b = b + lr*y[i]</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;&#123;&#125; epoch, error is &#123;&#125;&#x27;</span>.<span class="built_in">format</span>(epoch,error))</span><br><span class="line">    <span class="keyword">if</span> error == <span class="number">0</span>: <span class="comment"># 直到没有误分类数据结束</span></span><br><span class="line">        <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+<p><a name="8hfzJ"></a></p>
+<h2 id="4-对偶问题"><a href="#4-对偶问题" class="headerlink" title="4. 对偶问题"></a>4. 对偶问题</h2><p><br />由优化理论可知，任何线性优化问题都有对应的对偶问题。这里采用较为感性的认识来引出它的对偶问题<br /><br><br />当 w 和 b 均采用 0 初始化时，假设进行了n次更新，模型对点 (x, y) 误分类了 n 次，则由式子（5）可知：<br /></p>
+<blockquote>
+<p>这里可以思考一下如何证明线性可分的问题可以能够通过有限次的迭代获取一个超平面？<br>答案见附录 B-1</p>
+</blockquote>
+
+$$
+  w = \sum_i^N n_i\eta y_ix_i\\
+  b = \sum_i^N n_i\eta y_i \\
+$$ 
+
+<p>将w,b 代入到模型中去：<br>$$f(x) = sign(w^Tx + b) = sign( \sum_i^N n_i\eta y_ix_i^T x + \sum_i^N n_i\eta y_i ) $$<br>这里就可以简化一下计算的过程，无需每次都重复计算向量之间的内积。<br>$$G = [x_i\centerdot x_j]_{N\times N}$$</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 相当于对这一步重的 `f(x[i],w,b)` 结果做了一个缓存, 无需重复计算并且对于矩阵运算可以采用 GPU 加速</span></span><br><span class="line">y_i = y[i]*f(x[i],w,b) </span><br></pre></td></tr></table></figure>
+<p><a name="Q9xKC"></a></p>
+<h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><p><br />下面是训练过程，代码参考 <a target="_blank" rel="noopener" href="https://www.kaggle.com/hsjfans/perceptron">https://www.kaggle.com/hsjfans/perceptron</a><br /></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Rh411X7Sr?share_source=copy_web">https://www.bilibili.com/video/BV1Rh411X7Sr?share_source=copy_web</a></p>
+<p><a name="qo2yn"></a></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>通过感知机生成的超平面可能存在多个，不同的初始值可能得到不同的超平面，但是哪一个泛化能力最好呢？这就是 svm要讨论的问题了！</li>
+<li>感知机是线性的，它无法处理非线性的问题，或者抑或问题。后面会介绍到多层感知机，神经网络是用来解决这个问题的。</li>
+</ol>
+<p><a name="1tHqa"></a></p>
+<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><blockquote>
+<p>以下都是一家之言，如果问题，欢迎斧正～～～</p>
+</blockquote>
+<p><a name="B0j9H"></a></p>
+<h3 id="B-1-为什么能够省略掉-w-呢？"><a href="#B-1-为什么能够省略掉-w-呢？" class="headerlink" title="B-1 为什么能够省略掉 ||w||呢？"></a>B-1 为什么能够省略掉 ||w||呢？</h3><p><br />个人理解主要是两个方面：</p>
+<ol>
+<li>对于感知机模型来说，其损失函数的最终结果要优化为0，即没有误差点，所以||w||可以固定为1或者不考虑。</li>
+<li>对于梯度下降过程来讲，我们每次迭代关注符号的正负，而||w||的值对其符号没有影响。</li>
+</ol>
+<p><a name="zrQBL"></a></p>
+<h3 id="B-2-算法的收敛性"><a href="#B-2-算法的收敛性" class="headerlink" title="B-2 算法的收敛性"></a>B-2 算法的收敛性</h3><p><br />这里参考 《统计学系方法》 p.42<br><a name="EbN3t"></a></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<li>《统计学系方法》李航 p.36</li>
+<li><a target="_blank" rel="noopener" href="https://matplotlib.org/3.1.1/gallery/animation/simple_anim.html">https://matplotlib.org/3.1.1/gallery/animation/simple_anim.html</a></li>
+</ol>
+</div><div class="article-licensing box"><div class="licensing-title"><p>感知机</p><p><a href="https://codeflysafe.github.io/2021/03/28/感知机/">https://codeflysafe.github.io/2021/03/28/感知机/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>sjhuang</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2021-03-28</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2022-02-18</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/machine-learning/">machine learning</a><a class="link-muted mr-2" rel="tag" href="/tags/classification/">classification</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" href="/" target="_blank" rel="noopener" data-type="afdian"><span class="icon is-small"><i class="fas fa-charging-station"></i></span><span>爱发电</span></a><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/" alt="支付宝"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2021/07/06/template/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">template</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2020/12/26/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/"><span class="level-item">线性回归</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "e5763d4b8356f20709a6feb4361f9442",
+            repo: "gitalk",
+            owner: "codeflysafe",
+            clientID: "48d1eb3658ef4923896f",
+            clientSecret: "d619d46a6c36396cab7dc0190ad1630bd3982b34",
+            admin: ["codeflysafe"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 10,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            
+        })
+        gitalk.render('comment-container')</script></div></div></div><!--!--><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="魔法沉思录" height="28"></a><p class="is-size-7"><span>&copy; 2022 sjhuang</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

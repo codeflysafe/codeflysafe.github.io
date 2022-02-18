@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>多层感知机与BP算法 - 魔法沉思录</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="魔法沉思录"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="魔法沉思录"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="前面讲解 感知机 , 说明其有一个很大的不足之处，即它无法求解非线性问题或者异或问题。后面就发展出了多层感知机（deep feebforward network or multilayer perceptron），以及求解使用的BP算法。这也是深度学习的基础。"><meta property="og:type" content="blog"><meta property="og:title" content="多层感知机与BP算法"><meta property="og:url" content="https://codeflysafe.github.io/2020/09/23/%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E6%9C%BA%E4%B8%8EBP%E7%AE%97%E6%B3%95/"><meta property="og:site_name" content="魔法沉思录"><meta property="og:description" content="前面讲解 感知机 , 说明其有一个很大的不足之处，即它无法求解非线性问题或者异或问题。后面就发展出了多层感知机（deep feebforward network or multilayer perceptron），以及求解使用的BP算法。这也是深度学习的基础。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;w=500"><meta property="article:published_time" content="2020-09-23T08:14:19.000Z"><meta property="article:modified_time" content="2022-02-18T08:18:57.453Z"><meta property="article:author" content="sjhuang"><meta property="article:tag" content="machine learning"><meta property="article:tag" content="deep learning"><meta property="article:tag" content="perceptron"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;w=500"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://codeflysafe.github.io/2020/09/23/%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E6%9C%BA%E4%B8%8EBP%E7%AE%97%E6%B3%95/"},"headline":"多层感知机与BP算法","image":[],"datePublished":"2020-09-23T08:14:19.000Z","dateModified":"2022-02-18T08:18:57.453Z","author":{"@type":"Person","name":"sjhuang"},"publisher":{"@type":"Organization","name":"魔法沉思录","logo":{"@type":"ImageObject","url":"https://codeflysafe.github.io/img/logo.svg"}},"description":"前面讲解 感知机 , 说明其有一个很大的不足之处，即它无法求解非线性问题或者异或问题。后面就发展出了多层感知机（deep feebforward network or multilayer perceptron），以及求解使用的BP算法。这也是深度学习的基础。"}</script><link rel="canonical" href="https://codeflysafe.github.io/2020/09/23/%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E6%9C%BA%E4%B8%8EBP%E7%AE%97%E6%B3%95/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><!--!--><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><meta name="generator" content="Hexo 5.4.0"></head><body class="is-1-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="魔法沉思录" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-12"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="fill" src="https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;w=500" alt="多层感知机与BP算法"></span></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2020-09-23T08:14:19.000Z" title="2020/9/23 下午4:14:19">2020-09-23</time>发表</span><span class="level-item"><time dateTime="2022-02-18T08:18:57.453Z" title="2022/2/18 下午4:18:57">2022-02-18</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/machine-learning/">machine learning</a><span> / </span><a class="link-muted" href="/categories/machine-learning/deep-learning/">deep learning</a></span><span class="level-item">13 分钟读完 (大约1925个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">多层感知机与BP算法</h1><div class="content"><p>前面讲解 <a target="_blank" rel="noopener" href="https://www.yuque.com/hsjfans/hdu6yd/ff882d">感知机</a> , 说明其有一个很大的不足之处，即它无法求解非线性问题或者异或问题。后面就发展出了多层感知机（deep feebforward network or multilayer perceptron），以及求解使用的BP算法。这也是深度学习的基础。</p>
+<span id="more"></span>
+<p><img src="https://s3.bmp.ovh/imgs/2022/02/fe8be4cead7c96d1.png"></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="http://speech.ee.ntu.edu.tw/~tlkagk/courses/ML_2016/Lecture/DL%20(v2).pdf">http://speech.ee.ntu.edu.tw/~tlkagk/courses/ML_2016/Lecture/DL%20(v2).pdf</a></p>
+</blockquote>
+<p><a name="sEVkU"></a></p>
+<h2 id="1-多层感知机"><a href="#1-多层感知机" class="headerlink" title="1. 多层感知机"></a>1. 多层感知机</h2><p><a name="xTBmF"></a></p>
+<h3 id="1-1-Neuron"><a href="#1-1-Neuron" class="headerlink" title="1.1 Neuron"></a>1.1 Neuron</h3><p><img src="https://s3.bmp.ovh/imgs/2022/02/8395bc7caa58bb43.png"><br><br />我们将<a target="_blank" rel="noopener" href="https://www.yuque.com/hsjfans/hdu6yd/eryfte">逻辑回归</a>抽象成一个neural network的一个“Neuron”，而多层感知机即是将这些神经元连接在一起。对于深度学习网络来说，它也是有一个个神经元组成，但是它可以有各个不同的网络结构（网络堆叠）。<br /></p>
+<p><img src="https://s3.bmp.ovh/imgs/2022/02/e3ec78a6e697b64d.png"><br /></p>
+<p><a name="xuikm"></a></p>
+<h3 id="1-2-Multilayer-Perceptron"><a href="#1-2-Multilayer-Perceptron" class="headerlink" title="1.2 Multilayer Perceptron"></a>1.2 <code>Multilayer Perceptron</code></h3><p>多层感知机,其中一个小白色长方形（f）为一个一个”Neuron”，每一层可以有多个 Neruon, 而多层感知机可以有很多层。其中灰色部分为隐含层（Hidden Layer），绿色为输入层(Input Layer),黄色部分为输出层 (Output Layer) 。蓝色线可以看作是一个权重（w), 而 f 代表激活函数（activate function）。 目前激活函数有很多种，常用的有 <code>Sigmoid</code>、<code>Relu</code> 、<code>Tanh</code>、<code>Leaky Relu</code>、<code>Softmax</code> 等。<br /></p>
+<p><img src="https://s3.bmp.ovh/imgs/2022/02/4f3e2dd11a70c993.png"><br /><br>多层感知机是一种监督模型，它可以解决分类和回归问题（输出层的结构有所不同）。一般在解决分类问题时，它会在输出层前增加一层 softmax 处理，来模拟各个分类的概率。<br /><br><br />下面一分类问题为例子，来了解它的整个运作过程。<br><a name="ZMDwt"></a></p>
+<h4 id="1-2-1-数据流动"><a href="#1-2-1-数据流动" class="headerlink" title="1.2.1  数据流动"></a>1.2.1  数据流动</h4><blockquote>
+<p>数据是如何在感知机内流动的？</p>
+</blockquote>
+<p>本质上，多层感知机是一个个矩阵的乘法运算，它的数据流是从前向后流动的，即 <code>Feedforward</code><br /></p>
+<p><img src="https://s3.bmp.ovh/imgs/2022/02/1c36a6c8531aedcc.png"></p>
+<p><br />如，输入为 $x = [x_1, x_2,…,x_m]$, 其中$x \in R^n$, 即单个x存在m个特征。<br />对于隐含层第元素有：</p>
+<ul>
+<li>$w_{ji}^L$代表第L层的j个z值与第L-1层的第i个输入之间的权重</li>
+<li>$b_j^L$代表第L层的偏移量</li>
+<li>$a_i^L$代表第L层输出的第i的元素，同时是第L+1的输入的第i个元素</li>
+<li>f为激活函数</li>
+<li>$z_{j}^L = \sum_i w_{ji}^La_i^{L-1}  + b_j^L$</li>
+<li>$a_j^L = \sigma(z_j^L)$</li>
+</ul>
+<p>对于输入层有：</p>
+<ul>
+<li>$a_i^0 = x_i$</li>
+</ul>
+<p>对于输出层有（这里不考虑softmax）：</p>
+<ul>
+<li>$y_i = a_i^L$</li>
+</ul>
+<p><br />数据流通为：<br /><br><br /></p>
+
+$$
+\begin{aligned} 
+z^L &= \begin{bmatrix}
+w_{00}^L & w_{01}^L&  ... &w_{0i}^L\\
+w_{10}^L & w_{11}^L&  ... &w_{1i}^L\\
+... & ...&  ... & ...\\
+w_{j0}^L & w_{j1}^L&  ... &w_{ji}^L\\
+\end{bmatrix}
+\begin{bmatrix}
+ a_0^{L-1}\\
+a_1^{L-1}\\
+...\\
+ a_i^{L-1}\\
+\end{bmatrix}  + 
+\begin{bmatrix}
+ b_0^{L}\\
+ b_1^{L}\\
+ ...\\
+ b_j^{L}\\
+\end{bmatrix}  \\
+& = w^La^{L-1} + b^L  \\
+a^L &= f(z^L) = f(w^L a^{L-1} + b^L ) 
+\end{aligned}\tag{2} 
+$$
+
+
+<br />
+
+<p>其中 $w^L$ 为 <code>jxi</code> 得 <code>matrix</code>, <code>j</code>为第<code>L</code>层的输出<code>Dimensions</code>，<code>i</code>为第``L层的输入的<code>Dimensions</code>。<br /><br>根据公式<code>1, 2</code>,可以推出输出为:</p>
+
+$$
+\begin{aligned}
+y &= a^L \\
+&= f(w^La^{L-1} + b^L ) = f(w^Lf(w^{L-1}a^{L-2}+ b^{L-1})+ b^L ) \\
+&= ... \\
+&= f(w^Lf(w^{L-1}f(...f(...f(w^1a^0 + b^0) + b^{l} ) + b^{L-1}) + b^L ) \\
+\end{aligned}\tag{3}
+$$
+
+
+
+<p><a name="1.2.2"></a></p>
+<h4 id="1-2-2-损失函数"><a href="#1-2-2-损失函数" class="headerlink" title="1.2.2 损失函数"></a>1.2.2 损失函数</h4><p><br />由于多层感知机可以处理分类和回归问题，所有其损失函数也分为两类，下面以分类问题为例。<br />可以看作是多分类问题，这是可以采取最大似然概率来作为其损失函数（交叉熵）。<br />做分类问题时，需要在输出层之前增加一个 <code>softmax</code> 层。<br /></p>
+<blockquote>
+<p>Tips 这里看出多层感知机其实是一个 <code>discriminative model</code> 。 </p>
+</blockquote>
+<p><br />假设共有m个类别 $(c_1,…c_m)$，$\theta$ 为所有的参数，则 <code>Loss Function</code> 为：<br /><br><br /></p>
+
+$$
+\begin{aligned}
+L(\theta) &= \sum_i^m {\sum_{x^j\in c_i}\ln(y_i^j) + \sum_{x^j\notin c_i}\ln(1 - y_i^j)  } \\
+& = \sum_i^m {
+   E_{x^j\sim c_i} \ln{y_i^j} + E_{x^j\sim \bar{c_i}} \ln{(1 - y_i^j) }} \\
+&= \sum_i^m\sum_j^{n_{c_i}} \{\hat{y}_{i}^j\ln{y_i^j} + (1- \hat{y}_{i}^j) \ln{(1 - y_i^j)} \}  \\
+&= \sum_i^n \sum_j^m \hat{y}_j\ln{y_j} + (1-\hat{y}_j )\ln{(1 - y_j)}
+\end{aligned} \tag{4}
+$$
+
+
+<br />
+<br />
+或者使用 
+<br />
+
+
+$$
+\begin{aligned}
+L(\theta) &= \sum_i^m {\sum_{x^j \in c_i}\ln(y_i^j)} \\
+& = \sum_i^m {E_{x^j\sim c_i} \ln{y_i^j} } \\
+&= \sum_i^m\sum_j^{n_{c_i}} \hat{y}_{i}^j \ln{y_i^j}  \\
+&= \sum_i^n \sum_j^m \hat{y}_j\ln{y_j} 
+\end{aligned} \tag{5}
+$$
+
+<br />
+
+<br />
+<br />
+
+<p>其中 $\hat{y} = \begin{bmatrix} 0,0,.,1,.,0 \end{bmatrix}^T$ ,<br><code>one-shot vector</code> 的样式<br><br /></p>
+<blockquote>
+<p>Tips:</p>
+<ol>
+<li>如果是回归模型的话，无需添加 softmax 层，而且可以使用 mean square errors 作为损失函数</li>
+</ol>
+</blockquote>
+<p>Thinking</p>
+<blockquote>
+<ol>
+<li>式4和式5在使用过程中，有什么区别呢？那个效果更好呢？</li>
+</ol>
+</blockquote>
+<p>了解了损失函数之后，那么如何来寻找损失函数的极大值呢？或者是如何解决这个优化问题呢？这里就引出了BackPropagation, 即BP算法<br /></p>
+<p><a name="d3lQF"></a></p>
+<h2 id="2-BP算法"><a href="#2-BP算法" class="headerlink" title="2. BP算法"></a>2. BP算法</h2><p><br />由式子（5） 可知, 使用SGD来解该优化问题，在给定x的情况下, 令 c 为损失函数。<br /><br><img src="https://s3.bmp.ovh/imgs/2022/02/e628a8e2fdc4b8bb.png"><br><br /><br><br /><br><br />首先对隐含层某个参数求偏导数，如 $w_{ji}^L$<br /><br><br /></p>
+<p>$$\frac{dc}{dw_{ji}^L} = \frac{dc}{da_j^L}\frac{da_j^L}{dw_{ji}^L} \tag{6}$$</p>
+<br />
+<br />
+
+<p>其中 $\frac{da_j^L}{dw_{ji}^L}$</p>
+<br />
+
+<p>$$\frac{da_j^L}{dw_{ji}^L} = \frac{da_j^L}{dz_j^L}\frac{dz_j^L}{dw_{ji}^L} = f’(z_j^L)\frac{dz_j^L}{dw_{ji}^L} = f’(z_j^L)a_i^{L-1} \tag{7}<br>$$</p>
+<br />
+<br />
+
+<p>其中$\frac{dc}{da_j^L}$<br><br /><br><br /></p>
+<p>$$<br>\begin{aligned}<br>\delta_j^L &amp;=  \frac{dc}{da_j^L}  \<br>&amp;=  \sum_k^K \frac{dc}{dz_k^{L+1}}\frac{dz_k^{L+1}}{da_j^L}\<br>&amp; = \sum_k^K\frac{dc}{dz_k^{L+1}}w_{kj}^{L+1} \<br>&amp;= \sum_k^K\frac{dc}{da_k^{L+1}}\frac{da_k^{L+1}}{dz_k^{L+1}}w_{kj}^{L+1} \<br>&amp;= \sum_k^K \delta_k^{L+1}f’(z_k^{L+1})w_{kj}^{L+1}<br>\end{aligned}\tag{8}$$</p>
+<p><br />令 </p>
+<p>$<br>\delta^L = \begin{bmatrix} \delta_1^L, …, \delta_J^L \end{bmatrix}^T$,  $\sigma ^L =  \begin{bmatrix} f’(z_1^L), …, f’(z_J^L) \end{bmatrix}^T$, $w^L = \begin{bmatrix} w_1^L,…,w_J^L<br>\end{bmatrix}<br>$</p>
+<br />
+<br />则<br />
+<br />
+
+<p>$$\begin{aligned}<br>\delta_j^L &amp;= \sum_k^K \delta_k^{L+1}f’(z_k^{L+1})w_{kj}^{L+1} \<br>&amp;= \langle{(\delta^{L+1} \odot \sigma^L),w_j^{L+1}} \rangle<br>\end{aligned} \tag{9}<br>$$ </p>
+<p>由于$\delta^L = \begin{bmatrix} \delta_1^L, …, \delta_J^L \end{bmatrix}^T$, 故：<br /></p>
+<p>$$<br>\delta^L =\begin{bmatrix} \delta_1^L, …, \delta_J^L \end{bmatrix}^T =  (w^{L+1})^T (\delta^{L+1} \odot \sigma^L)<br> \tag{10}<br>$$</p>
+<p><br />因此找到了$\delta^L$和$\delta^{L+1}$ 之间的关系，一旦得到了$\delta^{L+1}$就可以求出$\delta^L$。<br />令 $\frac{dc}{dw_j^L} =<br>\begin{bmatrix}<br>\frac{dc}{dw_{j1}^L},…,\frac{dc}{dw_{jI}^L}<br>\end{bmatrix}^T$<br />又因为：<br />$\frac{dc}{dw_{ji}^L} =  f’(z_j^L)a_i^{L-1}\delta_j^L$<br /><br><br />故有</p>
+<p>$$<br>\frac{dc}{dw_{j}^L} = \sigma^L \odot a^{L-1} \odot \delta^L \tag{11}<br>$$<br><br /><br><br /><br>在输出层有：$\frac{dc}{dy}$， 这个要根据具体的损失函数来确定</p>
+<p>$\frac{dy_i}{da_i^L}$ 这个如果没有 softmax 层或者说是回归问题的话，值因为1</p>
+<blockquote>
+<p>Tips 如果是softmax的话，应该怎么做？</p>
+</blockquote>
+<p><br />因此，对最后一个隐含层的输出有<br /><br><br /></p>
+<p>$$<br>\begin{aligned}<br>  \delta &amp;= \frac{dc}{da} = \frac{dc}{dy}\frac{dy}{da}<br>\end{aligned} \tag{12}<br>$$</p>
+<br />
+<br />然后一次向前求解，即可求出对所有参数的倒数。<br />
+<br />
+<br />对 $b_j^L$求导数时：
+
+<p>$\frac{dc}{db_{j}^L} = \frac{dc}{da_j^L}\frac{da_j^L}{db_j^L} = \delta_j^Lf’(z_j^L)  \<br>\frac{da_j^L}{db_{j}^L} = \frac{da_j^L}{dz_j^L}\frac{dz_j^L}{db_{j}^L} = f’(z_j^L)$<br /><br><br /><br><br />因此 <br /><br>$$<br>\frac{dc}{db^L} = \delta^L \odot \sigma^L<br>$$</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>多层感知机与BP算法</p><p><a href="https://codeflysafe.github.io/2020/09/23/多层感知机与BP算法/">https://codeflysafe.github.io/2020/09/23/多层感知机与BP算法/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>sjhuang</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2020-09-23</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2022-02-18</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/machine-learning/">machine learning</a><a class="link-muted mr-2" rel="tag" href="/tags/deep-learning/">deep learning</a><a class="link-muted mr-2" rel="tag" href="/tags/perceptron/">perceptron</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" href="/" target="_blank" rel="noopener" data-type="afdian"><span class="icon is-small"><i class="fas fa-charging-station"></i></span><span>爱发电</span></a><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/" alt="支付宝"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2020/09/27/SVM(1)_%20Hard-SVM/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">Hard-SVM</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2020/09/22/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%92%8C%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/"><span class="level-item">朴素贝叶斯</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "16149a15c1f95941b6ed294ea19427c3",
+            repo: "gitalk",
+            owner: "codeflysafe",
+            clientID: "48d1eb3658ef4923896f",
+            clientSecret: "d619d46a6c36396cab7dc0190ad1630bd3982b34",
+            admin: ["codeflysafe"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 10,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            
+        })
+        gitalk.render('comment-container')</script></div></div></div><!--!--><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="魔法沉思录" height="28"></a><p class="is-size-7"><span>&copy; 2022 sjhuang</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

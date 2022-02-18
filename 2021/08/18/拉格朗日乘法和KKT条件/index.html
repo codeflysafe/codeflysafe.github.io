@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>拉格朗日乘法和KKT条件 - 魔法沉思录</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="魔法沉思录"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="魔法沉思录"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="千秋摄于黄山 最近看了 《最优化理论与方法》, 学习了常见的优化问题以及解决方法。同时，之前学习 SVM 时，对拉格朗日乘法以及 KKT 条件有一些疑问，这里做一下学习笔记，便于后面复习和理解！"><meta property="og:type" content="blog"><meta property="og:title" content="拉格朗日乘法和KKT条件"><meta property="og:url" content="https://codeflysafe.github.io/2021/08/18/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E6%B3%95%E5%92%8CKKT%E6%9D%A1%E4%BB%B6/"><meta property="og:site_name" content="魔法沉思录"><meta property="og:description" content="千秋摄于黄山 最近看了 《最优化理论与方法》, 学习了常见的优化问题以及解决方法。同时，之前学习 SVM 时，对拉格朗日乘法以及 KKT 条件有一些疑问，这里做一下学习笔记，便于后面复习和理解！"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://images.pexels.com/photos/1714208/pexels-photo-1714208.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;w=500"><meta property="article:published_time" content="2021-08-18T08:14:19.000Z"><meta property="article:modified_time" content="2022-02-18T08:46:40.636Z"><meta property="article:author" content="sjhuang"><meta property="article:tag" content="machine learning"><meta property="article:tag" content="最优化理论"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="https://images.pexels.com/photos/1714208/pexels-photo-1714208.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;w=500"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://codeflysafe.github.io/2021/08/18/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E6%B3%95%E5%92%8CKKT%E6%9D%A1%E4%BB%B6/"},"headline":"拉格朗日乘法和KKT条件","image":[],"datePublished":"2021-08-18T08:14:19.000Z","dateModified":"2022-02-18T08:46:40.636Z","author":{"@type":"Person","name":"sjhuang"},"publisher":{"@type":"Organization","name":"魔法沉思录","logo":{"@type":"ImageObject","url":"https://codeflysafe.github.io/img/logo.svg"}},"description":"千秋摄于黄山 最近看了 《最优化理论与方法》, 学习了常见的优化问题以及解决方法。同时，之前学习 SVM 时，对拉格朗日乘法以及 KKT 条件有一些疑问，这里做一下学习笔记，便于后面复习和理解！"}</script><link rel="canonical" href="https://codeflysafe.github.io/2021/08/18/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E6%B3%95%E5%92%8CKKT%E6%9D%A1%E4%BB%B6/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><!--!--><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><meta name="generator" content="Hexo 5.4.0"></head><body class="is-1-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="魔法沉思录" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-12"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="fill" src="https://images.pexels.com/photos/1714208/pexels-photo-1714208.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;w=500" alt="拉格朗日乘法和KKT条件"></span></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2021-08-18T08:14:19.000Z" title="2021/8/18 下午4:14:19">2021-08-18</time>发表</span><span class="level-item"><time dateTime="2022-02-18T08:46:40.636Z" title="2022/2/18 下午4:46:40">2022-02-18</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/machine-learning/">machine learning</a></span><span class="level-item">11 分钟读完 (大约1604个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">拉格朗日乘法和KKT条件</h1><div class="content"><p><img src="https://s3.bmp.ovh/imgs/2022/02/2b1c60897afcb8e7.jpeg">千秋摄于黄山</p>
+<p>最近看了 <a target="_blank" rel="noopener" href="https://book.douban.com/subject/30357691/">《最优化理论与方法》</a>, 学习了常见的优化问题以及解决方法。同时，之前学习 <code>SVM</code> 时，对拉格朗日乘法以及 <code>KKT</code> 条件有一些疑问，这里做一下学习笔记，便于后面复习和理解！</p>
+<span id="more"></span>
+
+<blockquote>
+<p>Notion: 同时参考了网上找到的一个PPT（见附件），觉得写的相当棒！</p>
+</blockquote>
+<p><br />主要设计四种优化问题：<br /></p>
+<ol>
+<li>无约束优化</li>
+<li>等式约束优化</li>
+<li>不等式约束优化</li>
+<li>等式和不等式约束优化</li>
+</ol>
+<p><br />讨论的对象是优化问题的标准形式:<br /><br><br /></p>
+
+$$
+\begin{aligned}
+&\min_{x\in X } \quad f(x) \\
+&s.t \quad 
+\begin{cases}
+g_i(x) = 0 \quad i = 1,2...\\ 
+h_j(x) <= 0 \quad j = 1,2...\\
+\end{cases}
+\end{aligned}
+$$
+
+<br />
+公式（1）：优化问题的标准形式
+
+<p><a name="8T6nb"></a></p>
+<h2 id="1-无约束优化"><a href="#1-无约束优化" class="headerlink" title="1. 无约束优化"></a>1. 无约束优化</h2><p><br />无约束优化的标准形式为：<br /><br>$\begin{aligned}<br>&amp;\min_{x\in X } \quad f(x) \<br>\end{aligned}$<br />公式（2）：无约束优化的标准形式<br /><br><br />假设f(x)在X上处处可导，则局部最优点 $x^{\star}$的充分必要条件为：<br />$\bigtriangledown_{x} f(x^{\star}) = 0 \quad and \quad G = \bigtriangledown^2_{x}f(^{\star}) &gt;= 0$。<br />公式（3）<br><a name="AinNC"></a></p>
+<h3 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h3><p><br />将f(x)使用泰勒公式在$x^{\star}$处展开：<br />$\begin{aligned}<br>&amp;f(x) = f(x^{\star}) + \bigtriangledown^Tf(x^{\star})(x-x^{\star}) + \frac{1}{2}(x-x^{\star})^T\bigtriangledown^2f(x^{\star})(x-x^{\star}) + O(||x-x^{\star}||) \<br>\end{aligned}$<br />公式（4）<br />​<br /><br><a name="a6109"></a></p>
+<h4 id="充分条件"><a href="#充分条件" class="headerlink" title="充分条件"></a>充分条件</h4><p>$\begin{aligned}<br>&amp;f(x) - f(x^{\star}) = \frac{1}{2}(x-x^{\star})^T\bigtriangledown^2f(x^{\star})(x-x^{\star}) \geq 0 \quad\to充分条件 \<br>\end{aligned}$<br />​<br /><br><a name="A2uLB"></a></p>
+<h4 id="必要条件"><a href="#必要条件" class="headerlink" title="必要条件"></a>必要条件</h4><p><a name="Ggnyf"></a></p>
+<h5 id="1-若f-x-在-x-star-处可导且取得局部最小值，则有-bigtriangledown-f-x-star-0"><a href="#1-若f-x-在-x-star-处可导且取得局部最小值，则有-bigtriangledown-f-x-star-0" class="headerlink" title="1. 若f(x) 在 $x^{\star}$ 处可导且取得局部最小值，则有$\bigtriangledown f(x^{\star}) = 0$"></a>1. 若f(x) 在 $x^{\star}$ 处可导且取得局部最小值，则有$\bigtriangledown f(x^{\star}) = 0$</h5><p>证明，使用反证法：<br />​</p>
+<p>$\begin{aligned}<br>&amp;假设 f(x^{\star}) \neq 0 \<br>&amp;f(x) = f(x^{\star}) + \bigtriangledown ^Tf(x^{\star})(x-x^{\star}) \<br>&amp; 令 (x-x^{\star}) = -\bigtriangledown f(x^{\star}) \<br>&amp;f(x) - f(x^{\star}) = -\bigtriangledown ^Tf(x^{\star})\bigtriangledown f(x^{\star}) &lt; 0<br>\ &amp;\to 不符合实际（局部最小值）<br>\end{aligned}$<br />​<br /><br><a name="tME33"></a></p>
+<h5 id="2-若f-x-在-x-star-处可导且取得局部最小值，且-bigtriangledown-f-x-star-0-，则-bigtriangledown-2f-x-star-gt-0-（半正定矩阵）"><a href="#2-若f-x-在-x-star-处可导且取得局部最小值，且-bigtriangledown-f-x-star-0-，则-bigtriangledown-2f-x-star-gt-0-（半正定矩阵）" class="headerlink" title="2. 若f(x) 在 $x^{\star}$ 处可导且取得局部最小值，且$\bigtriangledown f(x^{\star}) = 0$，则$\bigtriangledown^2f(x^{\star}) &gt;=0 （半正定矩阵）$"></a>2. 若f(x) 在 $x^{\star}$ 处可导且取得局部最小值，且$\bigtriangledown f(x^{\star}) = 0$，则$\bigtriangledown^2f(x^{\star}) &gt;=0 （半正定矩阵）$</h5><p>证明：<br />$\begin{aligned}<br>&amp;f(x) = f(x^{\star}) + \bigtriangledown^Tf(x^{\star})(x-x^{\star}) + \frac{1}{2}(x-x^{\star})^T\bigtriangledown^2f(x^{\star})(x-x^{\star}) + O(||x-x^{\star}||) \<br>&amp;\to f(x) - f(x^{\star}) = \frac{1}{2}(x-x^{\star})^T\bigtriangledown^2f(x^{\star})(x-x^{\star})  &gt;= 0 \<br>&amp;\to(x-x^{\star})^T\bigtriangledown^2f(x^{\star})(x-x^{\star}) \<br>&amp;\to \lambda^T\bigtriangledown^2f(x^{\star})\lambda &gt;= 0 \<br>\end{aligned}$<br />​</p>
+<p>则必要条件为: $\bigtriangledown_{x} f(x^{\star}) = 0 \quad and \quad G = \bigtriangledown^2_{x}f(^{\star}) &gt;= 0$<br />​<br /><br><a name="chSzT"></a></p>
+<h2 id="2-等式约束优化"><a href="#2-等式约束优化" class="headerlink" title="2. 等式约束优化"></a>2. 等式约束优化</h2><p>$\begin{aligned}<br>&amp;\min_{x\in X } \quad f(x) \<br>&amp;s.t \quad g_i(x) = 0 \quad i = 1,2… \<br>\end{aligned}$<br /><br><br />​</p>
+<p>其实一般有两种做法，拉格朗日乘法和消元法，但是消元法遇到等式约束较多时比较难以处理。因此，使用拉格朗日乘法较为方便。<br />​</p>
+<p>转化为拉格朗日乘法:<br />  $\min_{x\in X} F(x,\lambda) = f(x) + \sum_i \lambda_ig_i(x)$<br />​</p>
+<p>以一个具体的例子为例：<br />$f(x) = x_1 + x_2 \quad and \quad g(x) = x_1^2 + x_2^2 - 2$<br /><br><br /><br><br /><img src="https://s3.bmp.ovh/imgs/2022/02/5fe15718dff30256.png"><br><br />没有加等式约束时，它的最小值时不存在的（无穷小）<br />而加了等式约束之后，假设当前点为$x_F$, 下一点为 $x_F + \delta x$ , 则需要有：<br />$f(x_F + \delta x) &lt; f(x_F) \quad and \quad g(x_F + \delta x) = 0$<br /><br><br />要保证:$f(x_F + \delta x) &lt; f(x_F)$,<br />$f(x_F + \delta x) = f(x_F) + \bigtriangledown^T f(x_F) \delta_x + O(|\delta x)|) &lt; f(x_F) \<br>\to -\bigtriangledown f(x_F) \delta_x &gt; 0$<br />要保证: $g(x_F + \delta x) = 0,$要求：<br />$g(x_F + \delta x) = g(x_F) + \bigtriangledown^T g(x_F)\delta x = 0 \<br>\to \bigtriangledown^T g(x_F)\delta x  = 0$<br /><br><br />同样由几何意义可知，<br /><br><br /><img src="https://s3.bmp.ovh/imgs/2022/02/5fe15718dff30256.png"><br />即，f(x) 取得极值的地方为: 约束g(x) = 0 与 f(x) = C （等值线）相切的地方，如上图M1,M2。<br />此时有：<br /></p>
+<p>$$\bigtriangledown f(x) = \mu\bigtriangledown g(x) = 0$$</p>
+<p><br />因此可以，构造 $F = f(x) + \mu g(x)$, 并要求：<br /><br>$$\begin{cases}<br> \bigtriangledown F_x(x^{\star},\mu^{\star}) = 0 \<br> \bigtriangledown F_{\mu}(x^{\star},\mu^{\star}) = 0 \<br>\lambda^T\bigtriangledown_xx^2 L(x^{\star},\mu^{\star})\lambda  &gt;= 0 （半正定）<br>\end{cases}$$</p>
+<br />
+
+<p><a name="4tiAP"></a></p>
+<h3 id="另一种理解，KKT条件"><a href="#另一种理解，KKT条件" class="headerlink" title="另一种理解，KKT条件"></a>另一种理解，KKT条件</h3><p><br />构造 $\theta_p(x) = \max_{\mu} L(x,\mu) =  \max_{\mu} {f(x) + \mu g(x)}$, 假设在 $x^{\star}$处取得最大值，存在两种情况：</p>
+<ol>
+<li> x 满足 $g(x) = 0$, 此时 $\theta_p(x) = f(x)$</li>
+<li> x 不满足  $g(x) = 0$, 此时 存在 $\theta_p(x) = +\infty$</li>
+</ol>
+<p>​</p>
+<p>而， $\min_{x} \theta_p(x) = \min_x \max_{\mu}L(x,\mu) = \min_{x} f(x)$<br />​</p>
+<p>此时要求条件为：<br />​</p>
+<p>$\begin{cases}<br> \nabla_xL(x^{\star},\mu^{\star}) = 0 \<br> g(x^{\star}) = 0 \<br>\end{cases}$<br /></p>
+<p><a name="Sk4Rv"></a></p>
+<h2 id="3-不等式约束"><a href="#3-不等式约束" class="headerlink" title="3. 不等式约束"></a>3. 不等式约束</h2><p>$\begin{aligned}<br>&amp;\min_{x\in X } \quad f(x) \<br>&amp;s.t \quad g_i(x) \leq 0 \quad i = 1,2… \<br>\end{aligned}$<br /><br><br /><br><br />假设局部最小值点为 $x^{\star}$, 此时存在两种情况：<br /></p>
+<p><a name="TEmxa"></a></p>
+<h3 id="x-star-在约束条件之内"><a href="#x-star-在约束条件之内" class="headerlink" title="$x^{\star}$ 在约束条件之内"></a>$x^{\star}$ 在约束条件之内</h3><p><img src="https://s3.bmp.ovh/imgs/2022/02/ca86893c8bac5180.png"><br />此时，处理方式与无约束问题一样<br /></p>
+<p><a name="HtCMq"></a></p>
+<h3 id="x-star-在约束条件之外"><a href="#x-star-在约束条件之外" class="headerlink" title="$x^{\star}$ 在约束条件之外"></a>$x^{\star}$ 在约束条件之外</h3><p>​<br><img src="https://s3.bmp.ovh/imgs/2022/02/112f5b96e19aac4b.png">​</p>
+<p>此时由几何关系可知，局部最小值位于g(x) = 0 与 f(x) = C 的切线上，由等式约束可知，此时有<br />​</p>
+<p>$\nabla g(x) = -\lambda \nabla f(x) \quad and \quad \lambda &gt; 0$<br />综合以上有:<br />​</p>
+<p>拉格朗日乘法: $L(x,\lambda) = f(x) + \lambda g(x), \lambda &gt;= 0$<br />​</p>
+<p>$\begin{cases}<br>\nabla_x L(x^{\star},\lambda^{\star}) = 0 \<br>\lambda^{\star} \geq 0 \<br>\lambda^{\star}g(x^{\star}) = 0 \<br>g(x^{\star}) \leq 0\<br>\end{cases}$<br />以上便是KKT条件<br /><br><br /></p>
+<p><a name="MLZOh"></a></p>
+<h3 id="另一个直观的解释为"><a href="#另一个直观的解释为" class="headerlink" title="另一个直观的解释为:"></a>另一个直观的解释为:</h3><p><br />构造 $\theta_p(x) = \max_{\mu} L(x,\mu) =  \max_{\mu} {f(x) + \mu g(x)}, \mu &gt;= 0$, 假设在 $x^{\star}$处取得最大值，存在两种情况：</p>
+<ol>
+<li> x 满足 $g(x) = 0$, 此时 $\theta_p(x) = f(x)$</li>
+<li> x 满足 $g(x) &lt; 0$, 此时 $\mu = 0 \to \theta_p(x) = f(x)$</li>
+<li> x 不满足  $g(x) \leq 0$, 此时 $\theta_p(x) = +\infty$</li>
+</ol>
+<p><br />而， $\min_{x} \theta_p(x) = \min_x \max_{\mu}L(x,\mu) = \min_{x} f(x)$<br /><br><br />此时要求条件为：<br /><br><br />$\begin{cases}<br> \nabla_xL(x^{\star},\mu^{\star}) = 0 \<br> g(x^{\star}) \leq 0 \<br>\mu^{\star} &gt;= 0\<br>\mu^{\star} g(x^{\star})= 0\<br>\end{cases}$<br /><br><br /></p>
+<p><a name="5qJXy"></a></p>
+<h2 id="4-等式和不等式约束"><a href="#4-等式和不等式约束" class="headerlink" title="4. 等式和不等式约束"></a>4. 等式和不等式约束</h2><p>$\begin{aligned}<br>&amp;\min_{x\in X } \quad f(x) \<br>&amp;s.t \quad \begin{cases}<br>g_i(x) = 0 \quad i = 1,2… \<br>h_j(x) &lt;= 0 \quad j = 1,2…\\end{cases}<br>\end{aligned}$<br /><br><br />此时，是2，3 的综合情况，只需要构造拉格朗日乘法<br />$L(x,\lambda,\mu) = f(x) + \sum_i \lambda_ig_i(x) + \sum_j \mu_j h_j(x) \quad, \quad\mu_j &gt;= 0$<br />若$x^{\star}$满足此条件,则有：<br />​</p>
+<p>$\begin{cases}<br>\nabla_xL(x^{\star},\lambda^{\star},\mu^{\star}) = 0 \<br> g_i(x^{\star}) = 0 \<br>h_j(x^{\star}) \leq 0 \<br>\mu^{\star} &gt;= 0\<br>\mu^{\star} h_j(x^{\star})= 0\<br>\end{cases}$<br /></p>
+<p><a name="1olZc"></a></p>
+<h2 id="5-附件📎"><a href="#5-附件📎" class="headerlink" title="5. 附件📎"></a>5. 附件📎</h2></div><div class="article-licensing box"><div class="licensing-title"><p>拉格朗日乘法和KKT条件</p><p><a href="https://codeflysafe.github.io/2021/08/18/拉格朗日乘法和KKT条件/">https://codeflysafe.github.io/2021/08/18/拉格朗日乘法和KKT条件/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>sjhuang</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2021-08-18</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2022-02-18</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/machine-learning/">machine learning</a><a class="link-muted mr-2" rel="tag" href="/tags/%E6%9C%80%E4%BC%98%E5%8C%96%E7%90%86%E8%AE%BA/">最优化理论</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" href="/" target="_blank" rel="noopener" data-type="afdian"><span class="icon is-small"><i class="fas fa-charging-station"></i></span><span>爱发电</span></a><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/" alt="支付宝"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2021/09/03/applications-of-parallel-computers/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">applications_of_parallel_computers</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2021/07/20/minimize-maximum-pair-sum-in-array/"><span class="level-item">minimize-maximum-pair-sum-in-array</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "6cf46eabbf00a85a59c90f91f698a84c",
+            repo: "gitalk",
+            owner: "codeflysafe",
+            clientID: "48d1eb3658ef4923896f",
+            clientSecret: "d619d46a6c36396cab7dc0190ad1630bd3982b34",
+            admin: ["codeflysafe"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 10,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            
+        })
+        gitalk.render('comment-container')</script></div></div></div><!--!--><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="魔法沉思录" height="28"></a><p class="is-size-7"><span>&copy; 2022 sjhuang</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

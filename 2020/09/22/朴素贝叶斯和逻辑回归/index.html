@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>朴素贝叶斯 - 魔法沉思录</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="魔法沉思录"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="魔法沉思录"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="朴素贝叶斯（naive bayes）是基于贝叶斯理论的分类器，它以变量的各个特征之间相互独立为前提，利用条件概率来最大化后验概率或者最小化期望风险，来实现判别其类别。"><meta property="og:type" content="blog"><meta property="og:title" content="朴素贝叶斯"><meta property="og:url" content="https://codeflysafe.github.io/2020/09/22/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%92%8C%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/"><meta property="og:site_name" content="魔法沉思录"><meta property="og:description" content="朴素贝叶斯（naive bayes）是基于贝叶斯理论的分类器，它以变量的各个特征之间相互独立为前提，利用条件概率来最大化后验概率或者最小化期望风险，来实现判别其类别。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://images.pexels.com/photos/1714208/pexels-photo-1714208.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;w=500"><meta property="article:published_time" content="2020-09-22T08:14:19.000Z"><meta property="article:modified_time" content="2022-02-18T07:38:08.339Z"><meta property="article:author" content="sjhuang"><meta property="article:tag" content="machine learning"><meta property="article:tag" content="classification"><meta property="article:tag" content="probability"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="https://images.pexels.com/photos/1714208/pexels-photo-1714208.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;w=500"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://codeflysafe.github.io/2020/09/22/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%92%8C%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/"},"headline":"朴素贝叶斯","image":[],"datePublished":"2020-09-22T08:14:19.000Z","dateModified":"2022-02-18T07:38:08.339Z","author":{"@type":"Person","name":"sjhuang"},"publisher":{"@type":"Organization","name":"魔法沉思录","logo":{"@type":"ImageObject","url":"https://codeflysafe.github.io/img/logo.svg"}},"description":"朴素贝叶斯（naive bayes）是基于贝叶斯理论的分类器，它以变量的各个特征之间相互独立为前提，利用条件概率来最大化后验概率或者最小化期望风险，来实现判别其类别。"}</script><link rel="canonical" href="https://codeflysafe.github.io/2020/09/22/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%92%8C%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><!--!--><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><meta name="generator" content="Hexo 5.4.0"></head><body class="is-1-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="魔法沉思录" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-12"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="fill" src="https://images.pexels.com/photos/1714208/pexels-photo-1714208.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;w=500" alt="朴素贝叶斯"></span></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2020-09-22T08:14:19.000Z" title="2020/9/22 下午4:14:19">2020-09-22</time>发表</span><span class="level-item"><time dateTime="2022-02-18T07:38:08.339Z" title="2022/2/18 下午3:38:08">2022-02-18</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/machine-learning/">machine learning</a></span><span class="level-item">15 分钟读完 (大约2236个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">朴素贝叶斯</h1><div class="content"><p>朴素贝叶斯（<code>naive bayes</code>）是基于贝叶斯理论的分类器，它以变量的各个特征之间相互独立为前提，利用条件概率来最大化后验概率或者最小化期望风险，来实现判别其类别。</p>
+<span id="more"></span>
+
+<h2 id="1-基础理论"><a href="#1-基础理论" class="headerlink" title="1. 基础理论"></a>1. 基础理论</h2><p>根据条件概率或者贝叶斯理论有：</p>
+<p>$$<br>P(Y = c_k/ X = x) = \frac{P(Y = c_k, X = x)}{P(X = x)} = \frac{ P(X = x/ Y = c_k)P(Y = c_k)}{\sum_k^K  P(X = x/ Y = c_k)P(Y = c_k) } \<br>$$</p>
+<p>其中 Y 为类别集合 {${c_1,c_2,…c_k}$};<br>X 为输入空间的 n 维向量集合 {${x_i,x_2,…x_n}$} 。</p>
+<p>目标为对于给定的一个输入向量，通过模型能够获取其类别（这里取给定x情况下，取概率最大的类别作为最终类别），即</p>
+<p>$$Given,x \in X \<br>y = f(x) = \arg\max_{ck}P(Y = c_k/X = x), k =1,2,3…K$$<br>求解概率 $P(Y = c_k/X = x)$，可以有贝叶斯理论可知，先求解<br>$P(Y = c_k, X = x), P(X = x)$。</p>
+<h3 id="1-1-求解-P-Y-c-k-X-x"><a href="#1-1-求解-P-Y-c-k-X-x" class="headerlink" title="1.1 求解$P(Y = c_k,X = x)$"></a>1.1 求解$P(Y = c_k,X = x)$</h3><p>这里假设了，对于变量<br>$$<br>x = [x^{(1)},…,x^{(m)}]<br>$$<br>的不同特征之间相互独立，因此:</p>
+<p>$$<br>\begin{aligned}<br>P(Y=c_k,X=x) &amp;= P(Y=c_k,X^{(1)} \<br>   &amp;= x^{(1)},…,X^{(m)} = x^{(m)} ) \<br>   &amp;= \prod_{i}^m P(Y=c_k,X^{(i)} = x^{(i)}) \<br>   &amp;= P(Y = c_k) \prod_{i}^m P(X^{(i)}= x^{(i)}/ Y = c_k )<br>\end{aligned}<br>$$</p>
+<h3 id="1-2-求解-P-X-x"><a href="#1-2-求解-P-X-x" class="headerlink" title="1.2 求解 $P(X = x)$"></a>1.2 求解 $P(X = x)$</h3><p>有贝叶斯可知：<br>$$<br>\begin{aligned}<br>P(X = x) &amp;= \sum_k^K  P(X = x/ Y = c_k)P(Y = c_k) \<br>&amp;= \sum_k^K P(Y=c_k) \prod_i^m P(X^{(i)} = x^{(i)}/ Y = c_k )<br>\end{aligned}<br>$$</p>
+<blockquote>
+<p>但是 $P(Y = c_k ) , , P(X^{(i)} = x^{(i)}/ Y = c_k )$ 如何确定呢？</p>
+</blockquote>
+<h2 id="2-最大化后验概率或者最小化期望风险"><a href="#2-最大化后验概率或者最小化期望风险" class="headerlink" title="2. 最大化后验概率或者最小化期望风险"></a>2. 最大化后验概率或者最小化期望风险</h2><p>后验概率最大化即：$\max P(Y=c_k/X=x)$</p>
+<p>假设误差损失函数：<br>$$<br>\begin{aligned}<br>L(Y, f(X)) = \begin{cases}<br> 0 &amp;, Y = f(X) \<br> 1 &amp;, Y \neq f(X)\<br>\end{cases}<br>\end{aligned}<br>$$<br>则模型目标为最小化期望风险即：</p>
+<p>$$<br>\begin{aligned}<br>R_{exp}(f) &amp;= E[L(Y,f(X)]<br>\&amp;= E_X\sum_k^KP(c_k/X) L(c_k,f(X))  \&amp;= E_X\sum_k^{K}L(y,c_k)P(c_k/X=x) \&amp;= E_X\sum_k^{K}P(y \neq c_k/X=x) \qquad  (1)<br>\end{aligned}<br>$$</p>
+<p>最小化式子(1)，只需要对 X=x 逐个最小化即可。</p>
+<p>$$<br>\begin{aligned}<br>f(x) &amp;= \arg\min P(y\neq c_k/X=x) \<br>&amp;= \arg\min (1 - P(y = c_k/X= x)) \<br>&amp;= \arg \max P(y=c_k/X=x)<br>\end{aligned}<br>$$</p>
+<p>因此，两者是等价的</p>
+<h2 id="3-贝叶斯的参数估计"><a href="#3-贝叶斯的参数估计" class="headerlink" title="3. 贝叶斯的参数估计"></a>3. 贝叶斯的参数估计</h2><p>前面提到问题：但是 $P(Y = c_k ) , , P(X^{(i)} = x^{(i)}/ Y = c_k )$ 如何确定呢？<br>对于离散变量，一个直观的概念是使用其统计学方法来近似估计概率。<br>对于连续变量，采用一个概率分布拟合其变量分布，如高斯分布</p>
+<h3 id="3-1-离散型变量估计"><a href="#3-1-离散型变量估计" class="headerlink" title="3.1 离散型变量估计"></a>3.1 离散型变量估计</h3><p>令 $\theta = P(Y = c_k)$ 参与极大似然概率来估计 $\theta$, 设变量个数为n,其中类别为$c_k$的有t个，则有：</p>
+<p>$$<br>\begin{aligned}<br>&amp;L(\theta) = (\theta)^{t}(1 - \theta)^{(n-t)} \<br>&amp;LnL(\theta) = tLn(\theta) + (n-t)Ln(1-\theta) \<br>&amp;\frac{dLnL(\theta)}{d\theta} = \frac{t}{\theta} + \frac{-(n-t)}{1 - \theta} = 0 \<br>&amp;\hat\theta = \frac{t}{n}<br>\end{aligned}<br>$$<br>即： $P(Y=c_k) = \frac{t}{n}$<br>同理可知：<br>$P(X^{(i)} = x^{(i)}/ Y = c_k ) = \frac{t_{ni}}{n_k}$, 其中 $n_k$ 为类别为 $c_k$的数量，$t_{ni}$为在类别为$c_k$的数据中，$X^{(i)} = x^{(i)}$的数量<br>由于，对于任意类别 $P(X = x)$ 的值是相同的，因此可以省略…</p>
+<h3 id="3-2-连续性变量估计"><a href="#3-2-连续性变量估计" class="headerlink" title="3.2 连续性变量估计"></a>3.2 连续性变量估计</h3><p>如果X的各个特征是连续的，这是可以采用某种具体的分布函数来拟合X各个特征的分布，比如采用 <code>Normal Distribution</code> 等等。通常在确定分布函数类型之前，先对数据进行可视化处理，观察其数字特征等，在确定采用哪种分布函数来拟合。</p>
+<p>以高斯分布为例，此时 $X_i \sim (\mu\sigma)$：</p>
+<p>$$<br>\begin{aligned}<br>&amp;\mu_i = Ex_i = \bar{x} \<br>&amp;\sigma_i^2 = E((X_i-\mu_i)^2)<br>\end{aligned}<br>$$</p>
+<blockquote>
+<p>这里其实要使用最大似然来估计一下变量 $\mu$和 $\sigma$</p>
+</blockquote>
+<p>$$<br>L(\mu,\sigma) = \prod_i^mf(x_i)\<br>LnL = \sum_i^m\ln{f(x_i)}<br>$$<br>对上式分别对 $\mu$和 $\sigma$求偏导数，并令其为0即可</p>
+<p>更简化，由于变量的各个维度都是独立的，因此可以联合分布为各个分布函数的乘积，如果都是符合高斯分布，即有：</p>
+<p>$$<br>\begin{aligned}<br>f(x_1,x_2…x_m) &amp;= \prod_i^mf(x_i) \<br>&amp;= \prod_i^m \frac{1}{(2\pi\sigma_i^2)^{1/2}} \exp{\frac{-(x_i - \mu_i)^2}{2\sigma_i^2}} \<br>&amp;= \frac{1}{(2\pi)^m||\Sigma||}^{1/2} \exp{-\frac{1}{2}(X - \mu)^T\Sigma^{-1}(X - \mu)} \<br>\end{aligned}<br>$$</p>
+<p>只需要计算 <code>X</code> 的方差和均值即可。</p>
+<p>另外，如果 <code>X</code> 得来源于一个公共得资源，可以假设各个特征得方差均相同 </p>
+<blockquote>
+<p>if we have reason to believe that noise in the observed _Xi _comes from a common source, then we might further assume that all of the σ_ik _are identical, regardless of the attribute _i _or class _k _(see the homework exercise on this issue). </p>
+</blockquote>
+<h3 id="贝叶斯模型存在的问题"><a href="#贝叶斯模型存在的问题" class="headerlink" title="贝叶斯模型存在的问题"></a>贝叶斯模型存在的问题</h3><ol>
+<li>无偏差的贝叶斯模型是不现实的？</li>
+<li> 思考一下，如果变量的特征一个离散型的，一个是连续性的，如何设计和求解模型呢？<h2 id="逻辑回归模型"><a href="#逻辑回归模型" class="headerlink" title="逻辑回归模型"></a>逻辑回归模型</h2></li>
+</ol>
+<h3 id="2-从朴素贝叶斯到逻辑回归"><a href="#2-从朴素贝叶斯到逻辑回归" class="headerlink" title="2. 从朴素贝叶斯到逻辑回归"></a>2. 从朴素贝叶斯到逻辑回归</h3><p>首先在了解逻辑回归模型的之前，我们以二分类为例，使用朴素贝叶斯的方法来判别分类。</p>
+<p>$$<br>\begin{aligned}<br>P(Y = c_1/X = x)  &amp;= \frac{P(Y = c_1)P(X =x/ Y =c_1)}{P(X = x)} \<br>&amp;=\frac{P(Y = c_1) P(X =x/Y=c_1)}{\sum_i^2 P(Y = c_1) P(X =x/Y=c_1)} \<br>&amp;=\frac{1}{1 + \frac{P(Y=c_2)P(X =x/Y=c_2)}{P(Y =c_1)P(X =x/Y=c_1)}} , (3) \<br>\end{aligned}<br>$$</p>
+<p>由于 $P(X = x/ Y= c_1 ) = f(x) = \frac{1}{(2\pi)^m||\Sigma||}^{1/2} \exp{-\frac{1}{2}(x - \mu)^T\Sigma^{-1}(x - \mu)}$</p>
+<p>带入到式（3） 中，可得：</p>
+<p>$P(Y=c_1/X= x) = \frac{1}{1 + \exp(-z)}  = \sigma(z)$</p>
+<p>这就是 <code>Sigmoid Function</code></p>
+<p>$z = ln(\frac{P(c1)P(x/c1)}{P(c2)P(x/c2)}) = ln\frac{P(c1)}{P(c2)} + ln\frac{P(x/c1)}{P(x/c2)}$</p>
+<p>其中 $P(Y=c_k) = \frac{t}{n}$，<br>可知 $ln\frac{P(c1)}{P(c2)}$ 是常数</p>
+<p>这里假设 $\Sigma_1 = \Sigma_2 = \Sigma$</p>
+<p>$$<br>ln\frac{P(x/c1)}{P(x/c2)} = \frac{1}{2}(x-\mu_1)^T\Sigma^{-1}(x-\mu_1) -  \frac{1}{2}(x-\mu_2)^T\Sigma^{-1}(x-\mu_2) \<br>= (\mu_1-\mu_2)^T\Sigma^{-1}x - \frac{1}{2}( \mu_1^T\Sigma^{-1}\mu_1 - \mu_2^T\Sigma^{-1}\mu_2 )<br>$$</p>
+<p>令 $b = ln\frac{P(c1)}{P(c2)} + - \frac{1}{2}( \mu_1^T\Sigma^{-1}\mu_1 - \mu_2^T\Sigma^{-1}\mu_2 )$, $w^T = (\mu_1-\mu_2)^T\Sigma^{-1}$</p>
+<p>则有 $z = w^Tx + b$</p>
+<p>这里其实是有一个差异，因为 <code>w</code> 和 <code>b</code> 之间是有某种依赖关系的，但是如果只看作是 <code>w</code> 和 <code>b</code>变量，则<code>w</code>和<code>b</code>之间相互独立，这样子大大减少了训练的参数，这也就是逻辑回归。</p>
+<h3 id="3-从回归模型到逻辑回归"><a href="#3-从回归模型到逻辑回归" class="headerlink" title="3. 从回归模型到逻辑回归"></a>3. 从回归模型到逻辑回归</h3><blockquote>
+<p>还是以二分类为例</p>
+</blockquote>
+<p>回归模型为 $y(x) = W^Tx + b$ ， 这里我们想要找到一种模型使：$P_{w,b}(c/x)$</p>
+<p>$$<br>\begin{cases}<br>   output , c1 ,, P_{w,b}(c/x) &gt;= 0.5 \<br>   otherwise ,, output ,c2<br>\end{cases}<br>$$</p>
+<p>这里我们考虑是有 <code>sigmoid funcion</code></p>
+<p>$\sigma(z) = \frac{1}{1 + \exp{(-z)}}$<br>其取值范围为 (0 , 1 )，自变量取值为$( -\infty，+\infty)$, $z = w^Tx + b$<br>其图形如下：</p>
+<p>其实就是使用 <code>sigmoid function</code> 来替代 <code>p(y/x)</code>的概率，因此这种模型与前文看到模型不同。前文（贝叶斯）是使用间接计算，即由 <code>P(y)</code> 和 <code>P(x/y)</code>  来间接求的 <code>p(y/c)</code>的概率，这种模型叫做生成模型（<code>Generative model</code>）。而逻辑回归，是直接采用一个函数来模拟 <code>p(y/x)</code>的分布，成为判别模型(<code>discriminative model</code>)</p>
+<h4 id="3-1-策略"><a href="#3-1-策略" class="headerlink" title="3.1 策略"></a>3.1 策略</h4><p>逻辑回归的损失函数可以分为两种，一种为 <code>maximum likelihood estimation</code> ，另外一种为  <code>the least squares</code> , 一般采用最大似然概率。</p>
+<blockquote>
+<p>想一下为什么？</p>
+</blockquote>
+<p>其损失函数为：假设 $z_1,z_2 … z_m 为 c_1, z_{m+1}… z_n 为 c_2$<br>则<br>$$<br>L(w,b) = \prod_i^{m} \sigma(z_i) \prod_{i = m+1}^n (1- \sigma(z_i))\<br>\ln{L} = \sum_i^m \ln{(<br>\sigma(z_i))} +  \sum_{m+1}^{n} \ln{(<br>\sigma(z_i))} \<br>= E_{x\sim c_1} \ln{\sigma(z)} +  E_{x\sim c_2} \ln{\sigma(z)}\<br>= \sum_i^n\hat{y_i}\ln{\sigma(z_i)} + (1 - \hat{y_i} )ln{(1 - \sigma(z_i))}<br>$$</p>
+<p>对于每一个给定的x, 使 $f = \sigma(z_i)ln{\sigma(z_i)} + (1 - \sigma(z_i) )ln{(1 - \sigma(z_i))}$ 最大。这里直接对w,b 求偏导数，使用随机梯度下降法即可。</p>
+<p>$$<br>\frac{df}{dw} = \frac{df}{dz} \frac{dz}{dw} \<br> \frac{d\sigma}{dz} = \frac{\exp{(-z)}}{(1 + \exp{(-z)})^2} = \sigma(1 - \sigma) \<br>\frac{dz}{dw} = x\<br>\frac{df}{dw} = (y(1-\sigma) - (1-y)\sigma)x = (y - \sigma)x \<br>\frac{df}{db} = (y(1-\sigma) - (1-y)\sigma)x = y - \sigma<br>$$</p>
+<h4 id=""><a href="#" class="headerlink" title=""></a></h4><h3 id="4-思考一下"><a href="#4-思考一下" class="headerlink" title="4. 思考一下"></a>4. 思考一下</h3><ol>
+<li>朴素贝叶斯法和逻辑回归做分类问题的时候，有什么区别？各自有什么优势？</li>
+<li>逻辑回归的损失函数使用 <code>cross entropy</code> 和 <code>square error</code> 用什么优劣？</li>
+</ol>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<li> 《统计学习方法》 李航， chapter 4 </li>
+<li><a target="_blank" rel="noopener" href="https://www.cs.cmu.edu/~tom/mlbook/NBayesLogReg.pdf">Machine Learning</a> , Tom M. Mitchell , chapter 3</li>
+<li><a target="_blank" rel="noopener" href="http://speech.ee.ntu.edu.tw/~tlkagk/courses/ML_2016/Lecture/Classification%20(v3).pdf">Classification</a> 李宏毅</li>
+</ol>
+</div><div class="article-licensing box"><div class="licensing-title"><p>朴素贝叶斯</p><p><a href="https://codeflysafe.github.io/2020/09/22/朴素贝叶斯和逻辑回归/">https://codeflysafe.github.io/2020/09/22/朴素贝叶斯和逻辑回归/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>sjhuang</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2020-09-22</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2022-02-18</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/machine-learning/">machine learning</a><a class="link-muted mr-2" rel="tag" href="/tags/classification/">classification</a><a class="link-muted mr-2" rel="tag" href="/tags/probability/">probability</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" href="/" target="_blank" rel="noopener" data-type="afdian"><span class="icon is-small"><i class="fas fa-charging-station"></i></span><span>爱发电</span></a><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/" alt="支付宝"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2020/09/23/%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E6%9C%BA%E4%B8%8EBP%E7%AE%97%E6%B3%95/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">多层感知机与BP算法</span></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "523399743a0005886e7e3c8731f6a1ba",
+            repo: "gitalk",
+            owner: "codeflysafe",
+            clientID: "48d1eb3658ef4923896f",
+            clientSecret: "d619d46a6c36396cab7dc0190ad1630bd3982b34",
+            admin: ["codeflysafe"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 10,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            
+        })
+        gitalk.render('comment-container')</script></div></div></div><!--!--><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="魔法沉思录" height="28"></a><p class="is-size-7"><span>&copy; 2022 sjhuang</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
