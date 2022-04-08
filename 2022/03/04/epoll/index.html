@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="codeflysafe">
+    
+    <title>
+        
+            彻底搞懂 epoll - ET 和 LT 模式的触发 |
+        
+        魔法沉思录
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"codeflysafe.github.io","root":"/","language":"zh-CN"};
+    KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"center","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                魔法沉思录
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">彻底搞懂 epoll - ET 和 LT 模式的触发</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.svg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">codeflysafe</span>
+                        
+                            <span class="author-label">Lv5</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-03-04 22:42:05</span>
+        <span class="mobile">2022-03-04 22:42</span>
+    </span>
+    
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p>Created: March 16, 2022 3:15 PM<br>Tags: epoll, io复用, tcp, 网络编程</p>
+<p>修改和转载自，下面这一些列<code>blog</code>写的特别清晰</p>
+<p><a class="link"   target="_blank" rel="noopener" href="http://blog.chinaunix.net/uid-28541347-id-4296180.html" >彻底学会使用epoll（四）–ET的写操作实例分析-lvyilong316-ChinaUnix博客<i class="fas fa-external-link-alt"></i></a></p>
+<span id="more"></span>
+<h2 id="LT-模式的触发方式"><a href="#LT-模式的触发方式" class="headerlink" title="LT 模式的触发方式"></a>LT 模式的触发方式</h2><h3 id="读操作"><a href="#读操作" class="headerlink" title="读操作"></a>读操作</h3><p>缓冲区有数据即触发</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/epoll/Untitled.png"
+                      alt="Untitled"
+                ></p>
+<p>缓冲区有数据，下面这个程序当键盘键入数据，但是程序没有处理可读的情况。即缓冲区一直有数据，则会产生死循环。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/socket_c/epoll_mode/epoll_lt_no_read.c</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Created by sjhuang on 2022/3/15.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/epoll.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> epfd,nfds;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">epoll_event</span> <span class="title">ev</span>,<span class="title">events</span>[5];</span><span class="comment">//ev用于注册事件，数组用于返回要处理的事件</span></span><br><span class="line">    epfd = <span class="built_in">epoll_create</span>(<span class="number">1</span>);<span class="comment">//只需要监听一个描述符——标准输入</span></span><br><span class="line">    ev.data.fd=STDIN_FILENO;</span><br><span class="line">    ev.events=EPOLLIN;<span class="comment">//使用默认LT模式</span></span><br><span class="line">    <span class="built_in">epoll_ctl</span>(epfd,EPOLL_CTL_ADD,STDIN_FILENO,&amp;ev);<span class="comment">//注册epoll事件</span></span><br><span class="line">    <span class="keyword">for</span>(;;)</span><br><span class="line">    &#123;</span><br><span class="line">        nfds=<span class="built_in">epoll_wait</span>(epfd,events,<span class="number">5</span>,<span class="number">-1</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;nfds;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(events[i].data.fd == STDIN_FILENO)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;hello world!\n&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/epoll/Untitled%201.png"
+                      alt="Untitled"
+                ></p>
+<p>当缓冲区的数据被读出后，在进行写入即正常，不会重复提醒</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/socket_c/epoll_mode/epoll_lt_read.c</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Created by sjhuang on 2022/3/15.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/epoll.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> epfd,nfds;</span><br><span class="line">    <span class="keyword">char</span> buf[<span class="number">256</span>];</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">epoll_event</span> <span class="title">ev</span>,<span class="title">events</span>[5];</span><span class="comment">//ev用于注册事件，数组用于返回要处理的事件</span></span><br><span class="line">    epfd=<span class="built_in">epoll_create</span>(<span class="number">1</span>);<span class="comment">//只需要监听一个描述符——标准输入</span></span><br><span class="line">    ev.data.fd = STDIN_FILENO;</span><br><span class="line">    ev.events = EPOLLIN;<span class="comment">//使用默认LT模式</span></span><br><span class="line">    <span class="built_in">epoll_ctl</span>(epfd,EPOLL_CTL_ADD,STDIN_FILENO,&amp;ev);<span class="comment">//注册epoll事件</span></span><br><span class="line">    <span class="keyword">for</span>(;;)</span><br><span class="line">    &#123;</span><br><span class="line">        nfds=<span class="built_in">epoll_wait</span>(epfd,events,<span class="number">5</span>,<span class="number">-1</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;nfds;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(events[i].data.fd==STDIN_FILENO)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">//将缓冲中的内容读出</span></span><br><span class="line">                <span class="built_in">read</span>(STDIN_FILENO,buf,<span class="built_in"><span class="keyword">sizeof</span></span>(buf));</span><br><span class="line">                <span class="comment">// 打印</span></span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;hello world!\n&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/epoll/Untitled%202.png"
+                      alt="读出后正常"
+                ></p>
+<p>读出后正常</p>
+<h3 id="写操作"><a href="#写操作" class="headerlink" title="写操作"></a>写操作</h3><p>缓冲区里有空间即触发</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/epoll/Untitled%203.png"
+                      alt="Untitled"
+                ></p>
+<p>向<code>buffer</code>写入<code>”hello world!”</code>后，虽然<code>buffer</code>没有输出清空，但是<code>LT</code>模式下只有<code>buffer</code>有写空间就返回写就绪，所以会一直输出<code>”hello world!”</code>,当<code>buffer</code>满的时候，<code>buffer</code>会自动刷清输出，同样会造成<code>epoll_wait</code>返回写就绪</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/socket_c/epoll_mode/epoll_lt_write.c</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Created by sjhuang on 2022/3/19.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/epoll.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> fd, epfd;</span><br><span class="line">    <span class="keyword">int</span> max_epoll_size = <span class="number">5</span>, nready;</span><br><span class="line">    epfd = <span class="built_in">epoll_create</span>(max_epoll_size);</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">epoll_event</span> <span class="title">ev</span>,<span class="title">events</span>[<span class="title">max_epoll_size</span>];</span></span><br><span class="line">    <span class="comment">// tandard output</span></span><br><span class="line">    fd = STDOUT_FILENO;</span><br><span class="line">    ev.data.fd = fd;</span><br><span class="line">    <span class="comment">// 监听读状态， 默认lt模式</span></span><br><span class="line">    ev.events = EPOLLOUT;</span><br><span class="line">    <span class="built_in">epoll_ctl</span>(epfd, EPOLL_CTL_ADD, fd, &amp;ev);</span><br><span class="line">    <span class="keyword">for</span>(;;)&#123;</span><br><span class="line">        nready = <span class="built_in">epoll_wait</span>(epfd, events,max_epoll_size,<span class="number">-1</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i =<span class="number">0</span>; i &lt; nready; i++)&#123;</span><br><span class="line">            <span class="comment">// 如果是 STDOUT_FILENO</span></span><br><span class="line">            <span class="keyword">if</span>(events[i].data.fd == fd)&#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;Hello world!&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/epoll/Untitled%204.png"
+                      alt="Untitled"
+                ></p>
+<h2 id="ET-模式的触发方式"><a href="#ET-模式的触发方式" class="headerlink" title="ET 模式的触发方式"></a>ET 模式的触发方式</h2><h3 id="读操作-1"><a href="#读操作-1" class="headerlink" title="读操作"></a>读操作</h3><ol>
+<li>从不可读到可读</li>
+<li>有新的数据到达</li>
+</ol>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/epoll/Untitled%205.png"
+                      alt="缓冲区读操作"
+                ></p>
+<p>缓冲区读操作</p>
+<p>在ET模式下，缓冲区从空到有数据，但是数据一直不读取。如果没有新的数据到达，它将不再提醒。如果有新的数据到达，它便会提醒</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/socket_c/epoll_mode/epoll_et_no_read.c</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Created by sjhuang on 2022/3/16.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/epoll.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;errno.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> errno;</span><br><span class="line">    <span class="keyword">int</span> epfd,nfds;</span><br><span class="line">    <span class="comment">//ev用于注册事件，数组用于返回要处理的事件</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">epoll_event</span> <span class="title">ev</span>,<span class="title">events</span>[5];</span></span><br><span class="line">    <span class="comment">//只需要监听一个描述符——标准输入</span></span><br><span class="line">    epfd=<span class="built_in">epoll_create</span>(<span class="number">1</span>);</span><br><span class="line">    <span class="comment">// fd 默认的 Standard input.</span></span><br><span class="line">    ev.data.fd = STDIN_FILENO;</span><br><span class="line">    <span class="comment">//监听读状态同时设置ET模式</span></span><br><span class="line">    ev.events = EPOLLIN|EPOLLET;</span><br><span class="line">    <span class="comment">//注册epoll事件</span></span><br><span class="line">    <span class="built_in">epoll_ctl</span>(epfd,EPOLL_CTL_ADD,STDIN_FILENO,&amp;ev);</span><br><span class="line">    <span class="keyword">for</span>(;;)</span><br><span class="line">    &#123;</span><br><span class="line">        nfds = <span class="built_in">epoll_wait</span>(epfd, events,<span class="number">5</span>,<span class="number">-1</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i&lt; nfds;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(events[i].data.fd == STDIN_FILENO)</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;Hello world!\n&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/epoll/Untitled%206.png"
+                      alt="Untitled"
+                ></p>
+<h3 id="写操作-1"><a href="#写操作-1" class="headerlink" title="写操作"></a>写操作</h3><ol>
+<li>从不可写到可写</li>
+<li>缓冲区数据变少</li>
+</ol>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/epoll/Untitled%207.png"
+                      alt="缓冲区写操作"
+                ></p>
+<p>缓冲区写操作</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/socket_c/epoll_mode/epoll_et_write.c</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Created by sjhuang on 2022/3/19.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/epoll.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> fd, epfd;</span><br><span class="line">    <span class="keyword">int</span> max_epoll_size = <span class="number">5</span>, nready;</span><br><span class="line">    epfd = <span class="built_in">epoll_create</span>(max_epoll_size);</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">epoll_event</span> <span class="title">ev</span>,<span class="title">events</span>[<span class="title">max_epoll_size</span>];</span></span><br><span class="line">    <span class="comment">// tandard output</span></span><br><span class="line">    fd = STDOUT_FILENO;</span><br><span class="line">    ev.data.fd = fd;</span><br><span class="line">    <span class="comment">// 监听读状态同时设置ET模式</span></span><br><span class="line">    ev.events = EPOLLOUT | EPOLLET;</span><br><span class="line">    <span class="built_in">epoll_ctl</span>(epfd, EPOLL_CTL_ADD, fd, &amp;ev);</span><br><span class="line">    <span class="keyword">for</span>(;;)&#123;</span><br><span class="line">       nready = <span class="built_in">epoll_wait</span>(epfd, events,max_epoll_size,<span class="number">-1</span>);</span><br><span class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i =<span class="number">0</span>; i &lt; nready; i++)&#123;</span><br><span class="line">           <span class="comment">// 如果是 STDOUT_FILENO</span></span><br><span class="line">           <span class="keyword">if</span>(events[i].data.fd == fd)&#123;</span><br><span class="line">               <span class="built_in">printf</span>(<span class="string">&quot;Hello world!\n&quot;</span>);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个程序的功能是只要标准输出写就绪，就输出<code>“hello world！”</code>。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/epoll/Untitled%208.png"
+                      alt="Untitled"
+                ></p>
+<p>我们发现这将是一个死循环。下面具体分析一下这个程序的执行过程：</p>
+<p>(1) 首先初始<code>buffer</code>为空，<code>buffer</code>中有空间可写，这时无论是<code>ET</code>还是<code>LT</code>都会将对应的<code>epitem</code>加入<code>rdlist</code>，导致<code>epoll_wait</code>就返回写就绪。</p>
+<p>(2) 程序想标准输出输出<code>”hello world！”</code>和换行符，因为标准输出为控制台的时候缓冲是“行缓冲”,所以换行符导致<code>buffer</code>中的内容清空，这就对应第二节中<code>ET</code>模式下写就绪的第二种情况——<strong>当有旧数据被发送走时，即buffer中待写的内容变少得时候会触发fd状态的改变。</strong>所以下次<code>epoll_wait</code>会返回写就绪。之后重复这个过程一直循环下去。</p>
+<p>如果将 <code>printf(&quot;Hello world!\n&quot;);</code> →  <code>printf(&quot;Hello world!&quot;);</code> 则会出现下面的情况</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/socket_c/epoll_mode/epoll_et_write_line.c</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Created by sjhuang on 2022/3/19.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/epoll.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> fd, epfd;</span><br><span class="line">    <span class="keyword">int</span> max_epoll_size = <span class="number">5</span>, nready;</span><br><span class="line">    epfd = <span class="built_in">epoll_create</span>(max_epoll_size);</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">epoll_event</span> <span class="title">ev</span>,<span class="title">events</span>[<span class="title">max_epoll_size</span>];</span></span><br><span class="line">    <span class="comment">// tandard output</span></span><br><span class="line">    fd = STDOUT_FILENO;</span><br><span class="line">    ev.data.fd = fd;</span><br><span class="line">    <span class="comment">// 监听读状态同时设置ET模式</span></span><br><span class="line">    ev.events = EPOLLOUT | EPOLLET;</span><br><span class="line">    <span class="built_in">epoll_ctl</span>(epfd, EPOLL_CTL_ADD, fd, &amp;ev);</span><br><span class="line">    <span class="keyword">for</span>(;;)&#123;</span><br><span class="line">       nready = <span class="built_in">epoll_wait</span>(epfd, events,max_epoll_size,<span class="number">-1</span>);</span><br><span class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i =<span class="number">0</span>; i &lt; nready; i++)&#123;</span><br><span class="line">           <span class="comment">// 如果是 STDOUT_FILENO</span></span><br><span class="line">           <span class="keyword">if</span>(events[i].data.fd == fd)&#123;</span><br><span class="line">               <span class="built_in">printf</span>(<span class="string">&quot;Hello world!&quot;</span>);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/epoll/Untitled%209.png"
+                      alt="Untitled"
+                ></p>
+<p>我们看到程序成挂起状态。因为第一次<code>epoll_wait</code>返回写就绪后，程序向标准输出的<code>buffer</code>中写入<code>“hello world!”</code>，但是因为没有输出换行，所以<code>buffer</code>中的内容一直存在，下次<code>epoll_wait</code>的时候，虽然有写空间但是<code>ET</code>模式下不再返回写就绪。回忆第一节关于<code>ET</code>的实现，这种情况原因就是第一次<code>buffer</code>为空，导致<code>epitem</code>加入<code>rdlist</code>，返回一次就绪后移除此<code>epitem</code>，之后虽然<code>buffer</code>仍然可写，但是由于对应<code>epitem</code>已经不再<code>rdlist</code>中，就不会对其就绪<code>fd</code>的<code>events</code>的在检测了。</p>
+<p>如果重新修改事件监听 <code>epoll_ctl(epfd, EPOLL_CTL_MOD, fd, &amp;ev);</code></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/socket_c/epoll_mode/epoll_et_write_event.c</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Created by sjhuang on 2022/3/19.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/epoll.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> fd, epfd;</span><br><span class="line">    <span class="keyword">int</span> max_epoll_size = <span class="number">5</span>, nready;</span><br><span class="line">    epfd = <span class="built_in">epoll_create</span>(max_epoll_size);</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">epoll_event</span> <span class="title">ev</span>,<span class="title">events</span>[<span class="title">max_epoll_size</span>];</span></span><br><span class="line">    <span class="comment">// tandard output</span></span><br><span class="line">    fd = STDOUT_FILENO;</span><br><span class="line">    ev.data.fd = fd;</span><br><span class="line">    <span class="comment">// 监听读状态同时设置ET模式</span></span><br><span class="line">    ev.events = EPOLLOUT | EPOLLET;</span><br><span class="line">    <span class="built_in">epoll_ctl</span>(epfd, EPOLL_CTL_ADD, fd, &amp;ev);</span><br><span class="line">    <span class="keyword">for</span>(;;)&#123;</span><br><span class="line">       nready = <span class="built_in">epoll_wait</span>(epfd, events,max_epoll_size,<span class="number">-1</span>);</span><br><span class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i =<span class="number">0</span>; i &lt; nready; i++)&#123;</span><br><span class="line">           <span class="comment">// 如果是 STDOUT_FILENO</span></span><br><span class="line">           <span class="keyword">if</span>(events[i].data.fd == fd)&#123;</span><br><span class="line">               <span class="built_in">printf</span>(<span class="string">&quot;Hello world!&quot;</span>);</span><br><span class="line">               <span class="built_in">epoll_ctl</span>(epfd, EPOLL_CTL_MOD, fd, &amp;ev);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：彻底搞懂 epoll - ET 和 LT 模式的触发</li>
+        <li>本文作者：codeflysafe</li>
+        <li>创建时间：2022-03-04 22:42:05</li>
+        <li>
+            本文链接：https://codeflysafe.github.io/2022/03/04/epoll/
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2022/03/04/TCP%20%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%A5%97%E6%8E%A5%E5%AD%97%E7%BC%96%E7%A8%8B/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">TCP协议与套接字编程 socket 详解</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2022/03/04/epoll%E6%9C%8D%E5%8A%A1%E5%99%A8/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">epoll 服务器</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;评论</i>
+    </div>
+    
+
+        
+            
+    <div id="gitalk-container"></div>
+    <script 
+            src="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
+    <script >
+
+        function loadGitalk() {
+            let __gitalk__pathname = decodeURI(location.pathname);
+            const __gitalk__pathnameLength = __gitalk__pathname.length;
+            const __gitalk__pathnameMaxLength = 50;
+            if (__gitalk__pathnameLength > __gitalk__pathnameMaxLength) {
+                __gitalk__pathname = __gitalk__pathname.substring(0, __gitalk__pathnameMaxLength - 3) + '...';
+            }
+
+            try {
+                Gitalk && new Gitalk({
+                    clientID: '48d1eb3658ef4923896f',
+                    clientSecret: 'd619d46a6c36396cab7dc0190ad1630bd3982b34',
+                    repo: 'gitalk',
+                    owner: 'codeflysafe',
+                    admin: ['codeflysafe'],
+                    id: __gitalk__pathname,
+                    language: 'zh-CN'
+                }).render('gitalk-container');
+
+            } catch (e) {
+                window.Gitalk = null;
+            }
+        }
+
+        if ('false') {
+            const loadGitalkTimeout = setTimeout(() => {
+                loadGitalk();
+                clearTimeout(loadGitalkTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadGitalk);
+        }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">codeflysafe</a>
+        </div>
+        
+            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts">
+    
+</div>
+
+
+
+</body>
+</html>

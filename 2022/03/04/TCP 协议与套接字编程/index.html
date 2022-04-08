@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="codeflysafe">
+    
+    <title>
+        
+            TCP协议与套接字编程 socket 详解 |
+        
+        魔法沉思录
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"codeflysafe.github.io","root":"/","language":"zh-CN"};
+    KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"center","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                魔法沉思录
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">TCP协议与套接字编程 socket 详解</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.svg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">codeflysafe</span>
+                        
+                            <span class="author-label">Lv5</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-03-04 22:42:05</span>
+        <span class="mobile">2022-03-04 22:42</span>
+    </span>
+    
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p>Created: March 5, 2022 3:09 PM<br>Tags: socket, tcp, 网络编程</p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://github.com/codeflysafe/computer-network/tree/main/src/socket_c" >code<i class="fas fa-external-link-alt"></i></a></p>
+<span id="more"></span>
+<h2 id="TCP-协议"><a href="#TCP-协议" class="headerlink" title="TCP 协议"></a><code>TCP</code> 协议</h2><hr>
+<p><code>TCP</code> 是运输层的协议，它提供客户与服务器之间的连接。</p>
+<p>它提供了一下功能：</p>
+<p>可靠性、流量控制、自动重传</p>
+<p><code>TCP</code> 传输的是<strong>报文段</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/TCP%20%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%A5%97%E6%8E%A5%E5%AD%97%2087d22/Untitled.png"
+                      alt="tcp 首部"
+                ></p>
+<p>tcp 首部</p>
+<h2 id="套接字地址结构"><a href="#套接字地址结构" class="headerlink" title="套接字地址结构"></a><strong>套接字地址结构</strong></h2><hr>
+<p>大多数套接字函数都需要一个指向套接字地址结构的指针作为参数。每个协议族都定义他自己的套接字地址结构。这些结构均以 <code>sockaddr_</code> 开头，并以对应每个协议族的唯一后缀。</p>
+<h3 id="IPv4-套接字地址结构"><a href="#IPv4-套接字地址结构" class="headerlink" title="IPv4 套接字地址结构"></a><code>IPv4</code> <strong>套接字地址结构</strong></h3><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/CP%20%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%A5%97%E6%8E%A5%E5%AD%97%2087d22/Untitled%201.png"
+                      alt="tcp 套接字结构"
+                ></p>
+<p>tcp 套接字结构</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Internet address (a structure for historical reasons)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">in_addr</span> &#123;</span></span><br><span class="line">	<span class="keyword">in_addr_t</span> s_addr; <span class="comment">// 32位 ipv4地址</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Socket address, internet style.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_in</span> &#123;</span></span><br><span class="line">	<span class="keyword">__uint8_t</span>       sin_len; <span class="comment">// 长度</span></span><br><span class="line">	<span class="keyword">sa_family_t</span>     sin_family; <span class="comment">// 协议类型 AF_INET 代表 ipv4</span></span><br><span class="line">	<span class="keyword">in_port_t</span>       sin_port;  <span class="comment">// 端口号 16位</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span>  <span class="title">in_addr</span> <span class="title">sin_addr</span>;</span> <span class="comment">// ip 地址 32位</span></span><br><span class="line">	<span class="keyword">char</span>            sin_zero[<span class="number">8</span>]; <span class="comment">// 不知道干啥的</span></span><br><span class="line">  <span class="comment">// sin_addr + sin_zero 刚好 12 个字节</span></span><br><span class="line">  <span class="comment">// 共有 16个字节</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="通用套接字地址结构"><a href="#通用套接字地址结构" class="headerlink" title="通用套接字地址结构"></a>通用套接字地址结构</h3><hr>
+<p>内核用来存储大多是地址的套接字地址结构, 唯一用途是对指向特定协议的套接字地址结构的指针执行强制类型转换</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * [XSI] Structure used by kernel to store most addresses.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sockaddr</span> &#123;</span></span><br><span class="line">	<span class="keyword">__uint8_t</span>       sa_len;         <span class="comment">/* total length */</span></span><br><span class="line">	<span class="keyword">sa_family_t</span>     sa_family;      <span class="comment">/* [XSI] address family */</span></span><br><span class="line">	<span class="keyword">char</span>            sa_data[<span class="number">14</span>];    <span class="comment">/* [XSI] addr value (actually larger) */</span></span><br><span class="line">  <span class="comment">// 共有 16个字节</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_in</span> <span class="title">serv_addr</span>;</span></span><br><span class="line"><span class="built_in">bind</span>(listenfd, (struct sockaddr*)&amp;serv_addr,<span class="built_in"><span class="keyword">sizeof</span></span>(serv_addr));</span><br></pre></td></tr></table></figure>
+
+<h2 id="TCP-基本套接字"><a href="#TCP-基本套接字" class="headerlink" title="TCP 基本套接字"></a><code>TCP</code> 基本套接字</h2><hr>
+<p><code>tcp</code> 建立流程</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/TCP%20%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%A5%97%E6%8E%A5%E5%AD%97%2087d22/Untitled%202.png"
+                      alt="tcp 流程图"
+                ></p>
+<p>tcp 流程图</p>
+<p>结合着<code>TCP</code>的三次握手、数据传输以及四次挥手来学习</p>
+<blockquote>
+<p><code>sudo tcpdump -i lo0 port 1234</code></p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">13</span>:<span class="number">07</span>:<span class="number">27.918176</span> IP localhost<span class="number">.53103</span> &gt; localhost.search-agent: Flags [S], seq <span class="number">1452795004</span>, win <span class="number">65535</span>, options [mss <span class="number">16344</span>,nop,wscale <span class="number">6</span>,nop,nop,TS val <span class="number">3869849049</span> ecr <span class="number">0</span>,sackOK,eol], length <span class="number">0</span></span><br><span class="line"><span class="number">13</span>:<span class="number">07</span>:<span class="number">27.918235</span> IP localhost.search-agent &gt; localhost<span class="number">.53103</span>: Flags [S.], seq <span class="number">1145433398</span>, ack <span class="number">1452795005</span>, win <span class="number">65535</span>, options [mss <span class="number">16344</span>,nop,wscale <span class="number">6</span>,nop,nop,TS val <span class="number">3557382200</span> ecr <span class="number">3869849049</span>,sackOK,eol], length <span class="number">0</span></span><br><span class="line"><span class="number">13</span>:<span class="number">07</span>:<span class="number">27.918243</span> IP localhost<span class="number">.53103</span> &gt; localhost.search-agent: Flags [.], ack <span class="number">1</span>, win <span class="number">6379</span>, options [nop,nop,TS val <span class="number">3869849049</span> ecr <span class="number">3557382200</span>], length <span class="number">0</span></span><br><span class="line"><span class="number">13</span>:<span class="number">07</span>:<span class="number">27.918252</span> IP localhost.search-agent &gt; localhost<span class="number">.53103</span>: Flags [.], ack <span class="number">1</span>, win <span class="number">6379</span>, options [nop,nop,TS val <span class="number">3557382200</span> ecr <span class="number">3869849049</span>], length <span class="number">0</span></span><br><span class="line"><span class="number">13</span>:<span class="number">07</span>:<span class="number">27.918337</span> IP localhost.search-agent &gt; localhost<span class="number">.53103</span>: Flags [P.], seq <span class="number">1</span>:<span class="number">15</span>, ack <span class="number">1</span>, win <span class="number">6379</span>, options [nop,nop,TS val <span class="number">3557382200</span> ecr <span class="number">3869849049</span>], length <span class="number">14</span></span><br><span class="line"><span class="number">13</span>:<span class="number">07</span>:<span class="number">27.918350</span> IP localhost<span class="number">.53103</span> &gt; localhost.search-agent: Flags [.], ack <span class="number">15</span>, win <span class="number">6379</span>, options [nop,nop,TS val <span class="number">3869849049</span> ecr <span class="number">3557382200</span>], length <span class="number">0</span></span><br><span class="line"><span class="number">13</span>:<span class="number">07</span>:<span class="number">27.918372</span> IP localhost.search-agent &gt; localhost<span class="number">.53103</span>: Flags [F.], seq <span class="number">15</span>, ack <span class="number">1</span>, win <span class="number">6379</span>, options [nop,nop,TS val <span class="number">3557382200</span> ecr <span class="number">3869849049</span>], length <span class="number">0</span></span><br><span class="line"><span class="number">13</span>:<span class="number">07</span>:<span class="number">27.918389</span> IP localhost<span class="number">.53103</span> &gt; localhost.search-agent: Flags [.], ack <span class="number">16</span>, win <span class="number">6379</span>, options [nop,nop,TS val <span class="number">3869849049</span> ecr <span class="number">3557382200</span>], length <span class="number">0</span></span><br><span class="line"><span class="number">13</span>:<span class="number">07</span>:<span class="number">27.918407</span> IP localhost<span class="number">.53103</span> &gt; localhost.search-agent: Flags [F.], seq <span class="number">1</span>, ack <span class="number">16</span>, win <span class="number">6379</span>, options [nop,nop,TS val <span class="number">3869849049</span> ecr <span class="number">3557382200</span>], length <span class="number">0</span></span><br><span class="line"><span class="number">13</span>:<span class="number">07</span>:<span class="number">27.918423</span> IP localhost.search-agent &gt; localhost<span class="number">.53103</span>: Flags [.], ack <span class="number">2</span>, win <span class="number">6379</span>, options [nop,nop,TS val <span class="number">3557382200</span> ecr <span class="number">3869849049</span>], length <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="socket-函数"><a href="#socket-函数" class="headerlink" title="socket 函数"></a><code>socket</code> 函数</h3><p>为了执行网络i/o, 一个进程首先做的是调用 <code>socket</code> 函数，指定通行协议类型。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> fd = <span class="built_in">socket</span>(<span class="keyword">int</span> family, <span class="keyword">int</span> type, <span class="keyword">int</span> protocol);</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>说明</th>
+<th>取值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>family</td>
+<td>协议族（ip）</td>
+<td>AF_INET(ipv4), AF_INET6(ipv6)</td>
+</tr>
+<tr>
+<td>type</td>
+<td>套接字类型，与 family / protocol组合使用</td>
+<td>SOCK_STREAM(TCP) SOCK_DGRAM(UDP)</td>
+</tr>
+<tr>
+<td>protocol</td>
+<td>运输层协议</td>
+<td>IPPROTO_TCP/IPPROTO_UDP</td>
+</tr>
+</tbody></table>
+<h3 id="TCP-建立连接（三次握手）"><a href="#TCP-建立连接（三次握手）" class="headerlink" title="TCP 建立连接（三次握手）"></a>TCP 建立连接（三次握手）</h3><p>涉及到的函数有 <code>socket</code></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/TCP%20%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%A5%97%E6%8E%A5%E5%AD%97%2087d22/Untitled%203.png"
+                      alt="tcp 三次握手与tcp套接字函数的关系"
+                ></p>
+<p>tcp 三次握手与tcp套接字函数的关系</p>
+<p>主要涉及函数为 <code>connect</code>、<code>bind</code>、<code>listen</code>、<code>accept</code></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/TCP%20%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%A5%97%E6%8E%A5%E5%AD%97%2087d22/Untitled%204.png"
+                      alt="Untitled"
+                ></p>
+<h3 id="connect-函数"><a href="#connect-函数" class="headerlink" title="connect 函数"></a><code>connect</code> <strong>函数</strong></h3><p>客户端调用<code>connect</code> 函数来建立与<code>TCP</code>服务器端的连接， <code>tcp</code>客户端调用<code>connect</code>， 会发送一个报文段（第一个握手）给服务器端。此时客户端的状态发生改变：<code>closed</code> → <code>syn_sent</code>， 当<code>connect</code> 返回后， <code>socket</code>的状态便变为了<code>established</code>状态</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">connect</span><span class="params">(<span class="keyword">int</span> sockfd, <span class="keyword">const</span> struct sockaddr *servaddr, <span class="keyword">socklen_t</span> addrlen)</span></span>;</span><br><span class="line"><span class="comment">// Return 0 on success, -1 for errors.</span></span><br></pre></td></tr></table></figure>
+
+<p><code>connect</code> 会激发<code>TCP</code>的三次握手，仅在连接建立成功或者出错时才返回， 出错的情况如下：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>errno</th>
+<th>描述</th>
+<th>错误原因</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ECONNREFUSED</td>
+<td>61</td>
+<td>Connection refused</td>
+<td>PORT 没有在监听</td>
+</tr>
+<tr>
+<td>ETIMEDOUT</td>
+<td>60</td>
+<td>Operation timed out</td>
+<td>没有收到 SYN 分节的响应</td>
+</tr>
+<tr>
+<td>ENETUNREACH</td>
+<td>51</td>
+<td>Network is unreachable</td>
+<td>ICMP 目的地不可达错误</td>
+</tr>
+</tbody></table>
+<p><strong><code>ECONNREFUSED</code> <code>tcpdum</code> 结果</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">22</span>:<span class="number">20</span>:<span class="number">56.815703</span> IP localhost<span class="number">.62252</span> &gt; localhost.search-agent: Flags [S], seq <span class="number">632562553</span>, win <span class="number">65535</span>, options [mss <span class="number">16344</span>,nop,wscale <span class="number">6</span>,nop,nop,TS val <span class="number">2517767049</span> ecr <span class="number">0</span>,sackOK,eol], length <span class="number">0</span></span><br><span class="line"><span class="number">22</span>:<span class="number">20</span>:<span class="number">56.815741</span> IP localhost.search-agent &gt; localhost<span class="number">.62252</span>: Flags [R.], seq <span class="number">0</span>, ack <span class="number">632562554</span>, win <span class="number">0</span>, length <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="bind-函数"><a href="#bind-函数" class="headerlink" title="bind  函数"></a><code>bind</code>  <strong>函数</strong></h3><p><code>bind</code>函数将本地地址协议赋予一个套接字 <code>socket fd</code>。通常是 <code>32</code>位的 <code>ipv4</code>地址 + <code>tcp</code> 端口或者<code>udp</code>端口。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span>  <span class="title">bind</span><span class="params">(<span class="keyword">int</span> socket_fd, <span class="keyword">const</span> struct sockaddr *server_addr, <span class="keyword">socklen_t</span> addrlen)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p><code>server_addr</code> 见上文</p>
+<p>调用<code>bind</code>是，可以指定<code>port</code>或者<code>ip</code>，也可以不指定（不指定的话内核会自动分配一个<code>port</code>和<code>ip</code>）。服务器端通常指定 <code>port</code>，而客户端通常选用内核自动分配</p>
+<p>执行 <code>single_socket.sh</code> 脚本，可以看到下面结果（<strong>把对应注释去掉</strong>）</p>
+<p>指定客户端端口号（<code>client bind</code>）</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">single_socket_c git:(main) ✗ ./single_client.sh</span><br><span class="line">编译完毕</span><br><span class="line">[client] <span class="number">41243</span> connect successfully !</span><br><span class="line">[Server] connection from <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> port: <span class="number">6666</span></span><br><span class="line">[client] <span class="number">41243</span>, Message received from server: hello world!</span><br><span class="line"></span><br><span class="line">[client] client close: <span class="number">41243</span></span><br><span class="line">server pid is <span class="number">41242</span></span><br></pre></td></tr></table></figure>
+
+<p>内核分配端口号</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">single_socket_c git:(main) ✗ ./single_client.sh</span><br><span class="line">编译完毕</span><br><span class="line">[Server] connection from <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> port: <span class="number">63017</span></span><br><span class="line">[client] <span class="number">41609</span> connect successfully !</span><br><span class="line">[client] <span class="number">41609</span>, Message received from server: hello world!</span><br><span class="line"></span><br><span class="line">[client] client close: <span class="number">41609</span></span><br><span class="line">server pid is <span class="number">41608</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="listen-函数"><a href="#listen-函数" class="headerlink" title="listen 函数"></a><code>listen</code> <strong>函数</strong></h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> __sys_listen(<span class="keyword">int</span> fd, <span class="keyword">int</span> backlog)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">socket</span> *<span class="title">sock</span>;</span></span><br><span class="line">	<span class="keyword">int</span> err, fput_needed;</span><br><span class="line">	<span class="keyword">int</span> somaxconn;</span><br><span class="line"></span><br><span class="line">	sock = <span class="built_in">sockfd_lookup_light</span>(fd, &amp;err, &amp;fput_needed);</span><br><span class="line">	<span class="keyword">if</span> (sock) &#123;</span><br><span class="line">		somaxconn = <span class="built_in">sock_net</span>(sock-&gt;sk)-&gt;core.sysctl_somaxconn;</span><br><span class="line">		<span class="keyword">if</span> ((<span class="keyword">unsigned</span> <span class="keyword">int</span>)backlog &gt; somaxconn)</span><br><span class="line">			backlog = somaxconn;</span><br><span class="line"></span><br><span class="line">		err = <span class="built_in">security_socket_listen</span>(sock, backlog);</span><br><span class="line">		<span class="keyword">if</span> (!err)</span><br><span class="line">			err = sock-&gt;ops-&gt;<span class="built_in">listen</span>(sock, backlog);</span><br><span class="line"></span><br><span class="line">		<span class="built_in">fput_light</span>(sock-&gt;file, fput_needed);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> err;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>listen</code> 函数一般是服务器端在 <code>socket</code> <code>bind</code> 之后调用， 它主要功能有两个：</p>
+<ol>
+<li>将<code>socket</code>的状态变为被动打开（<code>closed  → listen</code>）</li>
+<li><code>backlog</code> 设置相应套接字队列排队的最大连接个数 <code>（min(backlog, somaxconn)</code></li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span>  <span class="title">listen</span><span class="params">(<span class="keyword">int</span> sock_fd, <span class="keyword">int</span> backlog)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/TCP%20%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%A5%97%E6%8E%A5%E5%AD%97%2087d22/Untitled%205.png"
+                      alt="backlog 和 套接字排队队列"
+                ></p>
+<p>backlog 和 套接字排队队列</p>
+<p>未完成连接队列： <code>server</code> 接收到了来自 <code>client</code> 的 <code>SYN</code> 请求，正在等待完成三次握手过程。此时这些<code>socket</code> 处于 <code>syn_rcvd</code> 状态</p>
+<p>已完成连接队列： 每个已完成<code>tcp</code>三路握手过程的客户端对应其中的一项，这些<code>socket</code>处于 <code>established</code> 状态</p>
+<h3 id="accept-函数"><a href="#accept-函数" class="headerlink" title="accept 函数"></a><code>accept</code> 函数</h3><p><code>server</code>调用 <code>accept</code> 函数，会从就绪队列拿出一个<code>socket</code> 请求，然后创建一个<code>socket</code>对象，并返回其<code>fd</code>（成为<code>connect fd</code> )，此时三次握手正式完成，<code>socket</code>状态变为<code>established</code>。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">accept</span><span class="params">(<span class="keyword">int</span> sock_fd, struct sockaddr * __restrict, <span class="keyword">socklen_t</span> * __restrict)</span></span></span><br></pre></td></tr></table></figure>
+
+<p>此时，若就绪队列（完成连接队列）为空，则会阻塞直到其存在完成连接。</p>
+<h3 id="TCP-数据传输"><a href="#TCP-数据传输" class="headerlink" title="TCP 数据传输"></a><code>TCP</code> 数据传输</h3><p><code>read</code>系统函数从打开的设备或文件中读取数据，即将数据从外设上经过内核缓冲区读到用户空间；<code>write</code>系统函数相反，向打开的设备或文件中写入数据，即将数据从用户空间（<code>I/O缓冲</code>）送到内核，然后刷到外设上。</p>
+<p>大多数文件系统的默认 <code>I/O</code> 操作都是缓存 <code>I/O</code>。在 <code>Linux</code> 的缓存 <code>I/O</code> 机制中，操作系统会将 <code>I/O</code> 的数据缓存在文件系统的页缓存（ <code>page cache</code> ）中，也就是说，数据会先被拷贝到操作系统内核的缓冲区中,然后才会从操作系统内核的缓冲区拷贝到应用程序的地址空间。</p>
+<h3 id="read-函数"><a href="#read-函数" class="headerlink" title="read 函数"></a><code>read</code> 函数</h3><p><code>read</code> 是从打开的文件中读取数据</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">ssize_t</span>	 <span class="title">read</span><span class="params">(<span class="keyword">int</span> fd, <span class="keyword">void</span> *buf, <span class="keyword">size_t</span> nbytes)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>desc</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>fd</td>
+<td>文件描述符</td>
+</tr>
+<tr>
+<td>buf</td>
+<td>用户缓冲区</td>
+</tr>
+<tr>
+<td>nbytes</td>
+<td>字节数</td>
+</tr>
+</tbody></table>
+<h3 id="write-函数"><a href="#write-函数" class="headerlink" title="write 函数"></a><code>write</code> 函数</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">ssize_t</span>	 <span class="title">write</span><span class="params">(<span class="keyword">int</span> __fd, <span class="keyword">const</span> <span class="keyword">void</span> * __buf, <span class="keyword">size_t</span> __nbyte)</span></span></span><br></pre></td></tr></table></figure>
+
+<p>向打开的<code>fd</code>写入数据</p>
+<h3 id="TCP-断开连接（四次挥手）"><a href="#TCP-断开连接（四次挥手）" class="headerlink" title="TCP 断开连接（四次挥手）"></a><code>TCP</code> 断开连接（四次挥手）</h3><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/TCP%20%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%A5%97%E6%8E%A5%E5%AD%97%2087d22/Untitled%206.png"
+                      alt="Untitled"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/TCP%20%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%A5%97%E6%8E%A5%E5%AD%97%2087d22/Untitled%207.png"
+                      alt="Untitled"
+                ></p>
+<h3 id="close-函数"><a href="#close-函数" class="headerlink" title="close 函数"></a><code>close</code> 函数</h3><p><code>close</code> 函数用来关闭套接字，终止<code>tcp</code>连接. 它存在一个引用计数，当数量变为1之后，在此关闭才会发送 <code>FIN</code>, 触发四次挥手。</p>
+<p>如果某个进程首先调用<code>close</code>函数，称之为<strong>主动关闭</strong>，主动关闭存在一个 <code>TIME_WAIT</code>阶段，它最长可达<code>2MSL</code>（2*60）。另外一个进程（接收这个<code>FIN</code>）称之为被动关闭，存在一个<code>CLOSE_WAIT</code> 阶段。被动关闭后接收到一个<code>EOF</code>（文件结束符）代表接收端收到应用进程在相应连接上再无额外数据可以接收。</p>
+<p><code>**TIME_WAIT</code> 状态**</p>
+<p>主动关闭的一端才会存在 <code>TIME_WAIT</code> 阶段，并不局限于客户端，服务端也可能存在。</p>
+<p>它的主要作用有两种：</p>
+<ol>
+<li>可靠的实现全双工连接的终止</li>
+<li>允许老的重复的分节在网络中消失</li>
+</ol>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/TCP%20%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%A5%97%E6%8E%A5%E5%AD%97%2087d22/Untitled%208.png"
+                      alt="Untitled"
+                ></p>
+<p>假设第<code>4</code>个报文段丢失，<code>server</code>会超时重传 第<code>3</code>条报文。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/TCP%20%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%A5%97%E6%8E%A5%E5%AD%97%2087d22/Untitled%209.png"
+                      alt="Untitled"
+                ></p>
+<p>如果没有<code>TIME_WAIT</code>阶段，有可能会存在一条新的连接（端口和ip对都相同），此时它可能会被误以为是同一条连接。<strong>为了防止这种情况的发生<code>TCP</code>连接必须让<code>TIME_WAIT</code>状态持续<code>2MSL</code>，在此期间将不能基于这个端口建立新的化身</strong></p>
+<p><strong>close 函数一定会触发四次挥手吗？</strong></p>
+<p><code>close</code> 关闭 <code>socket_fd</code>后并不一定触发<code>TCP</code>四次挥手，它只是将它的应用计数值减<code>1</code>，直到减到<code>0</code>是，才会触发四次挥手。</p>
+<p>这个特性主要配合并发服务器使用。详见 →</p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://github.com/codeflysafe/computer-network/tree/main/src/socket_c/multi_socket_c" >computer-network/src/socket_c/multi_socket_c at main · codeflysafe/computer-network<i class="fas fa-external-link-alt"></i></a></p>
+<h3 id="shutdown-函数"><a href="#shutdown-函数" class="headerlink" title="shutdown 函数"></a><code>shutdown</code> 函数</h3><p>半关闭，更加优雅的控制. <code>close</code> 函数是终止两个方向，而<code>shutdown</code> 是终止单个方向，如<code>SHUT_WR</code>， 则代表停止向另一端发送报文段，但是可以接收</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">shutdown</span><span class="params">(<span class="keyword">int</span> fd, <span class="keyword">int</span> mod)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p><a class="link"   target="_blank" rel="noopener" href="https://github.com/codeflysafe/computer-network/tree/main/src/socket_c/close_and_shutdown" >computer-network/src/socket_c/close_and_shutdown at main · codeflysafe/computer-network<i class="fas fa-external-link-alt"></i></a></p>
+<table>
+<thead>
+<tr>
+<th>operator</th>
+<th>send FIN</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>close(connfd);</td>
+<td></td>
+</tr>
+<tr>
+<td>shutdown(connfd, SHUT_WR);</td>
+<td></td>
+</tr>
+<tr>
+<td>shutdown(connfd, SHUT_RD);</td>
+<td></td>
+</tr>
+<tr>
+<td>shutdown(connfd, SHUT_RDWR);</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/TCP%20%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%A5%97%E6%8E%A5%E5%AD%97%2087d22/Untitled%2010.png"
+                      alt="Untitled"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/TCP%20%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%A5%97%E6%8E%A5%E5%AD%97%2087d22/Untitled%2011.png"
+                      alt="Untitled"
+                ></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">编译完毕</span><br><span class="line">[client] <span class="number">48724</span> connect successfully !</span><br><span class="line">[Server] connection from <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> port: <span class="number">61259</span></span><br><span class="line">[client] <span class="number">48724</span>, Message received from server: hello world!</span><br><span class="line"></span><br><span class="line">[Server] send [Server] <span class="number">4</span> 半关闭也可以接收数据 </span><br><span class="line"></span><br><span class="line">[client] <span class="number">48724</span>, <span class="number">0</span>, <span class="number">60</span> Message received from server: [Server] <span class="number">4</span> 半关闭也可以接收数据 </span><br><span class="line"> after shutdown</span><br><span class="line">[client] client close: <span class="number">48724</span></span><br><span class="line">[Server]  connect close: <span class="number">4</span></span><br><span class="line">server pid is <span class="number">48723</span></span><br></pre></td></tr></table></figure>
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：TCP协议与套接字编程 socket 详解</li>
+        <li>本文作者：codeflysafe</li>
+        <li>创建时间：2022-03-04 22:42:05</li>
+        <li>
+            本文链接：https://codeflysafe.github.io/2022/03/04/TCP 协议与套接字编程/
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2022/03/18/%E5%8D%95%E8%BF%9B%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item"></span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2022/03/04/epoll/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">彻底搞懂 epoll - ET 和 LT 模式的触发</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;评论</i>
+    </div>
+    
+
+        
+            
+    <div id="gitalk-container"></div>
+    <script 
+            src="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
+    <script >
+
+        function loadGitalk() {
+            let __gitalk__pathname = decodeURI(location.pathname);
+            const __gitalk__pathnameLength = __gitalk__pathname.length;
+            const __gitalk__pathnameMaxLength = 50;
+            if (__gitalk__pathnameLength > __gitalk__pathnameMaxLength) {
+                __gitalk__pathname = __gitalk__pathname.substring(0, __gitalk__pathnameMaxLength - 3) + '...';
+            }
+
+            try {
+                Gitalk && new Gitalk({
+                    clientID: '48d1eb3658ef4923896f',
+                    clientSecret: 'd619d46a6c36396cab7dc0190ad1630bd3982b34',
+                    repo: 'gitalk',
+                    owner: 'codeflysafe',
+                    admin: ['codeflysafe'],
+                    id: __gitalk__pathname,
+                    language: 'zh-CN'
+                }).render('gitalk-container');
+
+            } catch (e) {
+                window.Gitalk = null;
+            }
+        }
+
+        if ('false') {
+            const loadGitalkTimeout = setTimeout(() => {
+                loadGitalk();
+                clearTimeout(loadGitalkTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadGitalk);
+        }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">codeflysafe</a>
+        </div>
+        
+            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts">
+    
+</div>
+
+
+
+</body>
+</html>

@@ -1,149 +1,327 @@
-<!doctype html>
-<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>标签: deep-learning - 魔法沉思录</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="魔法沉思录"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="魔法沉思录"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta property="og:type" content="blog"><meta property="og:title" content="魔法沉思录"><meta property="og:url" content="https://codeflysafe.github.io/"><meta property="og:site_name" content="魔法沉思录"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://codeflysafe.github.io/img/og_image.png"><meta property="article:author" content="sjhuang"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://codeflysafe.github.io"},"headline":"魔法沉思录","image":["https://codeflysafe.github.io/img/og_image.png"],"author":{"@type":"Person","name":"sjhuang"},"publisher":{"@type":"Organization","name":"魔法沉思录","logo":{"@type":"ImageObject","url":"https://codeflysafe.github.io/img/logo.svg"}},"description":""}</script><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><!--!--><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><meta name="generator" content="Hexo 5.4.0"></head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="魔法沉思录" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a><a class="navbar-item" href="/love">Love</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><div class="card-content"><nav class="breadcrumb" aria-label="breadcrumbs"><ul><li><a href="/tags">标签</a></li><li class="is-active"><a href="#" aria-current="page">deep-learning</a></li></ul></nav></div></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2020-06-15T04:56:39.000Z" title="2020/6/15 下午12:56:39">2020-06-15</time>发表</span><span class="level-item"><time dateTime="2022-02-18T11:37:07.618Z" title="2022/2/18 下午7:37:07">2022-02-18</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/Generative-Adversial-Network/">Generative Adversial Network</a></span><span class="level-item">10 分钟读完 (大约1549个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2020/06/15/2020-06-15-Theory-behind-GAN/"> Theory behind GAN</a></h1><div class="content"><h2 id="Generation"><a href="#Generation" class="headerlink" title="Generation"></a>Generation</h2><p>Target: find data distribution $$P_{data}(x)$$.<br><em>x 是一个图片 ( a high-dimensional vector)</em></p>
-<h3 id="Before-GAN"><a href="#Before-GAN" class="headerlink" title="Before GAN"></a>Before GAN</h3><p><strong>Target</strong>：使用一个分布 $P_G(x,\theta)$ 去拟合分布$P_{data}(x)$（固定的），使两者越接近越好. 例如$P_G(x,\theta)$可以是 <code>gaussian mixture model</code>,此时 $\theta$为 <code>means</code> and <code>variances</code> of this model</p>
-<ul>
-<li>Given a data distribution $P_{data}(x)$ (We can sample from it)<blockquote>
-<p>$P_{data}(x)$ 未知，但是可以 sample from it. (就是从已有的<code>database</code>中<code>sample</code>出来一些)</p>
-</blockquote>
-</li>
-<li>We have a data distribution $P_G(x;\theta)$ parameterized by $\theta$<blockquote>
-<p>We want to find $\theta$ such that $P_G$ close to $P_{data}$</p>
-</blockquote>
-</li>
-<li>Sample {$x^1,x^2…,x^m$} from $P_{data}(x)$ and compute $P_G(x^i;\theta)$</li>
-<li>Find $\theta^*$ maximizing the Object Function</li>
-</ul>
-<p><strong>Object Function</strong>：<code>Maximum Likelihood Estimation</code> (最大似然估计)</p>
-<p>$$<br>\begin{aligned}<br>F(\theta) &amp;= \prod_{x=1}^{m} P_G(x^i;\theta)\tag{1}<br>\end{aligned}<br>$$</p>
-<p>要使 $F(\theta)$ 达到最大，即求 $\theta^*$ 使$F(\theta)$取得最值</p>
-<p>$$\begin{aligned}<br> \theta^* &amp;= \arg\mathop{\max}\limits_{\theta}F(\theta) \tag{2} \<br>          &amp;= \arg\mathop{\max}\limits_{\theta}\sum_{x=1}^mlog(P_G(x^i;\theta)) \<br>          &amp;\approx \color{red}\arg\mathop{\max}\limits_{\theta}E_x\sim_{P_{data}(x)}(log(P_G(x;\theta)))\<br>          &amp;= \color{red}\arg\mathop{\max}\limits_{\theta} (\int_x P_{data}(x)log(P_G(x;\theta))dx - \int_x P_{data}(x)log(P_{data}(x))dx) \<br>          &amp;= \arg\mathop{\max}\limits_{\theta}\int_xP_{data}(x)log(P_G(x;\theta)/P_{data}(x))dx \<br>          &amp;= \arg\mathop{\min}\limits_{\theta} KL Div(P_{data}||P_G)</p>
-<p>\end{aligned}$$</p>
-<p>即： Maximum Likelihood Estimation $\approx$ KL Divergence</p>
-<p>因此 对于 <code>Generator</code> 的目的就是 $G^* = \arg\mathop{\min}\limits_{G}Div(P_G,P_{data})$,即使 $P_G 和 P_{data}$ 之间的散度最小。</p>
-<h4 id="这里存在一个问题-How-to-define-general-P-G-x"><a href="#这里存在一个问题-How-to-define-general-P-G-x" class="headerlink" title="这里存在一个问题: How to define general $P_G(x)$ ?"></a>这里存在一个问题: How to define general $P_G(x)$ ?</h4><p>  对于 $P_G(x)$分布(更加 general distribution),它可能无法进行计算(如 <code>Nerual Network</code>),即 $logP_G(x;\theta)$无法计算.</p>
-<h2 id="Using-GAN"><a href="#Using-GAN" class="headerlink" title="Using GAN"></a>Using GAN</h2><h3 id="GAN-是如何处理这个问题的呢？-Generator"><a href="#GAN-是如何处理这个问题的呢？-Generator" class="headerlink" title="GAN 是如何处理这个问题的呢？ (Generator)"></a>GAN 是如何处理这个问题的呢？ (Generator)</h3><p>GAN 采用了一个 <code>NN</code> 来拟合 $P_G(x)$，即 Generator 是一个 network, 使用它来定义分布 $P_G$</p>
-<blockquote>
-<p>To learn the generator’s distribution $P_G$,we define a prior on input noise variables $P_z(z)$, then represent a mapping to data space as $G(z;\theta_g)$,where G is a differentiable function represented by a multilayer perceptron with parameters $\theta_g$.</p>
-</blockquote>
-<p><img src="https://raw.githubusercontent.com/hsjfans/git_resource/master/img/20200615092048.png"></p>
-<blockquote>
-<p>prior distribution $P_z(z) 一般可以选取任意分布，如 Gussian Mixture Distribution$</p>
-</blockquote>
-<p>根据上面可知，它的 Object Function (loss) 是某种 <code>Divergence</code>, 即 $Div(P_G,P_{data})$,<br>而且目的为是这种散度最小，即 $G^* = \arg\mathop{\min}\limits_G Div({P_G,P_{data}})$.<br>关键就是<strong>如何计算这种 Divergence？</strong></p>
-<h3 id="How-to-Compute-Divergence-Discriminator"><a href="#How-to-Compute-Divergence-Discriminator" class="headerlink" title="How to Compute Divergence (Discriminator) ?"></a>How to Compute Divergence (Discriminator) ?</h3><p>对于 $P_G$或者$P_{data}$ 因为是未知的，我们无法计算，但是可以 Sample from them.</p>
-<blockquote>
-<p>We alse define a second multilayer perceptron $D(x;\theta_d)$ that outputs a single scalar. D(x) represents the probability that x came from the data rather that $P_g$. We train D to maximize the probability of assigning the correct label to both training examples and samples from G.</p>
-</blockquote>
-<p><img src="https://raw.githubusercontent.com/hsjfans/git_resource/master/img/20200615094212.png"></p>
-<h4 id="Object-Function-For-D"><a href="#Object-Function-For-D" class="headerlink" title="Object Function For D"></a>Object Function For D</h4><p>When train <code>D</code>, <code>G</code>is fixed:<br>   $$\begin{aligned}<br>     V(G,D) &amp;= E_x \sim_{P_{data}(x)}[log(D(x))] + E_z \sim_{P_z(z)}[log(1-D(G(z)))]  \<br>       &amp; = E_x \sim_{P_{data}(x)}[log(D(x))] + E_x \sim_{P_G(x)}[log(1-D(x))]  \tag{3}<br>   \end{aligned}<br>   $$</p>
-<p>即 </p>
-<p>   $$D^* = \arg\mathop{\max}\limits_DV(D,G) \tag{4}$$</p>
-<h4 id="式-3-如何解释呢？"><a href="#式-3-如何解释呢？" class="headerlink" title="式(3)如何解释呢？"></a>式(3)如何解释呢？</h4><ol>
-<li>当 x 从 $P_data(x)$ sample 出来的时，那就使 <code>scalar</code>(D(x)) 越大越好（因为它是真实的）</li>
-<li>当 x 从 $P_G(x)$ sample 出来时，<code>saclar</code>(D(x))越小越好，即<code>1-D(x)</code> 越大越好（因为它是Generator出来的的）</li>
-</ol>
-<p>上面我们讲到，generator的目的使 $P_G$ 和 $P_{data}$ 的某种 Divergence 越小越好,其实对于式(3)它就等同于某种 Divergence</p>
-<h4 id="证明-V-G-D-等同于-JS-Divergence"><a href="#证明-V-G-D-等同于-JS-Divergence" class="headerlink" title="证明 V(G,D) 等同于 JS-Divergence"></a>证明 V(G,D) 等同于 JS-Divergence</h4><ol>
-<li>fixed G, 求解 $D^*$<br>$$<br> \begin{aligned}<br> D^* &amp;= \arg\mathop{\max}\limits_DV(D,G) \<pre><code> &amp;= \arg\mathop&#123;\max&#125;\limits_D[\int_xP_&#123;data&#125;(x)log(D(x))dx + \int_xP_G(x)log(1-D(x))dx ]\\
- &amp;= \arg\mathop&#123;\max&#125;\limits_D\int_x[P_&#123;data&#125;(x)log(D(x)) + P_G(x)log(1-D(x))]dx \tag&#123;5&#125;
-</code></pre>
- \end{aligned}<br>$$</li>
-</ol>
-<ol start="2">
-<li><p>Given x, $D^*$使 $P_{data}(x)log(D(x)) + P_G(x)log(1-D(x))$ maximum<br>简化为 $L(D) = alogD + blog(1-D)$ </p>
-<p>Assumed: $a = P_{data}(x)$ and  $b = P_G(x)$ </p>
-<p>$$\begin{aligned}<br>   &amp;L(D) = alogD + blog(1-D) \<br>   &amp;\frac{dL(D)}{dD} = a/D + b/(1-D)<em>(-1) = 0\<br>   &amp; D^</em> = a/(a+b) \tag{6}</p>
-<p>\end{aligned}$$</p>
-<blockquote>
-<p>For any (a,b) $\in R^2$, function $y\to alog(y) + blog(1-y)$ achieves its maximum in [0,1] at $\frac{a}{a+b}$</p>
-</blockquote>
-</li>
-<li><p>将 $D^* = a/(a+b)$ 带入到式（3）中，有:</p>
-<p>$$\begin{aligned}<br>  V(G,D) &amp;= E_x \sim_{P_{data}(x)}[log(\frac{P_{data}(x)}{(P_{data}(x)+P_G(x))})] + E_x \sim_{P_G(x)}[log(\frac{P_G(x)}{(P_{data}(x)+P_G(x))})] \<br>  &amp;= \int_x[P_{data}(x)log(\frac{P_{data}(x)}{(P_{data}(x)+P_G(x))}) + P_G(x)log(\frac{P_G(x)}{(P_{data}(x)+P_G(x))})]dx \<br>  &amp;= \int_x[P_{data}(x)log(\frac{P_{data}(x)/2}{(P_{data}(x)+P_G(x))/2}) + P_G(x)log(\frac{P_G(x)/2}{(P_{data}(x)+P_G(x))/2})]dx \<br>  &amp;= -\int_x[P_{data}(x)log2 + P_G(x)log2]dx + \int_x[P_{data}(x)log(\frac{P_{data}(x)}{(P_{data}(x)+P_G(x))/2}) + P_G(x)log(\frac{P_G(x)}{(P_{data}(x)+P_G(x))/2})]dx \<br>  &amp;= -log4 + KLDiv(P_{data}(x)||(P_{data}(x)+P_G(x))/2) + KLDiv(P_G(x)||(P_{data}(x)+P_G(x))/2) \<br>  &amp;= -log4 + 2*\color{red}JSDiv(P_{data}||P_G)<br>\end{aligned}$$</p>
-</li>
-</ol>
-<h4 id="计算-G-mathop-arg-min-limits-GDiv-P-data-P-G"><a href="#计算-G-mathop-arg-min-limits-GDiv-P-data-P-G" class="headerlink" title="计算 $G^* = \mathop{\arg\min}\limits_GDiv(P_{data},P_G)$"></a>计算 $G^* = \mathop{\arg\min}\limits_GDiv(P_{data},P_G)$</h4><p>上式就等同于:<br>  $$\begin{aligned}<br>      G^* &amp;= \arg\mathop{\min}\limits_GDiv(P_{data},P_G) \<br>          &amp;= \arg\mathop{\min}\limits_G\mathop{\max}\limits_DV(G,D) \<br>          &amp;= \arg\mathop{\min}\limits_GC(G)<br>  \end{aligned}$$</p>
-<p>  其中 $C(G)= \arg\mathop{\max}\limits_DV(G,D)$</p>
-<p>  <img src="https://raw.githubusercontent.com/hsjfans/git_resource/master/img/20200615120036.png"></p>
-<h2 id="Algorithm"><a href="#Algorithm" class="headerlink" title="Algorithm"></a>Algorithm</h2><ol>
-<li>Initialize generator and discriminator</li>
-<li>In each training iteration:     <ol>
-<li>Fix G, update D</li>
-<li>Fix D, update G</li>
-</ol>
-</li>
-</ol>
-<h3 id="Procerss"><a href="#Procerss" class="headerlink" title="Procerss"></a>Procerss</h3><p>实际上：<br> $$\begin{aligned}<br>      V(G,D) &amp;= E_x \sim_{P_{data}(x)}[log(D(x))] + E_x \sim_{P_G(x)}[log(1-D(x))] \<br>             &amp;\approx \frac{1}{m}\sum_{i=1}^{m}logD(x^i) + \frac{1}{m}\sum_{i=1}^{m}log(1-D(\hat{x}^i))<br>  \end{aligned}$$ </p>
-<p>initialize $\theta_d$ for D and $\theta_g$ for G</p>
-<ul>
-<li><p>In each training iteration</p>
-</li>
-<li><p>Training D, repeat K times</p>
-<ul>
-<li>sample m examples{$x^1,x^2,…x^m$} from database $P_{data}(x)$ </li>
-<li>sample m examples{$z^1,z^2,…z^m$} from prior distribution $P_z(z)$</li>
-<li>get generated data {$\hat{x}^1,\hat{x}^2,…\hat{x}^m$} via $G(z^i)$</li>
-<li>fixed $\theta_g$,update $\theta_d$ to maximize:<br>$$\begin{aligned}<br>  \hat{V} &amp;= \frac{1}{m}\sum_{i=1}^{m}logD(x^i) + \frac{1}{m}\sum_{i=1}^{m}log(1-D(\hat{x}^i)) \<br>  \theta_d &amp;\gets \theta_d + \eta\bigtriangledown\hat{V}(\theta_d)<br>\end{aligned}$$ </li>
-</ul>
-</li>
-<li><p>Training G, only once</p>
-<ul>
-<li>sample m examples{$z^1,z^2,…z^m$} from prior distribution $P_z(z)$</li>
-<li>fixed $\theta_d$,update $\theta_g$ to minimize:<br>$$\begin{aligned}<br> \hat{V} &amp;= \frac{1}{m}\sum_{i=1}^{m}logD(x^i) + \frac{1}{m}\sum_{i=1}^{m}log(1-D(G(z^i))) \<br> &amp;\approx\frac{1}{m}\sum_{i=1}^{m}log(1-D(G(z^i))) \<br>  \theta_g &amp;\gets \theta_g - \eta\bigtriangledown\hat{V}(\theta_g)<br>\end{aligned}$$</li>
-</ul>
-</li>
-</ul>
-<p>实际上，在 Training G 时，采用的是：</p>
-<p>$$\begin{aligned}<br>     \hat{V} &amp;=  -\frac{1}{m}\sum_{i=1}^{m}log(D(G(z^i))) \<br>      \theta_g &amp;\gets \theta_g - \eta\bigtriangledown\hat{V}(\theta_g)<br>\end{aligned}$$</p>
-<p><img src="https://raw.githubusercontent.com/hsjfans/git_resource/master/img/20200615124406.png"></p>
-</div></article></div></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/avatar.png" alt="codeflysafe"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">codeflysafe</p><p class="is-size-6 is-block">恒～～～</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>HeFei, China</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">67</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">14</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">54</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/codeflysafe" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/codeflysafe"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="RSS" href="/"><i class="fas fa-rss"></i></a></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/leetcode-%E5%91%A8%E8%B5%9B/"><span class="level-start"><span class="level-item">-leetcode -周赛</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/Daily-Check/"><span class="level-start"><span class="level-item">Daily Check</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/GC/"><span class="level-start"><span class="level-item">GC</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/Generative-Adversial-Network/"><span class="level-start"><span class="level-item">Generative Adversial Network</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/PAT/"><span class="level-start"><span class="level-item">PAT</span></span><span class="level-end"><span class="level-item tag">13</span></span></a></li><li><a class="level is-mobile" href="/categories/leetcode/"><span class="level-start"><span class="level-item">leetcode</span></span><span class="level-end"><span class="level-item tag">20</span></span></a></li><li><a class="level is-mobile" href="/categories/machine-learning/"><span class="level-start"><span class="level-item">machine learning</span></span><span class="level-end"><span class="level-item tag">8</span></span></a><ul><li><a class="level is-mobile" href="/categories/machine-learning/deep-learning/"><span class="level-start"><span class="level-item">deep learning</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/parallel-computers/"><span class="level-start"><span class="level-item">parallel computers</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/redis/"><span class="level-start"><span class="level-item">redis</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/"><span class="level-start"><span class="level-item">并发编程</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"><span class="level-start"><span class="level-item">数据结构</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%B4%E6%98%8E%E4%B9%A6/"><span class="level-start"><span class="level-item">说明书</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6/"><span class="level-start"><span class="level-item">读书</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/DP/"><span class="tag">DP</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/GC/"><span class="tag">GC</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/JVM/"><span class="tag">JVM</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/SVM/"><span class="tag">SVM</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/The-Economist-APRIL-18TH%E2%80%9324TH-2020/"><span class="tag">The Economist APRIL 18TH–24TH 2020</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/algorithm/"><span class="tag">algorithm</span><span class="tag">25</span></a></div><div class="control"><a class="tags has-addons" href="/tags/algorithms/"><span class="tag">algorithms</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/bfs/"><span class="tag">bfs</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/classification/"><span class="tag">classification</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/datastructure/"><span class="tag">datastructure</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/deep-learning/"><span class="tag">deep learning</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/deep-learning/"><span class="tag">deep-learning</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/dfs/"><span class="tag">dfs</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/dynamic/"><span class="tag">dynamic</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/dynamic-programming/"><span class="tag">dynamic-programming</span><span class="tag">8</span></a></div><div class="control"><a class="tags has-addons" href="/tags/gan/"><span class="tag">gan</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/graph/"><span class="tag">graph</span><span class="tag">5</span></a></div><div class="control"><a class="tags has-addons" href="/tags/hpc/"><span class="tag">hpc</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/introduction/"><span class="tag">introduction</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/leetcode/"><span class="tag">leetcode</span><span class="tag">21</span></a></div><div class="control"><a class="tags has-addons" href="/tags/linear-regression/"><span class="tag">linear regression</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/machine-learning/"><span class="tag">machine learning</span><span class="tag">7</span></a></div><div class="control"><a class="tags has-addons" href="/tags/machine-learning/"><span class="tag">machine-learning</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/math/"><span class="tag">math</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ml/"><span class="tag">ml</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/newcode/"><span class="tag">newcode</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/parallel-computers/"><span class="tag">parallel computers</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/pat/"><span class="tag">pat</span><span class="tag">11</span></a></div><div class="control"><a class="tags has-addons" href="/tags/perceptron/"><span class="tag">perceptron</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/probability/"><span class="tag">probability</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/redis/"><span class="tag">redis</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/regression/"><span class="tag">regression</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/sort/"><span class="tag">sort</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/tree/"><span class="tag">tree</span><span class="tag">10</span></a></div><div class="control"><a class="tags has-addons" href="/tags/usage/"><span class="tag">usage</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E4%B8%80%E5%88%B7leetcode/"><span class="tag">一刷leetcode</span><span class="tag">7</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E4%BA%8C%E5%88%86/"><span class="tag">二分</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/"><span class="tag">内存管理</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%AD%A6%E4%B9%A0/"><span class="tag">学习</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/"><span class="tag">并发编程</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%B9%B6%E6%9F%A5%E9%9B%86/"><span class="tag">并查集</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%BC%95%E7%94%A8%E8%AE%A1%E6%95%B0%E7%AE%97%E6%B3%95/"><span class="tag">引用计数算法</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%84%9F%E6%82%9F/"><span class="tag">感悟</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"><span class="tag">操作系统</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"><span class="tag">数据结构</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%9C%80%E4%BC%98%E5%8C%96%E7%90%86%E8%AE%BA/"><span class="tag">最优化理论</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%9D%8E%E5%AE%8F%E6%AF%85/"><span class="tag">李宏毅</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%A8%A1%E6%8B%9F/"><span class="tag">模拟</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%94%9F%E6%B4%BB/"><span class="tag">生活</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%A7%91%E5%B9%BB/"><span class="tag">科幻</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%A8%8B%E5%BA%8F%E5%91%98%E9%9D%A2%E8%AF%95%E5%AE%9D%E5%85%B8/"><span class="tag">程序员面试宝典</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%BA%BF%E6%80%A7DP/"><span class="tag">线性DP</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/"><span class="tag">计算机体系结构</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AF%BB%E4%B9%A6/"><span class="tag">读书</span><span class="tag">2</span></a></div></div></div></div></div><div class="column-right-shadow is-hidden-widescreen"></div></div><div class="column column-right is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only order-3"><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-03-02T08:31:01.000Z">2022-03-02</time></p><p class="title"><a href="/2022/03/02/redis-object/">redis 对象</a></p><p class="categories"><a href="/categories/redis/">redis</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-02-28T16:03:27.000Z">2022-03-01</time></p><p class="title"><a href="/2022/03/01/consistency/">缓存一致性</a></p><p class="categories"><a href="/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/">并发编程</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-02-27T07:49:49.000Z">2022-02-27</time></p><p class="title"><a href="/2022/02/27/282%E5%9C%BA%E5%91%A8%E8%B5%9B/">282场周赛</a></p><p class="categories"><a href="/categories/leetcode-%E5%91%A8%E8%B5%9B/">-leetcode -周赛</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-02-21T13:19:39.000Z">2022-02-21</time></p><p class="title"><a href="/2022/02/21/mark-sweep-gc/">标记-清除算法</a></p><p class="categories"><a href="/categories/GC/">GC</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-02-19T08:56:51.000Z">2022-02-19</time></p><p class="title"><a href="/2022/02/19/distinct-subsequences/">distinct-subsequences</a></p><p class="categories"><a href="/categories/leetcode/">leetcode</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2022/03/"><span class="level-start"><span class="level-item">三月 2022</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/02/"><span class="level-start"><span class="level-item">二月 2022</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/01/"><span class="level-start"><span class="level-item">一月 2022</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/09/"><span class="level-start"><span class="level-item">九月 2021</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/08/"><span class="level-start"><span class="level-item">八月 2021</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/07/"><span class="level-start"><span class="level-item">七月 2021</span></span><span class="level-end"><span class="level-item tag">5</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/03/"><span class="level-start"><span class="level-item">三月 2021</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/12/"><span class="level-start"><span class="level-item">十二月 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/10/"><span class="level-start"><span class="level-item">十月 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/09/"><span class="level-start"><span class="level-item">九月 2020</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/06/"><span class="level-start"><span class="level-item">六月 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/05/"><span class="level-start"><span class="level-item">五月 2020</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/04/"><span class="level-start"><span class="level-item">四月 2020</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/03/"><span class="level-start"><span class="level-item">三月 2020</span></span><span class="level-end"><span class="level-item tag">31</span></span></a></li></ul></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="魔法沉思录" height="28"></a><p class="is-size-7"><span>&copy; 2022 sjhuang</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
-            article: {
-                highlight: {
-                    clipboard: true,
-                    fold: 'unfolded'
-                }
-            }
-        };</script><script src="/js/column.js"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
-            'HTML-CSS': {
-                matchFontHeight: false
-            },
-            SVG: {
-                matchFontHeight: false
-            },
-            CommonHTML: {
-                matchFontHeight: false
-            },
-            tex2jax: {
-                inlineMath: [
-                    ['$','$'],
-                    ['\\(','\\)']
-                ]
-            }
-        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
-      window.cookieconsent.initialise({
-        type: "info",
-        theme: "edgeless",
-        static: false,
-        position: "bottom-left",
-        content: {
-          message: "此网站使用Cookie来改善您的体验。",
-          dismiss: "知道了！",
-          allow: "允许使用Cookie",
-          deny: "拒绝",
-          link: "了解更多",
-          policy: "Cookie政策",
-          href: "https://www.cookiesandyou.com/",
-        },
-        palette: {
-          popup: {
-            background: "#edeff5",
-            text: "#838391"
-          },
-          button: {
-            background: "#4b81e8"
-          },
-        },
-      });
-    });</script><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
-            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
-        });</script></body></html>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="codeflysafe">
+    
+    <title>
+        
+            标签: deep learning |
+        
+        魔法沉思录
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"codeflysafe.github.io","root":"/","language":"zh-CN"};
+    KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"center","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                魔法沉思录
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="tag-container">
+        <div class="tag-name"><i class="fas fa-tag"></i>&nbsp;deep learning
+        </div>
+        <div class="tag-post-list">
+            
+<div class="archive-list-container">
+    
+        <section class="archive-item">
+            <div class="archive-item-header">
+                <span class="archive-year">2020</span>
+                <span class="archive-year-post-count">[1]</span>
+            </div>
+            <ul class="article-list">
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2020/09/23/%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E6%9C%BA%E4%B8%8EBP%E7%AE%97%E6%B3%95/"
+                        >多层感知机与BP算法</a>
+                        <span class="article-date">09-23</span>
+                    </li>
+                
+            </ul>
+        </section>
+    
+</div>
+
+        </div>
+    </div>
+
+    <div class="tag-paginator">
+        <div class="paginator">
+    
+
+    
+</div>
+
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">codeflysafe</a>
+        </div>
+        
+            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts">
+    
+</div>
+
+
+
+</body>
+</html>

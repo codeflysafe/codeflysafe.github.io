@@ -1,72 +1,718 @@
-<!doctype html>
-<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>魔法沉思录</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="魔法沉思录"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="魔法沉思录"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta property="og:type" content="blog"><meta property="og:title" content="魔法沉思录"><meta property="og:url" content="https://codeflysafe.github.io/"><meta property="og:site_name" content="魔法沉思录"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://codeflysafe.github.io/img/og_image.png"><meta property="article:author" content="sjhuang"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://codeflysafe.github.io"},"headline":"魔法沉思录","image":["https://codeflysafe.github.io/img/og_image.png"],"author":{"@type":"Person","name":"sjhuang"},"publisher":{"@type":"Organization","name":"魔法沉思录","logo":{"@type":"ImageObject","url":"https://codeflysafe.github.io/img/logo.svg"}},"description":""}</script><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><!--!--><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><meta name="generator" content="Hexo 5.4.0"></head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="魔法沉思录" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item is-active" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a><a class="navbar-item" href="/love">Love</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-03-02T08:31:01.000Z" title="2022/3/2 下午4:31:01">2022-03-02</time>发表</span><span class="level-item"><time dateTime="2022-03-02T08:33:28.437Z" title="2022/3/2 下午4:33:28">2022-03-02</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/redis/">redis</a></span><span class="level-item">7 分钟读完 (大约1063个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/03/02/redis-object/">redis 对象</a></h1><div class="content"><p><img src="/img/redis_/Untitled.png" alt="Untitled"></p></div><a class="article-more button is-small is-size-7" href="/2022/03/02/redis-object/#more">阅读更多</a></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-02-28T16:03:27.000Z" title="2022/3/1 上午12:03:27">2022-03-01</time>发表</span><span class="level-item"><time dateTime="2022-03-01T09:42:07.663Z" title="2022/3/1 下午5:42:07">2022-03-01</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/">并发编程</a></span><span class="level-item">25 分钟读完 (大约3760个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/03/01/consistency/">缓存一致性</a></h1><div class="content"><h2 id="缓存一致性问题"><a href="#缓存一致性问题" class="headerlink" title="缓存一致性问题"></a>缓存一致性问题</h2><p><img src="/img/cache_/Untitled.png" alt="Untitled"></p>
-<p>同一个数据在不同的缓存中看到的值是不同的，这就是缓存一致性问题</p>
-<p>考虑下面一个程序(cache_consistency/SumTest.java)</p></div><a class="article-more button is-small is-size-7" href="/2022/03/01/consistency/#more">阅读更多</a></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-02-27T07:49:49.000Z" title="2022/2/27 下午3:49:49">2022-02-27</time>发表</span><span class="level-item"><time dateTime="2022-02-27T07:50:50.171Z" title="2022/2/27 下午3:50:50">2022-02-27</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/leetcode-%E5%91%A8%E8%B5%9B/">-leetcode -周赛</a></span><span class="level-item">4 分钟读完 (大约591个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/02/27/282%E5%9C%BA%E5%91%A8%E8%B5%9B/">282场周赛</a></h1><div class="content"><p>T1、T2、T3 过了，T4 有点思路，没抓住重点，加油！！！</p></div><a class="article-more button is-small is-size-7" href="/2022/02/27/282%E5%9C%BA%E5%91%A8%E8%B5%9B/#more">阅读更多</a></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-02-21T13:19:39.000Z" title="2022/2/21 下午9:19:39">2022-02-21</time>发表</span><span class="level-item"><time dateTime="2022-02-22T15:03:09.256Z" title="2022/2/22 下午11:03:09">2022-02-22</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/GC/">GC</a></span><span class="level-item">6 分钟读完 (大约910个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/02/21/mark-sweep-gc/">标记-清除算法</a></h1><div class="content"><p><img src="https://s3.bmp.ovh/imgs/2022/02/ecd8d22994e5c3de.png"></p>
-<blockquote>
-<p>GC 算法，可以称之为内存回收算法，是将程序不用的内存空间回收以便与重复利用。可以简单分为两个步骤：找垃圾和回收垃圾</p>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="codeflysafe">
+    
+    <title>
+        
+        魔法沉思录
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"codeflysafe.github.io","root":"/","language":"zh-CN"};
+    KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"center","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+        <div class="first-screen-container flex-center fade-in-down-animation">
+    <div class="content flex-center">
+        <div class="description">
+            Keep writing and Keep loving.
+        </div>
+        
+            <div class="s-icon-list">
+                
+                    
+                        
+                            <span class="s-icon-item github">
+                                <a target="_blank" href="https://github.com/codeflysafe">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                            </span>
+                        
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        
+                            <span class="s-icon-item email">
+                                <a href="mailto:hsjfans_scholar@163.com">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                            </span>
+                        
+                    
+                
+            </div>
+        
+    </div>
+</div>
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content has-first-screen">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                魔法沉思录
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class="active"
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class="active"
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="home-content-container fade-in-down-animation">
+    <ul class="home-article-list">
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/2022/04/06/operate-system/">
+                        operate_system
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        code
+
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Wed Apr 06 2022 17:48:05 GMT+0800">2022-04-06</span></span>
+        
+        
+    </div>
+
+    <a href="/2022/04/06/operate-system/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/2022/04/04/%E9%98%B3%E5%85%89%E6%99%AE%E7%85%A7/">
+                        阳光普照的日子
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        <p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://img2.doubanio.com/view/photo/l/public/p2510589763.jpg"
+                     
+                ></p>
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Mon Apr 04 2022 16:14:19 GMT+0800">2022-04-04</span></span>
+        
+            <span class="home-article-category"><i class="fas fa-folder"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/categories/%E7%94%9F%E6%B4%BB/">生活</a>&nbsp;
+                        </li>
+                    
+                    
+                </ul>
+            </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/%E6%84%9F%E6%82%9F/">感悟</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/%E7%94%9F%E6%B4%BB/">生活</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/2022/04/04/%E9%98%B3%E5%85%89%E6%99%AE%E7%85%A7/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/2022/03/20/recv_read_write_send%E5%8C%BA%E5%88%AB/">
+                        
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        <!--
+ * @Author: sjhuang
+ * @Date: 2022-03-20 20:44:51
+ * @LastEditTime: 2022-04-06 17:43:02
+ * @FilePath: /notes/source/_posts/recv_read_write_send区别.md
+-->
+<h1 id="socket编程中write、read和send、recv之间的区别"><a href="#socket编程中write、read和send、recv之间的区别" class="headerlink" title="socket编程中write、read和send、recv之间的区别"></a>socket编程中write、read和send、recv之间的区别</h1><blockquote>
+<p>from <a class="link"   target="_blank" rel="noopener" href="https://www.cnblogs.com/George1994/p/6731091.html" >https://www.cnblogs.com/George1994/p/6731091.html<i class="fas fa-external-link-alt"></i></a></p>
 </blockquote>
-<h2 id="第一章-GC的简单介绍"><a href="#第一章-GC的简单介绍" class="headerlink" title="第一章 GC的简单介绍"></a>第一章 GC的简单介绍</h2><h3 id="GC-的作用"><a href="#GC-的作用" class="headerlink" title="GC 的作用"></a>GC 的作用</h3><p>防止内存泄漏，不使用的内存空间自动释放，无需手动释放，无需进行手动内存管理。</p></div><a class="article-more button is-small is-size-7" href="/2022/02/21/mark-sweep-gc/#more">阅读更多</a></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-02-19T08:56:51.000Z" title="2022/2/19 下午4:56:51">2022-02-19</time>发表</span><span class="level-item"><time dateTime="2022-02-19T09:00:39.318Z" title="2022/2/19 下午5:00:39">2022-02-19</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/leetcode/">leetcode</a></span><span class="level-item">3 分钟读完 (大约484个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/02/19/distinct-subsequences/">distinct-subsequences</a></h1><div class="content"><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/distinct-subsequences/">力扣</a></p>
-<p>给定一个字符串 s 和一个字符串 t ，计算在 s 的子序列中 t 出现的个数。</p>
-<p>字符串的一个 子序列 是指，通过删除一些（也可以不删除）字符且不干扰剩余字符相对位置所组成的新字符串。（例如，”ACE” 是 “ABCDE” 的一个子序列，而 “AEC” 不是）</p>
-<p>题目数据保证答案符合 32 位带符号整数范围。</p></div><a class="article-more button is-small is-size-7" href="/2022/02/19/distinct-subsequences/#more">阅读更多</a></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-02-19T07:33:12.000Z" title="2022/2/19 下午3:33:12">2022-02-19</time>发表</span><span class="level-item"><time dateTime="2022-02-19T08:58:14.573Z" title="2022/2/19 下午4:58:14">2022-02-19</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/leetcode/">leetcode</a></span><span class="level-item">1 分钟读完 (大约175个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/02/19/pascals-triangle/">pascals-triangle</a></h1><div class="content"><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/pascals-triangle/">力扣</a></p>
-<p><img src="https://pic.leetcode-cn.com/1626927345-DZmfxB-PascalTriangleAnimated2.gif" alt="https://pic.leetcode-cn.com/1626927345-DZmfxB-PascalTriangleAnimated2.gif"></p></div><a class="article-more button is-small is-size-7" href="/2022/02/19/pascals-triangle/#more">阅读更多</a></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-01-12T08:14:19.000Z" title="2022/1/12 下午4:14:19">2022-01-12</time>发表</span><span class="level-item"><time dateTime="2022-02-18T09:33:50.359Z" title="2022/2/18 下午5:33:50">2022-02-18</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></span><span class="level-item">3 分钟读完 (大约444个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/01/12/Disjoint%20S%208c71a/">Disjoint Set (Union-Find )</a></h1><div class="content"><p>并查集数据结构</p>
-<p>只有 <code>find</code>  和 <code>union</code>  操作,  它用于处理一些不交集的 <strong>合并</strong> 及 <strong>查询</strong> 问题。</p>
-<p><code>find</code> : 确定元素所在的集合</p>
-<p><code>union</code>: 合并两个不相交集合</p></div><a class="article-more button is-small is-size-7" href="/2022/01/12/Disjoint%20S%208c71a/#more">阅读更多</a></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2021-09-03T08:14:19.000Z" title="2021/9/3 下午4:14:19">2021-09-03</time>发表</span><span class="level-item"><time dateTime="2021-09-03T08:30:08.983Z" title="2021/9/3 下午4:30:08">2021-09-03</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/parallel-computers/">parallel computers</a></span><span class="level-item">几秒读完 (大约64个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/09/03/applications-of-parallel-computers/">applications_of_parallel_computers</a></h1><div class="content"><p>cs267 是cmu的一门关于并行算法的公开课<br>下面是它的一个详细的课程表</p>
-<hr>
-<p><a target="_blank" rel="noopener" href="https://docs.google.com/spreadsheets/d/1fxflgqzuDdtVhHeOOK1oixOH9PZQ4hXgAXEdPJARaqs/edit?usp=drivesdk">CS267 Master Schedule Sp21</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.notion.so/9b061e1e9e6247dab3a98dc9ad17bd6b">并行算法</a></p>
-</div></article></div><div class="card"><div class="card-image"><a class="image is-7by3" href="/2021/08/18/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E6%B3%95%E5%92%8CKKT%E6%9D%A1%E4%BB%B6/"><img class="fill" src="https://images.pexels.com/photos/1714208/pexels-photo-1714208.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;w=500" alt="拉格朗日乘法和KKT条件"></a></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2021-08-18T08:14:19.000Z" title="2021/8/18 下午4:14:19">2021-08-18</time>发表</span><span class="level-item"><time dateTime="2022-02-18T08:46:40.636Z" title="2022/2/18 下午4:46:40">2022-02-18</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/machine-learning/">machine learning</a></span><span class="level-item">11 分钟读完 (大约1604个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/08/18/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E6%B3%95%E5%92%8CKKT%E6%9D%A1%E4%BB%B6/">拉格朗日乘法和KKT条件</a></h1><div class="content"><p><img src="https://s3.bmp.ovh/imgs/2022/02/2b1c60897afcb8e7.jpeg">千秋摄于黄山</p>
-<p>最近看了 <a target="_blank" rel="noopener" href="https://book.douban.com/subject/30357691/">《最优化理论与方法》</a>, 学习了常见的优化问题以及解决方法。同时，之前学习 <code>SVM</code> 时，对拉格朗日乘法以及 <code>KKT</code> 条件有一些疑问，这里做一下学习笔记，便于后面复习和理解！</p></div><a class="article-more button is-small is-size-7" href="/2021/08/18/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E6%B3%95%E5%92%8CKKT%E6%9D%A1%E4%BB%B6/#more">阅读更多</a></article></div><div class="card"><div class="card-image"><a class="image is-7by3" href="/2021/07/20/minimize-maximum-pair-sum-in-array/"><img class="fill" src="https://img10.360buyimg.com/ddimg/jfs/t1/82349/3/16992/174102/60f38bcbEf6ea7be2/871e7c8aa240a98e.jpg" alt="minimize-maximum-pair-sum-in-array"></a></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2021-07-20T02:01:55.000Z" title="2021/7/20 上午10:01:55">2021-07-20</time>发表</span><span class="level-item"><time dateTime="2021-07-20T08:37:34.342Z" title="2021/7/20 下午4:37:34">2021-07-20</time>更新</span><span class="level-item">3 分钟读完 (大约442个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/07/20/minimize-maximum-pair-sum-in-array/">minimize-maximum-pair-sum-in-array</a></h1><div class="content"><p>一个数对 (a,b) 的 数对和 等于 a + b 。最大数对和 是一个数对数组中最大的 数对和 。</p>
-<p>比方说，如果我们有数对 (1,5) ，(2,3) 和 (4,4)，最大数对和 为 max(1+5, 2+3, 4+4) = max(6, 5, 8) = 8 。<br>给你一个长度为 偶数 n 的数组 nums ，请你将 nums 中的元素分成 n / 2 个数对，使得：</p>
-<p>nums 中每个元素 恰好 在 一个 数对中，且<br>最大数对和 的值 最小 。<br>请你在最优数对划分的方案下，返回最小的 最大数对和 。</p></div><a class="article-more button is-small is-size-7" href="/2021/07/20/minimize-maximum-pair-sum-in-array/#more">阅读更多</a></article></div><nav class="pagination" role="navigation" aria-label="pagination"><div class="pagination-previous is-invisible is-hidden-mobile"><a href="/page/0/">上一页</a></div><div class="pagination-next"><a href="/page/2/">下一页</a></div><ul class="pagination-list is-hidden-mobile"><li><a class="pagination-link is-current" href="/">1</a></li><li><a class="pagination-link" href="/page/2/">2</a></li><li><span class="pagination-ellipsis">&hellip;</span></li><li><a class="pagination-link" href="/page/7/">7</a></li></ul></nav></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/avatar.png" alt="codeflysafe"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">codeflysafe</p><p class="is-size-6 is-block">恒～～～</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>HeFei, China</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">67</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">14</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">54</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/codeflysafe" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/codeflysafe"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="RSS" href="/"><i class="fas fa-rss"></i></a></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/leetcode-%E5%91%A8%E8%B5%9B/"><span class="level-start"><span class="level-item">-leetcode -周赛</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/Daily-Check/"><span class="level-start"><span class="level-item">Daily Check</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/GC/"><span class="level-start"><span class="level-item">GC</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/Generative-Adversial-Network/"><span class="level-start"><span class="level-item">Generative Adversial Network</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/PAT/"><span class="level-start"><span class="level-item">PAT</span></span><span class="level-end"><span class="level-item tag">13</span></span></a></li><li><a class="level is-mobile" href="/categories/leetcode/"><span class="level-start"><span class="level-item">leetcode</span></span><span class="level-end"><span class="level-item tag">20</span></span></a></li><li><a class="level is-mobile" href="/categories/machine-learning/"><span class="level-start"><span class="level-item">machine learning</span></span><span class="level-end"><span class="level-item tag">8</span></span></a><ul><li><a class="level is-mobile" href="/categories/machine-learning/deep-learning/"><span class="level-start"><span class="level-item">deep learning</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/parallel-computers/"><span class="level-start"><span class="level-item">parallel computers</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/redis/"><span class="level-start"><span class="level-item">redis</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/"><span class="level-start"><span class="level-item">并发编程</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"><span class="level-start"><span class="level-item">数据结构</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%B4%E6%98%8E%E4%B9%A6/"><span class="level-start"><span class="level-item">说明书</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6/"><span class="level-start"><span class="level-item">读书</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/DP/"><span class="tag">DP</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/GC/"><span class="tag">GC</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/JVM/"><span class="tag">JVM</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/SVM/"><span class="tag">SVM</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/The-Economist-APRIL-18TH%E2%80%9324TH-2020/"><span class="tag">The Economist APRIL 18TH–24TH 2020</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/algorithm/"><span class="tag">algorithm</span><span class="tag">25</span></a></div><div class="control"><a class="tags has-addons" href="/tags/algorithms/"><span class="tag">algorithms</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/bfs/"><span class="tag">bfs</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/classification/"><span class="tag">classification</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/datastructure/"><span class="tag">datastructure</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/deep-learning/"><span class="tag">deep learning</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/deep-learning/"><span class="tag">deep-learning</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/dfs/"><span class="tag">dfs</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/dynamic/"><span class="tag">dynamic</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/dynamic-programming/"><span class="tag">dynamic-programming</span><span class="tag">8</span></a></div><div class="control"><a class="tags has-addons" href="/tags/gan/"><span class="tag">gan</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/graph/"><span class="tag">graph</span><span class="tag">5</span></a></div><div class="control"><a class="tags has-addons" href="/tags/hpc/"><span class="tag">hpc</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/introduction/"><span class="tag">introduction</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/leetcode/"><span class="tag">leetcode</span><span class="tag">21</span></a></div><div class="control"><a class="tags has-addons" href="/tags/linear-regression/"><span class="tag">linear regression</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/machine-learning/"><span class="tag">machine learning</span><span class="tag">7</span></a></div><div class="control"><a class="tags has-addons" href="/tags/machine-learning/"><span class="tag">machine-learning</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/math/"><span class="tag">math</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ml/"><span class="tag">ml</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/newcode/"><span class="tag">newcode</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/parallel-computers/"><span class="tag">parallel computers</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/pat/"><span class="tag">pat</span><span class="tag">11</span></a></div><div class="control"><a class="tags has-addons" href="/tags/perceptron/"><span class="tag">perceptron</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/probability/"><span class="tag">probability</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/redis/"><span class="tag">redis</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/regression/"><span class="tag">regression</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/sort/"><span class="tag">sort</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/tree/"><span class="tag">tree</span><span class="tag">10</span></a></div><div class="control"><a class="tags has-addons" href="/tags/usage/"><span class="tag">usage</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E4%B8%80%E5%88%B7leetcode/"><span class="tag">一刷leetcode</span><span class="tag">7</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E4%BA%8C%E5%88%86/"><span class="tag">二分</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/"><span class="tag">内存管理</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%AD%A6%E4%B9%A0/"><span class="tag">学习</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/"><span class="tag">并发编程</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%B9%B6%E6%9F%A5%E9%9B%86/"><span class="tag">并查集</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%BC%95%E7%94%A8%E8%AE%A1%E6%95%B0%E7%AE%97%E6%B3%95/"><span class="tag">引用计数算法</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%84%9F%E6%82%9F/"><span class="tag">感悟</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"><span class="tag">操作系统</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"><span class="tag">数据结构</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%9C%80%E4%BC%98%E5%8C%96%E7%90%86%E8%AE%BA/"><span class="tag">最优化理论</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%9D%8E%E5%AE%8F%E6%AF%85/"><span class="tag">李宏毅</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%A8%A1%E6%8B%9F/"><span class="tag">模拟</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%94%9F%E6%B4%BB/"><span class="tag">生活</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%A7%91%E5%B9%BB/"><span class="tag">科幻</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%A8%8B%E5%BA%8F%E5%91%98%E9%9D%A2%E8%AF%95%E5%AE%9D%E5%85%B8/"><span class="tag">程序员面试宝典</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%BA%BF%E6%80%A7DP/"><span class="tag">线性DP</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/"><span class="tag">计算机体系结构</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AF%BB%E4%B9%A6/"><span class="tag">读书</span><span class="tag">2</span></a></div></div></div></div></div><div class="column-right-shadow is-hidden-widescreen"></div></div><div class="column column-right is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only order-3"><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-03-02T08:31:01.000Z">2022-03-02</time></p><p class="title"><a href="/2022/03/02/redis-object/">redis 对象</a></p><p class="categories"><a href="/categories/redis/">redis</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-02-28T16:03:27.000Z">2022-03-01</time></p><p class="title"><a href="/2022/03/01/consistency/">缓存一致性</a></p><p class="categories"><a href="/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/">并发编程</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-02-27T07:49:49.000Z">2022-02-27</time></p><p class="title"><a href="/2022/02/27/282%E5%9C%BA%E5%91%A8%E8%B5%9B/">282场周赛</a></p><p class="categories"><a href="/categories/leetcode-%E5%91%A8%E8%B5%9B/">-leetcode -周赛</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-02-21T13:19:39.000Z">2022-02-21</time></p><p class="title"><a href="/2022/02/21/mark-sweep-gc/">标记-清除算法</a></p><p class="categories"><a href="/categories/GC/">GC</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-02-19T08:56:51.000Z">2022-02-19</time></p><p class="title"><a href="/2022/02/19/distinct-subsequences/">distinct-subsequences</a></p><p class="categories"><a href="/categories/leetcode/">leetcode</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2022/03/"><span class="level-start"><span class="level-item">三月 2022</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/02/"><span class="level-start"><span class="level-item">二月 2022</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/01/"><span class="level-start"><span class="level-item">一月 2022</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/09/"><span class="level-start"><span class="level-item">九月 2021</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/08/"><span class="level-start"><span class="level-item">八月 2021</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/07/"><span class="level-start"><span class="level-item">七月 2021</span></span><span class="level-end"><span class="level-item tag">5</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/03/"><span class="level-start"><span class="level-item">三月 2021</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/12/"><span class="level-start"><span class="level-item">十二月 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/10/"><span class="level-start"><span class="level-item">十月 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/09/"><span class="level-start"><span class="level-item">九月 2020</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/06/"><span class="level-start"><span class="level-item">六月 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/05/"><span class="level-start"><span class="level-item">五月 2020</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/04/"><span class="level-start"><span class="level-item">四月 2020</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/03/"><span class="level-start"><span class="level-item">三月 2020</span></span><span class="level-end"><span class="level-item tag">31</span></span></a></li></ul></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="魔法沉思录" height="28"></a><p class="is-size-7"><span>&copy; 2022 sjhuang</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
-            article: {
-                highlight: {
-                    clipboard: true,
-                    fold: 'unfolded'
-                }
-            }
-        };</script><script src="/js/column.js"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
-            'HTML-CSS': {
-                matchFontHeight: false
-            },
-            SVG: {
-                matchFontHeight: false
-            },
-            CommonHTML: {
-                matchFontHeight: false
-            },
-            tex2jax: {
-                inlineMath: [
-                    ['$','$'],
-                    ['\\(','\\)']
-                ]
-            }
-        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
-      window.cookieconsent.initialise({
-        type: "info",
-        theme: "edgeless",
-        static: false,
-        position: "bottom-left",
-        content: {
-          message: "此网站使用Cookie来改善您的体验。",
-          dismiss: "知道了！",
-          allow: "允许使用Cookie",
-          deny: "拒绝",
-          link: "了解更多",
-          policy: "Cookie政策",
-          href: "https://www.cookiesandyou.com/",
-        },
-        palette: {
-          popup: {
-            background: "#edeff5",
-            text: "#838391"
-          },
-          button: {
-            background: "#4b81e8"
-          },
-        },
-      });
-    });</script><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
-            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
-        });</script></body></html>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">read/<span class="function">write</span></span><br><span class="line"><span class="function"><span class="keyword">ssize_t</span> <span class="title">read</span><span class="params">(<span class="keyword">int</span> fd,<span class="keyword">void</span> *buf,<span class="keyword">size_t</span> nbyte)</span></span></span><br><span class="line"><span class="function"><span class="keyword">ssize_t</span> <span class="title">write</span><span class="params">(<span class="keyword">int</span> fd, <span class="keyword">const</span> <span class="keyword">void</span>*buf,<span class="keyword">size_t</span> nbytes)</span></span>;</span><br></pre></td></tr></table></figure>
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Sun Mar 20 2022 20:44:51 GMT+0800">2022-03-20</span></span>
+        
+        
+    </div>
+
+    <a href="/2022/03/20/recv_read_write_send%E5%8C%BA%E5%88%AB/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/2022/03/18/%E5%B9%B6%E5%8F%91%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8/">
+                        
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Fri Mar 18 2022 12:15:08 GMT+0800">2022-03-18</span></span>
+        
+        
+    </div>
+
+    <a href="/2022/03/18/%E5%B9%B6%E5%8F%91%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/2022/03/18/%E5%8D%95%E8%BF%9B%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8/">
+                        
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        <h1 id="单进程服务器"><a href="#单进程服务器" class="headerlink" title="单进程服务器"></a>单进程服务器</h1><p><a href="src/socket_c/single_socket_c">code</a></p>
+<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./run.sh</span><br></pre></td></tr></table></figure>
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Fri Mar 18 2022 12:14:00 GMT+0800">2022-03-18</span></span>
+        
+        
+    </div>
+
+    <a href="/2022/03/18/%E5%8D%95%E8%BF%9B%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/2022/03/04/TCP%20%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%A5%97%E6%8E%A5%E5%AD%97%E7%BC%96%E7%A8%8B/">
+                        TCP协议与套接字编程 socket 详解
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        <p>Created: March 5, 2022 3:09 PM<br>Tags: socket, tcp, 网络编程</p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://github.com/codeflysafe/computer-network/tree/main/src/socket_c" >code<i class="fas fa-external-link-alt"></i></a></p>
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Fri Mar 04 2022 22:42:05 GMT+0800">2022-03-04</span></span>
+        
+        
+    </div>
+
+    <a href="/2022/03/04/TCP%20%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%A5%97%E6%8E%A5%E5%AD%97%E7%BC%96%E7%A8%8B/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/2022/03/04/epoll/">
+                        彻底搞懂 epoll - ET 和 LT 模式的触发
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        <p>Created: March 16, 2022 3:15 PM<br>Tags: epoll, io复用, tcp, 网络编程</p>
+<p>修改和转载自，下面这一些列<code>blog</code>写的特别清晰</p>
+<p><a class="link"   target="_blank" rel="noopener" href="http://blog.chinaunix.net/uid-28541347-id-4296180.html" >彻底学会使用epoll（四）–ET的写操作实例分析-lvyilong316-ChinaUnix博客<i class="fas fa-external-link-alt"></i></a></p>
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Fri Mar 04 2022 22:42:05 GMT+0800">2022-03-04</span></span>
+        
+        
+    </div>
+
+    <a href="/2022/03/04/epoll/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/2022/03/04/epoll%E6%9C%8D%E5%8A%A1%E5%99%A8/">
+                        epoll 服务器
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Fri Mar 04 2022 22:42:05 GMT+0800">2022-03-04</span></span>
+        
+        
+    </div>
+
+    <a href="/2022/03/04/epoll%E6%9C%8D%E5%8A%A1%E5%99%A8/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/2022/03/04/http%20%E6%9C%8D%E5%8A%A1%E5%99%A8/">
+                        http 服务器
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Fri Mar 04 2022 22:42:05 GMT+0800">2022-03-04</span></span>
+        
+        
+    </div>
+
+    <a href="/2022/03/04/http%20%E6%9C%8D%E5%8A%A1%E5%99%A8/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/2022/03/02/redis-object/">
+                        redis 对象
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        <p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/redis_/Untitled.png"
+                      alt="Untitled"
+                ></p>
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Wed Mar 02 2022 16:31:01 GMT+0800">2022-03-02</span></span>
+        
+            <span class="home-article-category"><i class="fas fa-folder"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/categories/redis/">redis</a>&nbsp;
+                        </li>
+                    
+                    
+                </ul>
+            </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/redis/">redis</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/%E5%BC%95%E7%94%A8%E8%AE%A1%E6%95%B0%E7%AE%97%E6%B3%95/">引用计数算法</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/2022/03/02/redis-object/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+    </ul>
+
+    <div class="home-paginator">
+        <div class="paginator">
+    
+
+    
+        <a class="next btn"
+           href="/page/2/"
+        >下一页</a>
+    
+</div>
+
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">codeflysafe</a>
+        </div>
+        
+            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts">
+    
+</div>
+
+
+
+</body>
+</html>
