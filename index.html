@@ -485,64 +485,30 @@
                 
 
                 <h3 class="home-article-title">
-                    <a href="/2022/03/02/redis-object/">
-                        redis 对象
+                    <a href="/2022/03/04/io%E5%A4%8D%E7%94%A8/">
+                        I/O 复用select\poll\epoll 初探
                     </a>
                 </h3>
 
                 <div class="home-article-content markdown-body">
                     
-                        <p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/redis_/Untitled.png"
-                      alt="Untitled"
-                ></p>
+                        <h2 id="I-O-模型"><a href="#I-O-模型" class="headerlink" title="I/O 模型"></a>I/O 模型</h2><p>数据的读取分为两个阶段：</p>
+<ol>
+<li>准备数据</li>
+<li>将数据从内核拷贝到进程（用户空间）</li>
+</ol>
+<p>对于套接字的输入操作，第一步通常是等待数据从网络中到达，当所有分组到达时，将它复制到内核的某个缓冲区（准备数据）；第二步是把数据从内核缓冲区复制到应用进程缓冲区</p>
                     
                 </div>
 
                 <div class="home-article-meta-info-container">
     <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Wed Mar 02 2022 16:31:01 GMT+0800">2022-03-02</span></span>
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Fri Mar 04 2022 22:42:05 GMT+0800">2022-03-04</span></span>
         
-            <span class="home-article-category"><i class="fas fa-folder"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/categories/redis/">redis</a>&nbsp;
-                        </li>
-                    
-                    
-                </ul>
-            </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fas fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/redis/">redis</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/%E5%BC%95%E7%94%A8%E8%AE%A1%E6%95%B0%E7%AE%97%E6%B3%95/">引用计数算法</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
         
     </div>
 
-    <a href="/2022/03/02/redis-object/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+    <a href="/2022/03/04/io%E5%A4%8D%E7%94%A8/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
 </div>
 
             </li>
