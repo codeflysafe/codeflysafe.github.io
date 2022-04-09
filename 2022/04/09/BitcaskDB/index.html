@@ -9,7 +9,7 @@
     
     <title>
         
-            operate_system |
+            BitcaskDB |
         
         魔法沉思录
     </title>
@@ -137,7 +137,7 @@
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">operate_system</span>
+            <span class="title-hover-animation">BitcaskDB</span>
         </div>
 
         
@@ -156,10 +156,36 @@
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fas fa-edit"></i>&nbsp;
-        <span class="pc">2022-04-06 17:48:05</span>
-        <span class="mobile">2022-04-06 17:48</span>
+        <span class="pc">2022-04-09 16:50:13</span>
+        <span class="mobile">2022-04-09 16:50</span>
     </span>
     
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/golang/">golang</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
     
 
     
@@ -178,7 +204,39 @@
         
 
         <div class="article-content markdown-body">
-            <p><a class="link"   target="_blank" rel="noopener" href="https://docs.qq.com/doc/p/f9c3942276e7f01450e1e0084f3934766b3542bc?dver=3.0.27459971" >code<i class="fas fa-external-link-alt"></i></a></p>
+            <h2 id="Bitcask-介绍"><a href="#Bitcask-介绍" class="headerlink" title="Bitcask 介绍"></a>Bitcask 介绍</h2><p><a href="doc/Bitcask.md">Bitcask</a></p>
+<h2 id="设计方案"><a href="#设计方案" class="headerlink" title="设计方案"></a>设计方案</h2><h2 id="Entry"><a href="#Entry" class="headerlink" title="Entry"></a>Entry</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/codeflysafe/gitalk/main/img/20220409154644.png"
+                     
+                ></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Entry <span class="keyword">struct</span> &#123;</span><br><span class="line">	Key       []<span class="keyword">byte</span></span><br><span class="line">	KeySize   <span class="keyword">uint32</span> <span class="comment">// key 的长度</span></span><br><span class="line">	Value     []<span class="keyword">byte</span></span><br><span class="line">	ValueSize <span class="keyword">uint32</span> <span class="comment">// value 长度</span></span><br><span class="line">	Mark      <span class="keyword">uint16</span> <span class="comment">// 标记，是否删除</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>固定大小为 4 + 4 + 2</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/codeflysafe/gitalk/main/img/20220409154916.png"
+                     
+                ></p>
+<h3 id="db-file"><a href="#db-file" class="headerlink" title="db_file"></a>db_file</h3><p>将一个文件作为持久化存储介质</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> DBFile <span class="keyword">struct</span> &#123;</span><br><span class="line">	File   *os.File <span class="comment">// 存储的文件∏</span></span><br><span class="line">	OffSet <span class="keyword">int64</span>    <span class="comment">// 当前的偏移量</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="DB"><a href="#DB" class="headerlink" title="DB"></a>DB</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 数据库的定义</span></span><br><span class="line"><span class="keyword">type</span> BitcaskDB <span class="keyword">struct</span> &#123;</span><br><span class="line">	io.Closer</span><br><span class="line">	indexes  <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int64</span> <span class="comment">// key 与 offset 的索引</span></span><br><span class="line">	indexes2 <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int64</span> <span class="comment">// merge 过程中使用的hash 表</span></span><br><span class="line">	dbFile   *DBFile          <span class="comment">// 数据文件</span></span><br><span class="line">	dirPath  <span class="keyword">string</span>           <span class="comment">// 数据位置</span></span><br><span class="line">	mu       sync.RWMutex     <span class="comment">// 采用读写锁</span></span><br><span class="line">	ratio    <span class="keyword">int64</span>            <span class="comment">// indexes2， 新建时的大小</span></span><br><span class="line">	count    <span class="keyword">int64</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Get"><a href="#Get" class="headerlink" title="Get"></a>Get</h4><p>首先从内存的<code>indexes</code>中根据<code>key</code>获取<code>offset</code>，即指向<code>value</code>的地址,然后去文件中读取</p>
+<h4 id="Write"><a href="#Write" class="headerlink" title="Write"></a>Write</h4><p>采用文件的追加写即可</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 顺序写，写入Entry</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *DBFile)</span> <span class="title">Write</span><span class="params">(e *Entry)</span> <span class="params">(offset <span class="keyword">int64</span>, err error)</span></span> &#123;</span><br><span class="line">	buf, err := e.Encode()</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	_, err = f.File.WriteAt(buf, f.OffSet)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	offset = f.OffSet</span><br><span class="line">	f.OffSet += e.GetSize()</span><br><span class="line">	<span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="DEL"><a href="#DEL" class="headerlink" title="DEL"></a>DEL</h4><p><code>del</code> 操作是一种特殊的读写，实现采用的是写入一条特殊的删除记录</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_, err = db.dbFile.Write(NewEntry(key, <span class="literal">nil</span>, DEL))</span><br></pre></td></tr></table></figure>
+
+<h4 id="Merge"><a href="#Merge" class="headerlink" title="Merge"></a>Merge</h4><p>采用生产者和消费者模式，使用channel作为通信媒介<br>从旧的文件中生成 <code>entry</code>， 写到新的文件中去<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/codeflysafe/gitalk/main/img/20220409162109.png"
+                     
+                ></p>
 
         </div>
 
@@ -186,11 +244,11 @@
             <div class="post-copyright-info">
                 <div class="article-copyright-info-container">
     <ul>
-        <li>本文标题：operate_system</li>
+        <li>本文标题：BitcaskDB</li>
         <li>本文作者：codeflysafe</li>
-        <li>创建时间：2022-04-06 17:48:05</li>
+        <li>创建时间：2022-04-09 16:50:13</li>
         <li>
-            本文链接：https://codeflysafe.github.io/2022/04/06/operate-system/
+            本文链接：https://codeflysafe.github.io/2022/04/09/BitcaskDB/
         </li>
         <li>
             版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -202,33 +260,30 @@
         
 
         
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">#数据库</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/golang/">#golang</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
 
         
             <div class="article-nav">
-                
-                    <div class="article-prev">
-                        <a class="prev"
-                           rel="prev"
-                           href="/2022/04/09/BitcaskDB/"
-                        >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
-                            <span class="title flex-center">
-                                <span class="post-nav-title-item">BitcaskDB</span>
-                                <span class="post-nav-item">上一篇</span>
-                            </span>
-                        </a>
-                    </div>
                 
                 
                     <div class="article-next">
                         <a class="next"
                            rel="next"
-                           href="/2022/03/20/recv_read_write_send%E5%8C%BA%E5%88%AB/"
+                           href="/2022/04/06/operate-system/"
                         >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item"></span>
+                                <span class="post-nav-title-item">operate_system</span>
                                 <span class="post-nav-item">下一篇</span>
                             </span>
                             <span class="right arrow-icon flex-center">
