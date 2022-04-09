@@ -9,7 +9,7 @@
     
     <title>
         
-            BitcaskDB |
+            bitcask 存储模型 |
         
         魔法沉思录
     </title>
@@ -137,7 +137,7 @@
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">BitcaskDB</span>
+            <span class="title-hover-animation">bitcask 存储模型</span>
         </div>
 
         
@@ -156,36 +156,10 @@
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fas fa-edit"></i>&nbsp;
-        <span class="pc">2022-04-09 16:50:13</span>
-        <span class="mobile">2022-04-09 16:50</span>
+        <span class="pc">2022-04-09 16:53:26</span>
+        <span class="mobile">2022-04-09 16:53</span>
     </span>
     
-        <span class="article-categories article-meta-item">
-            <i class="fas fa-folder"></i>&nbsp;
-            <ul>
-                
-                    <li>
-                        <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>&nbsp;
-                    </li>
-                
-            </ul>
-        </span>
-    
-    
-        <span class="article-tags article-meta-item">
-            <i class="fas fa-tags"></i>&nbsp;
-            <ul>
-                
-                    <li>
-                        <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>&nbsp;
-                    </li>
-                
-                    <li>
-                        | <a href="/tags/golang/">golang</a>&nbsp;
-                    </li>
-                
-            </ul>
-        </span>
     
 
     
@@ -204,39 +178,76 @@
         
 
         <div class="article-content markdown-body">
-            <h2 id="Bitcask-介绍"><a href="#Bitcask-介绍" class="headerlink" title="Bitcask 介绍"></a>Bitcask 介绍</h2><p><a href="doc/Bitcask.md">Bitcask</a></p>
-<h2 id="设计方案"><a href="#设计方案" class="headerlink" title="设计方案"></a>设计方案</h2><h2 id="Entry"><a href="#Entry" class="headerlink" title="Entry"></a>Entry</h2><p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/codeflysafe/gitalk/main/img/20220409154644.png"
-                     
-                ></p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Entry <span class="keyword">struct</span> &#123;</span><br><span class="line">	Key       []<span class="keyword">byte</span></span><br><span class="line">	KeySize   <span class="keyword">uint32</span> <span class="comment">// key 的长度</span></span><br><span class="line">	Value     []<span class="keyword">byte</span></span><br><span class="line">	ValueSize <span class="keyword">uint32</span> <span class="comment">// value 长度</span></span><br><span class="line">	Mark      <span class="keyword">uint16</span> <span class="comment">// 标记，是否删除</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>固定大小为 4 + 4 + 2</p>
+            <h1 id="Bitcask-存储模型"><a href="#Bitcask-存储模型" class="headerlink" title="Bitcask 存储模型"></a>Bitcask 存储模型</h1><p>Paper: Log-Structured Hash Table for Fast Key/Value Data</p>
+<p>Achieving some of these is easy. Achieving them all is less so.</p>
+<p><code>Bitcask</code> 原来是用于记录<code>Riak distributed database</code>的历史。在<code>Risk</code>的集群中，每个<code>node</code>使用插件式的存储引擎，几乎所有<code>key-value</code>类型的存储引擎都可以作为单个node节点的存储引擎。这种内嵌式的存储引擎可以在不影响其它<code>codebase</code>的情况下提升和测试。</p>
+<p>BitCask 的设计目标是：</p>
+<ol>
+<li>读写低延迟 low latency per item read or written</li>
+<li>高吞吐量，high throughput, especially when writing an incoming stream of random items</li>
+<li>处理更大的数据  ability to handle datasets much larger than RAM w/o degradation</li>
+<li>崩溃恢复容易并且不会丢失数据: crash friendliness, both in terms of fast recovery and not losing data</li>
+<li>容易备份和存储 ease of backup and restore</li>
+<li>一个相当简单并且容易理解的数据形式 a relatively simple, understandable (and thus supportable) code structure and data format</li>
+<li> predictable behavior under heavy access load or large volume</li>
+</ol>
+<p>采用 <code>hash table log merging</code>， 有可能比 <code>LSM-trees</code> 更快</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/codeflysafe/gitalk/main/img/20220409154916.png"
+                     data-src="https://raw.githubusercontent.com/codeflysafe/gitalk/main/img/20220409165506.png"
                      
                 ></p>
-<h3 id="db-file"><a href="#db-file" class="headerlink" title="db_file"></a>db_file</h3><p>将一个文件作为持久化存储介质</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> DBFile <span class="keyword">struct</span> &#123;</span><br><span class="line">	File   *os.File <span class="comment">// 存储的文件∏</span></span><br><span class="line">	OffSet <span class="keyword">int64</span>    <span class="comment">// 当前的偏移量</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="DB"><a href="#DB" class="headerlink" title="DB"></a>DB</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 数据库的定义</span></span><br><span class="line"><span class="keyword">type</span> BitcaskDB <span class="keyword">struct</span> &#123;</span><br><span class="line">	io.Closer</span><br><span class="line">	indexes  <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int64</span> <span class="comment">// key 与 offset 的索引</span></span><br><span class="line">	indexes2 <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int64</span> <span class="comment">// merge 过程中使用的hash 表</span></span><br><span class="line">	dbFile   *DBFile          <span class="comment">// 数据文件</span></span><br><span class="line">	dirPath  <span class="keyword">string</span>           <span class="comment">// 数据位置</span></span><br><span class="line">	mu       sync.RWMutex     <span class="comment">// 采用读写锁</span></span><br><span class="line">	ratio    <span class="keyword">int64</span>            <span class="comment">// indexes2， 新建时的大小</span></span><br><span class="line">	count    <span class="keyword">int64</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="Get"><a href="#Get" class="headerlink" title="Get"></a>Get</h4><p>首先从内存的<code>indexes</code>中根据<code>key</code>获取<code>offset</code>，即指向<code>value</code>的地址,然后去文件中读取</p>
-<h4 id="Write"><a href="#Write" class="headerlink" title="Write"></a>Write</h4><p>采用文件的追加写即可</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 顺序写，写入Entry</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *DBFile)</span> <span class="title">Write</span><span class="params">(e *Entry)</span> <span class="params">(offset <span class="keyword">int64</span>, err error)</span></span> &#123;</span><br><span class="line">	buf, err := e.Encode()</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	_, err = f.File.WriteAt(buf, f.OffSet)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	offset = f.OffSet</span><br><span class="line">	f.OffSet += e.GetSize()</span><br><span class="line">	<span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="DEL"><a href="#DEL" class="headerlink" title="DEL"></a>DEL</h4><p><code>del</code> 操作是一种特殊的读写，实现采用的是写入一条特殊的删除记录</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_, err = db.dbFile.Write(NewEntry(key, <span class="literal">nil</span>, DEL))</span><br></pre></td></tr></table></figure>
-
-<h4 id="Merge"><a href="#Merge" class="headerlink" title="Merge"></a>Merge</h4><p>采用生产者和消费者模式，使用channel作为通信媒介<br>从旧的文件中生成 <code>entry</code>， 写到新的文件中去<br><img  
+<p>一个bitcask实例就是一个目录，在设计上强制在任意时刻，只有一个操作系统进程可以打开bitcask进行写操作，这个进程就可以看作是bitcask服务。在任意时刻，这个目录中只有一个文件是active的，只有这个文件是可以被写入的。当这个active的文件大小达到一个临界值的时候，bitcask就会创建一个新的文件，用来取代当前的active文件。被取代的文件被称为老文件，之后永远都是不可变的，不会再有任何进程往里面写入数据。</p>
+<p>当前存活的文件(active file) 只允许追加写(appendinf)，这意味着顺序写并不要求磁盘 <code>disk seek</code>，每一个被写入的 entry 非常简单，</p>
+<p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/codeflysafe/gitalk/main/img/20220409162109.png"
+                     data-src="https://raw.githubusercontent.com/codeflysafe/gitalk/main/img/20220409165528.png"
                      
                 ></p>
+<ul>
+<li>crc：一个检验值，在这里可以忽略</li>
+<li>tstamp：时间戳</li>
+<li>ksz: key的大小</li>
+<li>value_sz : value的大小。</li>
+</ul>
+<p>对于每一个写，一个新的entry追加写到文件中。而删除操作，被看成一种特殊的写操作，它将在merge的过程中删除。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/codeflysafe/gitalk/main/img/20220409165558.png"
+                     
+                ></p>
+<p>追加写完成之后，一个内存结构<code>keydir</code> 被更新。keydir是一个hash table，key就是插入数据的key，value指向了插入数据value在文件系统中的具体位置。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/codeflysafe/gitalk/main/img/20220409165618.png"
+                     
+                ></p>
+<p><code>write</code> 操作：</p>
+<p>当一个写操作发生的时候，keydir会自动更新最新数据所在的位置。旧的数据仍然存在磁盘上，但是任何新的读操作都将读取新的数据。</p>
+<p><code>read</code> 操作：</p>
+<p>主需要至多一次(more than a single disk seek), <em><strong>为什么？</strong></em>从内存中的keydir查询key，从这里知道了value所在的file_id，位置，大小，然后只要调用系统的读取接口就行了。一般操作系统都还会有自己独立的disk读缓存，所以这个操作实际上可以更快。<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/codeflysafe/gitalk/main/img/20220409165636.png"
+                     
+                ></p>
+<p><code>merge</code> 过程：</p>
+<p>合并进程遍历所有的老文件，产生一个只包含当前最新版本数据的文件。这部分完成的时候，还会产生一个hint file，这个文件本质上和data 文件一样，只不过他们保存的是value所在文件上的位置，而不是value本身。这个文件可以加速从目录文件重建keydir的过程。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/codeflysafe/gitalk/main/img/20220409165653.png"
+                     
+                ></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a class="link"   target="_blank" rel="noopener" href="https://riak.com/assets/bitcask-intro.pdf" >bitcask-intro<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://github.com/basho/bitcask" >https://github.com/basho/bitcask<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://juejin.cn/post/6844903774377476109" >bitcask存储引擎 - 掘金<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/s8s6VtqwdyjthR6EtuhnUA" >从零实现一个 k-v 存储引擎<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://github.com/flower-corp/minidb" >https://github.com/flower-corp/minidb<i class="fas fa-external-link-alt"></i></a></p>
 
         </div>
 
@@ -244,11 +255,11 @@
             <div class="post-copyright-info">
                 <div class="article-copyright-info-container">
     <ul>
-        <li>本文标题：BitcaskDB</li>
+        <li>本文标题：bitcask 存储模型</li>
         <li>本文作者：codeflysafe</li>
-        <li>创建时间：2022-04-09 16:50:13</li>
+        <li>创建时间：2022-04-09 16:53:26</li>
         <li>
-            本文链接：https://codeflysafe.github.io/2022/04/09/BitcaskDB/
+            本文链接：https://codeflysafe.github.io/2022/04/09/bitcask/
         </li>
         <li>
             版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -260,45 +271,18 @@
         
 
         
-            <ul class="post-tags-box">
-                
-                    <li class="tag-item">
-                        <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">#数据库</a>&nbsp;
-                    </li>
-                
-                    <li class="tag-item">
-                        <a href="/tags/golang/">#golang</a>&nbsp;
-                    </li>
-                
-            </ul>
-        
 
         
             <div class="article-nav">
-                
-                    <div class="article-prev">
-                        <a class="prev"
-                           rel="prev"
-                           href="/2022/04/09/bitcask/"
-                        >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
-                            <span class="title flex-center">
-                                <span class="post-nav-title-item">bitcask 存储模型</span>
-                                <span class="post-nav-item">上一篇</span>
-                            </span>
-                        </a>
-                    </div>
                 
                 
                     <div class="article-next">
                         <a class="next"
                            rel="next"
-                           href="/2022/04/06/operate-system/"
+                           href="/2022/04/09/BitcaskDB/"
                         >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">operate_system</span>
+                                <span class="post-nav-title-item">BitcaskDB</span>
                                 <span class="post-nav-item">下一篇</span>
                             </span>
                             <span class="right arrow-icon flex-center">
