@@ -24,7 +24,119 @@
     KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/logo.jpeg","favicon":"/images/logo.jpeg","article_img_align":"center","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
     KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
   </script>
-<meta name="generator" content="Hexo 5.4.2"></head>
+<meta name="generator" content="Hexo 5.4.2"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 
 <body>
@@ -47,7 +159,7 @@
             <!--
  * @Author: sjhuang
  * @Date: 2022-04-08 09:47:24
- * @LastEditTime: 2023-01-01 11:00:04
+ * @LastEditTime: 2023-01-01 11:11:34
  * @FilePath: /notes/themes/keep/layout/_partial/header.ejs
 -->
 <header class="header-wrapper">
@@ -128,13 +240,6 @@
     </div>
 
     <div class="window-mask"></div>
-    <script>
-        window.MathJax = {
-            tex: {
-                tags: 'ams'
-            }
-        };
-    </script>
 </header>
 
 
@@ -217,38 +322,23 @@
 
         <div class="article-content markdown-body">
             <h2 id="Bitcask-介绍"><a href="#Bitcask-介绍" class="headerlink" title="Bitcask 介绍"></a>Bitcask 介绍</h2><p><a href="doc/Bitcask.md">Bitcask</a></p>
-<h2 id="设计方案"><a href="#设计方案" class="headerlink" title="设计方案"></a>设计方案</h2><h2 id="Entry"><a href="#Entry" class="headerlink" title="Entry"></a>Entry</h2><p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/codeflysafe/gitalk/main/img/20220409154644.png"
-                     
-                ></p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Entry <span class="keyword">struct</span> &#123;</span><br><span class="line">	Key       []<span class="type">byte</span></span><br><span class="line">	KeySize   <span class="type">uint32</span> <span class="comment">// key 的长度</span></span><br><span class="line">	Value     []<span class="type">byte</span></span><br><span class="line">	ValueSize <span class="type">uint32</span> <span class="comment">// value 长度</span></span><br><span class="line">	Mark      <span class="type">uint16</span> <span class="comment">// 标记，是否删除</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="设计方案"><a href="#设计方案" class="headerlink" title="设计方案"></a>设计方案</h2><h2 id="Entry"><a href="#Entry" class="headerlink" title="Entry"></a>Entry</h2><p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/codeflysafe/gitalk/main/img/20220409154644.png"></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Entry <span class="keyword">struct</span> {</span><br><span class="line">	Key       []<span class="type">byte</span></span><br><span class="line">	KeySize   <span class="type">uint32</span> <span class="comment">// key 的长度</span></span><br><span class="line">	Value     []<span class="type">byte</span></span><br><span class="line">	ValueSize <span class="type">uint32</span> <span class="comment">// value 长度</span></span><br><span class="line">	Mark      <span class="type">uint16</span> <span class="comment">// 标记，是否删除</span></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
 
 <p>固定大小为 4 + 4 + 2</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/codeflysafe/gitalk/main/img/20220409154916.png"
-                     
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/codeflysafe/gitalk/main/img/20220409154916.png"></p>
 <h3 id="db-file"><a href="#db-file" class="headerlink" title="db_file"></a>db_file</h3><p>将一个文件作为持久化存储介质</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> DBFile <span class="keyword">struct</span> &#123;</span><br><span class="line">	File   *os.File <span class="comment">// 存储的文件∏</span></span><br><span class="line">	OffSet <span class="type">int64</span>    <span class="comment">// 当前的偏移量</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> DBFile <span class="keyword">struct</span> {</span><br><span class="line">	File   *os.File <span class="comment">// 存储的文件∏</span></span><br><span class="line">	OffSet <span class="type">int64</span>    <span class="comment">// 当前的偏移量</span></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
 
-<h3 id="DB"><a href="#DB" class="headerlink" title="DB"></a>DB</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 数据库的定义</span></span><br><span class="line"><span class="keyword">type</span> BitcaskDB <span class="keyword">struct</span> &#123;</span><br><span class="line">	io.Closer</span><br><span class="line">	indexes  <span class="keyword">map</span>[<span class="type">string</span>]<span class="type">int64</span> <span class="comment">// key 与 offset 的索引</span></span><br><span class="line">	indexes2 <span class="keyword">map</span>[<span class="type">string</span>]<span class="type">int64</span> <span class="comment">// merge 过程中使用的hash 表</span></span><br><span class="line">	dbFile   *DBFile          <span class="comment">// 数据文件</span></span><br><span class="line">	dirPath  <span class="type">string</span>           <span class="comment">// 数据位置</span></span><br><span class="line">	mu       sync.RWMutex     <span class="comment">// 采用读写锁</span></span><br><span class="line">	ratio    <span class="type">int64</span>            <span class="comment">// indexes2， 新建时的大小</span></span><br><span class="line">	count    <span class="type">int64</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="DB"><a href="#DB" class="headerlink" title="DB"></a>DB</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 数据库的定义</span></span><br><span class="line"><span class="keyword">type</span> BitcaskDB <span class="keyword">struct</span> {</span><br><span class="line">	io.Closer</span><br><span class="line">	indexes  <span class="keyword">map</span>[<span class="type">string</span>]<span class="type">int64</span> <span class="comment">// key 与 offset 的索引</span></span><br><span class="line">	indexes2 <span class="keyword">map</span>[<span class="type">string</span>]<span class="type">int64</span> <span class="comment">// merge 过程中使用的hash 表</span></span><br><span class="line">	dbFile   *DBFile          <span class="comment">// 数据文件</span></span><br><span class="line">	dirPath  <span class="type">string</span>           <span class="comment">// 数据位置</span></span><br><span class="line">	mu       sync.RWMutex     <span class="comment">// 采用读写锁</span></span><br><span class="line">	ratio    <span class="type">int64</span>            <span class="comment">// indexes2， 新建时的大小</span></span><br><span class="line">	count    <span class="type">int64</span></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
 
 <h4 id="Get"><a href="#Get" class="headerlink" title="Get"></a>Get</h4><p>首先从内存的<code>indexes</code>中根据<code>key</code>获取<code>offset</code>，即指向<code>value</code>的地址,然后去文件中读取</p>
 <h4 id="Write"><a href="#Write" class="headerlink" title="Write"></a>Write</h4><p>采用文件的追加写即可</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 顺序写，写入Entry</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *DBFile)</span></span> Write(e *Entry) (offset <span class="type">int64</span>, err <span class="type">error</span>) &#123;</span><br><span class="line">	buf, err := e.Encode()</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	_, err = f.File.WriteAt(buf, f.OffSet)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	offset = f.OffSet</span><br><span class="line">	f.OffSet += e.GetSize()</span><br><span class="line">	<span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 顺序写，写入Entry</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *DBFile)</span></span> Write(e *Entry) (offset <span class="type">int64</span>, err <span class="type">error</span>) {</span><br><span class="line">	buf, err := e.Encode()</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> {</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	}</span><br><span class="line">	_, err = f.File.WriteAt(buf, f.OffSet)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> {</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	}</span><br><span class="line">	offset = f.OffSet</span><br><span class="line">	f.OffSet += e.GetSize()</span><br><span class="line">	<span class="keyword">return</span></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
 <h4 id="DEL"><a href="#DEL" class="headerlink" title="DEL"></a>DEL</h4><p><code>del</code> 操作是一种特殊的读写，实现采用的是写入一条特殊的删除记录</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_, err = db.dbFile.Write(NewEntry(key, <span class="literal">nil</span>, DEL))</span><br></pre></td></tr></table></figure>
 
-<h4 id="Merge"><a href="#Merge" class="headerlink" title="Merge"></a>Merge</h4><p>采用生产者和消费者模式，使用channel作为通信媒介<br>从旧的文件中生成 <code>entry</code>， 写到新的文件中去<br><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/codeflysafe/gitalk/main/img/20220409162109.png"
-                     
-                ></p>
+<h4 id="Merge"><a href="#Merge" class="headerlink" title="Merge"></a>Merge</h4><p>采用生产者和消费者模式，使用channel作为通信媒介<br>从旧的文件中生成 <code>entry</code>， 写到新的文件中去<br><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/codeflysafe/gitalk/main/img/20220409162109.png"></p>
 
         </div>
 

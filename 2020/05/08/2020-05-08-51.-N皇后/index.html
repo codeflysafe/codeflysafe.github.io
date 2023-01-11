@@ -24,7 +24,119 @@
     KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/logo.jpeg","favicon":"/images/logo.jpeg","article_img_align":"center","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
     KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
   </script>
-<meta name="generator" content="Hexo 5.4.2"></head>
+<meta name="generator" content="Hexo 5.4.2"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 
 <body>
@@ -47,7 +159,7 @@
             <!--
  * @Author: sjhuang
  * @Date: 2022-04-08 09:47:24
- * @LastEditTime: 2023-01-01 11:00:04
+ * @LastEditTime: 2023-01-01 11:11:34
  * @FilePath: /notes/themes/keep/layout/_partial/header.ejs
 -->
 <header class="header-wrapper">
@@ -128,13 +240,6 @@
     </div>
 
     <div class="window-mask"></div>
-    <script>
-        window.MathJax = {
-            tex: {
-                tags: 'ams'
-            }
-        };
-    </script>
 </header>
 
 
@@ -206,24 +311,19 @@
 
         <div class="article-content markdown-body">
             <p>n 皇后问题研究的是如何将 n 个皇后放置在 n×n 的棋盘上，并且使皇后彼此之间不能相互攻击。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://assets.leetcode-cn.com/aliyun-lc-upload/uploads/2018/10/12/8-queens.png"
-                     
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://assets.leetcode-cn.com/aliyun-lc-upload/uploads/2018/10/12/8-queens.png"></p>
 <p>上图为 8 皇后问题的一种解法。</p>
 <p>给定一个整数 n，返回所有不同的 n 皇后问题的解决方案。</p>
 <p>每一种解法包含一个明确的 n 皇后问题的棋子放置方案，该方案中 ‘Q’ 和 ‘.’ 分别代表了皇后和空位。</p>
 <h2 id="示例"><a href="#示例" class="headerlink" title="示例:"></a>示例:</h2><p>输入: 4</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">输出: [</span><br><span class="line"> [&quot;.Q..&quot;,  // 解法 1</span><br><span class="line">  &quot;...Q&quot;,</span><br><span class="line">  &quot;Q...&quot;,</span><br><span class="line">  &quot;..Q.&quot;],</span><br><span class="line"></span><br><span class="line"> [&quot;..Q.&quot;,  // 解法 2</span><br><span class="line">  &quot;Q...&quot;,</span><br><span class="line">  &quot;...Q&quot;,</span><br><span class="line">  &quot;.Q..&quot;]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">输出: [</span><br><span class="line"> [".Q..",  // 解法 1</span><br><span class="line">  "...Q",</span><br><span class="line">  "Q...",</span><br><span class="line">  "..Q."],</span><br><span class="line"></span><br><span class="line"> ["..Q.",  // 解法 2</span><br><span class="line">  "Q...",</span><br><span class="line">  "...Q",</span><br><span class="line">  ".Q.."]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 <p>解释: 4 皇后问题存在两个不同的解法。
  </p>
 <p>提示：</p>
 <p>皇后，是国际象棋中的棋子，意味着国王的妻子。皇后只做一件事，那就是“吃子”。当她遇见可以吃的棋子时，就迅速冲上去吃掉棋子。当然，她横、竖、斜都可走一或七步，可进可退。（引用自 百度百科 - 皇后 ）</p>
-<p>来源：力扣（LeetCode）<br>链接：<a class="link"   target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/n-queens" >https://leetcode-cn.com/problems/n-queens<i class="fas fa-external-link-alt"></i></a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+<p>来源：力扣（LeetCode）<br>链接：<a class="link" target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/n-queens">https://leetcode-cn.com/problems/n-queens<i class="fas fa-external-link-alt"></i></a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
 <h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><p>暴力枚举，首先 对于 n*n 的 n 皇后问题，肯定不会出现同一列和同一行存在两个棋子的机会，因此 每个棋子肯定为独占一行或者一列。可以一行一行的进行填充，知道不会出现冲突，其时间复杂度为 O(n!)</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line">   vector&lt;vector&lt;string&gt;&gt; ans;</span><br><span class="line">   </span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">traceback</span><span class="params">(vector&lt;string&gt; &amp;checked,<span class="type">int</span> x,<span class="type">int</span> n)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>( x == n ) &#123;</span><br><span class="line">            ans.<span class="built_in">push_back</span>(checked);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(!<span class="built_in">check</span>(checked,n,x,i))&#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            checked[x][i]  = <span class="string">&#x27;Q&#x27;</span>;</span><br><span class="line">            <span class="built_in">traceback</span>(checked,x+<span class="number">1</span>,n);</span><br><span class="line">            checked[x][i] = <span class="string">&#x27;.&#x27;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">check</span><span class="params">(vector&lt;string&gt; &amp;checked,<span class="type">int</span> n,<span class="type">int</span> x, <span class="type">int</span> y)</span></span>&#123;</span><br><span class="line">        <span class="comment">// 核查其作用域上是否有棋子，有的话就返回false</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">            <span class="comment">// 纵向</span></span><br><span class="line">           <span class="keyword">if</span>(checked[i][y] == <span class="string">&#x27;Q&#x27;</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 斜线 、、、</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=x<span class="number">-1</span>,j=y<span class="number">-1</span>;i&gt;=<span class="number">0</span> &amp;&amp; j &gt;=<span class="number">0</span>;i--,j--)&#123;</span><br><span class="line">            <span class="keyword">if</span>(checked[i][j] == <span class="string">&#x27;Q&#x27;</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 斜线 、、、</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=x<span class="number">-1</span>,j=y+<span class="number">1</span>;i&gt;=<span class="number">0</span> &amp;&amp; j &lt; n;i--,j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(checked[i][j] == <span class="string">&#x27;Q&#x27;</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    vector&lt;vector&lt;string&gt;&gt; <span class="built_in">solveNQueens</span>(<span class="type">int</span> n) &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// -1空 0 代表不能放置 1 代表已经放置的</span></span><br><span class="line">        <span class="function">vector&lt;string&gt; <span class="title">checked</span><span class="params">(n,string(n,<span class="string">&#x27;.&#x27;</span>))</span></span>;</span><br><span class="line">        <span class="built_in">traceback</span>(checked,<span class="number">0</span>,n);</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> {</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line">   vector&lt;vector&lt;string&gt;&gt; ans;</span><br><span class="line">   </span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">traceback</span><span class="params">(vector&lt;string&gt; &amp;checked,<span class="type">int</span> x,<span class="type">int</span> n)</span></span>{</span><br><span class="line">        <span class="keyword">if</span>( x == n ) {</span><br><span class="line">            ans.<span class="built_in">push_back</span>(checked);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++){</span><br><span class="line">            <span class="keyword">if</span>(!<span class="built_in">check</span>(checked,n,x,i)){</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            }</span><br><span class="line">            checked[x][i]  = <span class="string">'Q'</span>;</span><br><span class="line">            <span class="built_in">traceback</span>(checked,x+<span class="number">1</span>,n);</span><br><span class="line">            checked[x][i] = <span class="string">'.'</span>;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">check</span><span class="params">(vector&lt;string&gt; &amp;checked,<span class="type">int</span> n,<span class="type">int</span> x, <span class="type">int</span> y)</span></span>{</span><br><span class="line">        <span class="comment">// 核查其作用域上是否有棋子，有的话就返回false</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++){</span><br><span class="line">            <span class="comment">// 纵向</span></span><br><span class="line">           <span class="keyword">if</span>(checked[i][y] == <span class="string">'Q'</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        }</span><br><span class="line">        <span class="comment">// 斜线 、、、</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=x<span class="number">-1</span>,j=y<span class="number">-1</span>;i&gt;=<span class="number">0</span> &amp;&amp; j &gt;=<span class="number">0</span>;i--,j--){</span><br><span class="line">            <span class="keyword">if</span>(checked[i][j] == <span class="string">'Q'</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        }</span><br><span class="line">        <span class="comment">// 斜线 、、、</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=x<span class="number">-1</span>,j=y+<span class="number">1</span>;i&gt;=<span class="number">0</span> &amp;&amp; j &lt; n;i--,j++){</span><br><span class="line">            <span class="keyword">if</span>(checked[i][j] == <span class="string">'Q'</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    vector&lt;vector&lt;string&gt;&gt; <span class="built_in">solveNQueens</span>(<span class="type">int</span> n) {</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// -1空 0 代表不能放置 1 代表已经放置的</span></span><br><span class="line">        <span class="function">vector&lt;string&gt; <span class="title">checked</span><span class="params">(n,string(n,<span class="string">'.'</span>))</span></span>;</span><br><span class="line">        <span class="built_in">traceback</span>(checked,<span class="number">0</span>,n);</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    }</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
 
         </div>
 

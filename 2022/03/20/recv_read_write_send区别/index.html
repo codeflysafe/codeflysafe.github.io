@@ -22,7 +22,119 @@
     KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/logo.jpeg","favicon":"/images/logo.jpeg","article_img_align":"center","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
     KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
   </script>
-<meta name="generator" content="Hexo 5.4.2"></head>
+<meta name="generator" content="Hexo 5.4.2"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 
 <body>
@@ -45,7 +157,7 @@
             <!--
  * @Author: sjhuang
  * @Date: 2022-04-08 09:47:24
- * @LastEditTime: 2023-01-01 11:00:04
+ * @LastEditTime: 2023-01-01 11:11:34
  * @FilePath: /notes/themes/keep/layout/_partial/header.ejs
 -->
 <header class="header-wrapper">
@@ -126,13 +238,6 @@
     </div>
 
     <div class="window-mask"></div>
-    <script>
-        window.MathJax = {
-            tex: {
-                tags: 'ams'
-            }
-        };
-    </script>
 </header>
 
 
@@ -195,7 +300,7 @@
  * @FilePath: /notes/source/_posts/recv_read_write_send区别.md
 -->
 <h1 id="socket编程中write、read和send、recv之间的区别"><a href="#socket编程中write、read和send、recv之间的区别" class="headerlink" title="socket编程中write、read和send、recv之间的区别"></a>socket编程中write、read和send、recv之间的区别</h1><blockquote>
-<p>from <a class="link"   target="_blank" rel="noopener" href="https://www.cnblogs.com/George1994/p/6731091.html" >https://www.cnblogs.com/George1994/p/6731091.html<i class="fas fa-external-link-alt"></i></a></p>
+<p>from <a class="link" target="_blank" rel="noopener" href="https://www.cnblogs.com/George1994/p/6731091.html">https://www.cnblogs.com/George1994/p/6731091.html<i class="fas fa-external-link-alt"></i></a></p>
 </blockquote>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">read/<span class="function">write</span></span><br><span class="line"><span class="function"><span class="type">ssize_t</span> <span class="title">read</span><span class="params">(<span class="type">int</span> fd,<span class="type">void</span> *buf,<span class="type">size_t</span> nbyte)</span></span></span><br><span class="line"><span class="function"><span class="type">ssize_t</span> <span class="title">write</span><span class="params">(<span class="type">int</span> fd, <span class="type">const</span> <span class="type">void</span>*buf,<span class="type">size_t</span> nbytes)</span></span>;</span><br></pre></td></tr></table></figure>
 <span id="more"></span>
@@ -205,7 +310,7 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">recv/<span class="function">send</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">recv</span><span class="params">(<span class="type">int</span> sockfd,<span class="type">void</span> *buf,<span class="type">int</span> len,<span class="type">int</span> flags)</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">send</span><span class="params">(<span class="type">int</span> sockfd,<span class="type">void</span> *buf,<span class="type">int</span> len,<span class="type">int</span> flags)</span></span></span><br></pre></td></tr></table></figure>
 <p>第四个参数可以是0或者是下面的组合</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">flags	描述</span><br><span class="line">MSG_DONTROUTE	不查找表</span><br><span class="line">MSG_OOB	接受或者发送带外数据</span><br><span class="line">MSG_PEEK	查看数据,并不从系统缓冲区移走数据</span><br><span class="line">MSG_WAITALL	等待所有数据</span><br><span class="line">读取／接收	写入／发送</span><br><span class="line">read	write</span><br><span class="line">recv	send</span><br></pre></td></tr></table></figure>
-<p>当recv&#x2F;send的flag参数设置为0时，则和read&#x2F;write是一样的。<br>如果有如下几种需求，则read&#x2F;write无法满足，必须使用recv&#x2F;send:</p>
+<p>当recv/send的flag参数设置为0时，则和read/write是一样的。<br>如果有如下几种需求，则read/write无法满足，必须使用recv/send:</p>
 <p>为接收和发送进行一些选项设置<br>从多个客户端中接收报文<br>发送带外数据（out-of-band data)<br>参考文章：<br>socket编程中write、read和send、recv之间的区别</p>
 
         </div>

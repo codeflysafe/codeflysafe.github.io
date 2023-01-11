@@ -24,7 +24,119 @@
     KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/logo.jpeg","favicon":"/images/logo.jpeg","article_img_align":"center","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
     KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
   </script>
-<meta name="generator" content="Hexo 5.4.2"></head>
+<meta name="generator" content="Hexo 5.4.2"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 
 <body>
@@ -47,7 +159,7 @@
             <!--
  * @Author: sjhuang
  * @Date: 2022-04-08 09:47:24
- * @LastEditTime: 2023-01-01 11:00:04
+ * @LastEditTime: 2023-01-01 11:11:34
  * @FilePath: /notes/themes/keep/layout/_partial/header.ejs
 -->
 <header class="header-wrapper">
@@ -128,13 +240,6 @@
     </div>
 
     <div class="window-mask"></div>
-    <script>
-        window.MathJax = {
-            tex: {
-                tags: 'ams'
-            }
-        };
-    </script>
 </header>
 
 
@@ -192,12 +297,7 @@
         <div class="article-content markdown-body">
             <p>Eva would like to make a string of beads with her favorite colors so she went to a small shop to buy some beads. There were many colorful strings of beads. However the owner of the shop would only sell the strings in whole pieces. Hence Eva must check whether a string in the shop contains all the beads she needs. She now comes to you for help: if the answer is Yes, please tell her the number of extra beads she has to buy; or if the answer is No, please tell her the number of beads missing from the string.</p>
 <p>For the sake of simplicity, let’s use the characters in the ranges [0-9], [a-z], and [A-Z] to represent the colors. For example, the 3rd string in Figure 1 is the one that Eva would like to make. Then the 1st string is okay since it contains all the necessary beads with 8 extra ones; yet the 2nd one is not since there is no black bead and one less red bead.</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/hsjfans/git_resource/master/img/20200502085856.png"
-                      alt="figbuy.jpg"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/hsjfans/git_resource/master/img/20200502085856.png" alt="figbuy.jpg"></p>
 <p>Figure 1</p>
 <h2 id="Input-Specification"><a href="#Input-Specification" class="headerlink" title="Input Specification:"></a>Input Specification:</h2><p>Each input file contains one test case. Each case gives in two lines the strings of no more than 1000 beads which belong to the shop owner and Eva, respectively.</p>
 <h2 id="Output-Specification"><a href="#Output-Specification" class="headerlink" title="Output Specification:"></a>Output Specification:</h2><p>For each test case, print your answer in one line. If the answer is Yes, then also output the number of extra beads Eva has to buy; or if the answer is No, then also output the number of beads missing from the string. There must be exactly 1 space between the answer and the number.</p>
@@ -208,7 +308,7 @@
 
 
 <h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><p>题目比较简单，只要分别统计各字符的数量，然后判断是否符合需求即可。</p>
-<h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;map&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function">map&lt;<span class="type">char</span>,<span class="type">int</span>&gt; <span class="title">getCount</span><span class="params">(string s1)</span></span>&#123;</span><br><span class="line">  map&lt;<span class="type">char</span>,<span class="type">int</span>&gt; count;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">char</span> c : s1)&#123;</span><br><span class="line">    count[c]++;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> count;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">pat_1092</span><span class="params">()</span></span>&#123;</span><br><span class="line">  string s1,s2;</span><br><span class="line">  cin &gt;&gt; s1 &gt;&gt; s2;</span><br><span class="line">  </span><br><span class="line">  map&lt;<span class="type">char</span>,<span class="type">int</span>&gt; count1 = <span class="built_in">getCount</span>(s1);</span><br><span class="line">  map&lt;<span class="type">char</span>,<span class="type">int</span>&gt; count2 = <span class="built_in">getCount</span>(s2);</span><br><span class="line">  </span><br><span class="line">  <span class="type">int</span> res = <span class="number">0</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> &amp;p : count2)&#123;</span><br><span class="line">      <span class="keyword">if</span>(count1[p.first] &lt; p.second)&#123;</span><br><span class="line">        res += (p.second - count1[p.first]);</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span>(res &gt; <span class="number">0</span>) <span class="built_in">printf</span>(<span class="string">&quot;No %d\n&quot;</span>,res);</span><br><span class="line">  <span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">&quot;Yes %d\n&quot;</span>,(<span class="type">int</span>)(s1.<span class="built_in">size</span>() - s2.<span class="built_in">size</span>()));;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">pat_1092</span>();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;map&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function">map&lt;<span class="type">char</span>,<span class="type">int</span>&gt; <span class="title">getCount</span><span class="params">(string s1)</span></span>{</span><br><span class="line">  map&lt;<span class="type">char</span>,<span class="type">int</span>&gt; count;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">char</span> c : s1){</span><br><span class="line">    count[c]++;</span><br><span class="line">  }</span><br><span class="line">  <span class="keyword">return</span> count;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">pat_1092</span><span class="params">()</span></span>{</span><br><span class="line">  string s1,s2;</span><br><span class="line">  cin &gt;&gt; s1 &gt;&gt; s2;</span><br><span class="line">  </span><br><span class="line">  map&lt;<span class="type">char</span>,<span class="type">int</span>&gt; count1 = <span class="built_in">getCount</span>(s1);</span><br><span class="line">  map&lt;<span class="type">char</span>,<span class="type">int</span>&gt; count2 = <span class="built_in">getCount</span>(s2);</span><br><span class="line">  </span><br><span class="line">  <span class="type">int</span> res = <span class="number">0</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> &amp;p : count2){</span><br><span class="line">      <span class="keyword">if</span>(count1[p.first] &lt; p.second){</span><br><span class="line">        res += (p.second - count1[p.first]);</span><br><span class="line">      }</span><br><span class="line">  }</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span>(res &gt; <span class="number">0</span>) <span class="built_in">printf</span>(<span class="string">"No %d\n"</span>,res);</span><br><span class="line">  <span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">"Yes %d\n"</span>,(<span class="type">int</span>)(s1.<span class="built_in">size</span>() - s2.<span class="built_in">size</span>()));;</span><br><span class="line">  </span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>{</span><br><span class="line">  <span class="built_in">pat_1092</span>();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
         </div>
 

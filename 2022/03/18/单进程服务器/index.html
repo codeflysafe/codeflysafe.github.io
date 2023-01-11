@@ -22,7 +22,119 @@
     KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/logo.jpeg","favicon":"/images/logo.jpeg","article_img_align":"center","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
     KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
   </script>
-<meta name="generator" content="Hexo 5.4.2"></head>
+<meta name="generator" content="Hexo 5.4.2"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 
 <body>
@@ -45,7 +157,7 @@
             <!--
  * @Author: sjhuang
  * @Date: 2022-04-08 09:47:24
- * @LastEditTime: 2023-01-01 11:00:04
+ * @LastEditTime: 2023-01-01 11:11:34
  * @FilePath: /notes/themes/keep/layout/_partial/header.ejs
 -->
 <header class="header-wrapper">
@@ -126,13 +238,6 @@
     </div>
 
     <div class="window-mask"></div>
-    <script>
-        window.MathJax = {
-            tex: {
-                tags: 'ams'
-            }
-        };
-    </script>
 </header>
 
 
@@ -191,9 +296,9 @@
             <h1 id="单进程服务器"><a href="#单进程服务器" class="headerlink" title="单进程服务器"></a>单进程服务器</h1><p><a href="src/socket_c/single_socket_c">code</a></p>
 <h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./run.sh</span><br></pre></td></tr></table></figure>
 <span id="more"></span>
-<h2 id="客户端-client"><a href="#客户端-client" class="headerlink" title="客户端 client"></a>客户端 <code>client</code></h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * @Author: sjhuang</span></span><br><span class="line"><span class="comment"> * @Date: 2022-03-05 16:35:32</span></span><br><span class="line"><span class="comment"> * @LastEditTime: 2022-03-11 12:40:42</span></span><br><span class="line"><span class="comment"> * @FilePath: /computer_network/src/socket_c/single_socket_c/client.c</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;single_socket.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">errno = <span class="number">0</span>;</span><br><span class="line"><span class="type">char</span> buf[<span class="number">60</span>];</span><br><span class="line"><span class="comment">// 创建套接字</span></span><br><span class="line"><span class="type">int</span> fd = <span class="built_in">socket</span>(AF_INET, SOCK_STREAM, IPPROTO_TCP);</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">sockaddr_in</span> serv_addr;</span><br><span class="line"><span class="comment">// 客户端也可以调用 bind 来指定端口号，而不是内核随机分配</span></span><br><span class="line"><span class="comment">// 指定端口号，</span></span><br><span class="line"><span class="comment">// struct sockaddr_in cli_addr;</span></span><br><span class="line"><span class="comment">// 初始化 cli_addr</span></span><br><span class="line"><span class="comment">//    memset(&amp;cli_addr, 0, sizeof(serv_addr));</span></span><br><span class="line"><span class="comment">//    // 指定端口</span></span><br><span class="line"><span class="comment">//    cli_addr.sin_port = htons(6666);</span></span><br><span class="line"><span class="comment">//    bind(fd, (struct sockaddr *)(&amp;cli_addr), sizeof(cli_addr));</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化 server_addr</span></span><br><span class="line"><span class="built_in">memset</span>(&amp;serv_addr, <span class="number">0</span>, <span class="built_in">sizeof</span>(serv_addr));</span><br><span class="line"><span class="built_in">init_serv_addr</span>(&amp;serv_addr);</span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"><span class="type">pid_t</span> pid = <span class="built_in">getpid</span>();</span><br><span class="line"><span class="comment">// 建立 tcp 连接</span></span><br><span class="line"><span class="type">int</span> res = <span class="built_in">connect</span>(fd, (<span class="keyword">struct</span> sockaddr *)(&amp;serv_addr), <span class="built_in">sizeof</span>(serv_addr));</span><br><span class="line"><span class="keyword">if</span>(res &lt; <span class="number">0</span>)&#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;[client ] connect failed, res: %d, errno: %d\n&quot;</span>, res, errno);</span><br><span class="line">&#125;<span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">&quot;[client] %d connect successfully !\n&quot;</span>, pid);</span><br><span class="line"><span class="comment">// 读取从服务器传回的数据</span></span><br><span class="line"><span class="comment">// 阻塞</span></span><br><span class="line">n = <span class="built_in">read</span>(fd,buf, <span class="built_in">sizeof</span>(buf));</span><br><span class="line"><span class="keyword">if</span>(n &gt; <span class="number">0</span>) <span class="built_in">printf</span>(<span class="string">&quot;[client] %d, Message received from server: %s\n&quot;</span>,pid, buf);</span><br><span class="line"><span class="comment">// 关闭套接字</span></span><br><span class="line"><span class="built_in">close</span>(fd);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;[client] client close: %d\n&quot;</span>, <span class="built_in">getpid</span>());</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="客户端-client"><a href="#客户端-client" class="headerlink" title="客户端 client"></a>客户端 <code>client</code></h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * @Author: sjhuang</span></span><br><span class="line"><span class="comment"> * @Date: 2022-03-05 16:35:32</span></span><br><span class="line"><span class="comment"> * @LastEditTime: 2022-03-11 12:40:42</span></span><br><span class="line"><span class="comment"> * @FilePath: /computer_network/src/socket_c/single_socket_c/client.c</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">"single_socket.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>{</span><br><span class="line">errno = <span class="number">0</span>;</span><br><span class="line"><span class="type">char</span> buf[<span class="number">60</span>];</span><br><span class="line"><span class="comment">// 创建套接字</span></span><br><span class="line"><span class="type">int</span> fd = <span class="built_in">socket</span>(AF_INET, SOCK_STREAM, IPPROTO_TCP);</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">sockaddr_in</span> serv_addr;</span><br><span class="line"><span class="comment">// 客户端也可以调用 bind 来指定端口号，而不是内核随机分配</span></span><br><span class="line"><span class="comment">// 指定端口号，</span></span><br><span class="line"><span class="comment">// struct sockaddr_in cli_addr;</span></span><br><span class="line"><span class="comment">// 初始化 cli_addr</span></span><br><span class="line"><span class="comment">//    memset(&amp;cli_addr, 0, sizeof(serv_addr));</span></span><br><span class="line"><span class="comment">//    // 指定端口</span></span><br><span class="line"><span class="comment">//    cli_addr.sin_port = htons(6666);</span></span><br><span class="line"><span class="comment">//    bind(fd, (struct sockaddr *)(&amp;cli_addr), sizeof(cli_addr));</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化 server_addr</span></span><br><span class="line"><span class="built_in">memset</span>(&amp;serv_addr, <span class="number">0</span>, <span class="built_in">sizeof</span>(serv_addr));</span><br><span class="line"><span class="built_in">init_serv_addr</span>(&amp;serv_addr);</span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"><span class="type">pid_t</span> pid = <span class="built_in">getpid</span>();</span><br><span class="line"><span class="comment">// 建立 tcp 连接</span></span><br><span class="line"><span class="type">int</span> res = <span class="built_in">connect</span>(fd, (<span class="keyword">struct</span> sockaddr *)(&amp;serv_addr), <span class="built_in">sizeof</span>(serv_addr));</span><br><span class="line"><span class="keyword">if</span>(res &lt; <span class="number">0</span>){</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"[client ] connect failed, res: %d, errno: %d\n"</span>, res, errno);</span><br><span class="line">}<span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">"[client] %d connect successfully !\n"</span>, pid);</span><br><span class="line"><span class="comment">// 读取从服务器传回的数据</span></span><br><span class="line"><span class="comment">// 阻塞</span></span><br><span class="line">n = <span class="built_in">read</span>(fd,buf, <span class="built_in">sizeof</span>(buf));</span><br><span class="line"><span class="keyword">if</span>(n &gt; <span class="number">0</span>) <span class="built_in">printf</span>(<span class="string">"[client] %d, Message received from server: %s\n"</span>,pid, buf);</span><br><span class="line"><span class="comment">// 关闭套接字</span></span><br><span class="line"><span class="built_in">close</span>(fd);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"[client] client close: %d\n"</span>, <span class="built_in">getpid</span>());</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<h2 id="server"><a href="#server" class="headerlink" title="server"></a><code>server</code></h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * @Author: sjhuang</span></span><br><span class="line"><span class="comment"> * @Date: 2022-03-05 16:35:28</span></span><br><span class="line"><span class="comment"> * @LastEditTime: 2022-03-11 12:44:02</span></span><br><span class="line"><span class="comment"> * @FilePath: /computer_network/src/socket_c/single_socket_c/server.c</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;single_socket.h&quot;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> **argv)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// listenfd 监听 fd</span></span><br><span class="line">    <span class="comment">// connfd 连接 fd</span></span><br><span class="line">    <span class="type">int</span> listenfd, connfd;</span><br><span class="line">    <span class="type">char</span> buff[<span class="number">30</span>];</span><br><span class="line">    <span class="comment">// 创建套接字，获取 listenfd</span></span><br><span class="line">    listenfd = <span class="built_in">socket</span>(AF_INET, SOCK_STREAM, IPPROTO_TCP);</span><br><span class="line">    <span class="comment">// 常见 sockaddr 结构</span></span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">sockaddr_in</span> serv_addr;</span><br><span class="line">    <span class="comment">// 填充 0</span></span><br><span class="line">    <span class="built_in">memset</span>(&amp;serv_addr, <span class="number">0</span>, <span class="built_in">sizeof</span>(serv_addr));</span><br><span class="line">    <span class="built_in">init_serv_addr</span>(&amp;serv_addr);</span><br><span class="line">    <span class="comment">// 监听， 将服务器协议地址赋予给一个套接字</span></span><br><span class="line">    <span class="built_in">bind</span>(listenfd, (<span class="keyword">struct</span> sockaddr*)&amp;serv_addr,<span class="built_in">sizeof</span>(serv_addr));</span><br><span class="line">    <span class="comment">// 监听 listenfd, 将获取的 SYN 的连接放入 SYN_RCVD 队列中</span></span><br><span class="line">    <span class="built_in">listen</span>(listenfd, BACK_LOG);</span><br><span class="line">    <span class="comment">// char buf[1024];</span></span><br><span class="line">     <span class="comment">// 客户端地址</span></span><br><span class="line">    <span class="comment">// int client_num = 0;</span></span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">sockaddr_in</span> cli_addr;</span><br><span class="line">    <span class="type">socklen_t</span> addrlen = <span class="built_in">sizeof</span>(cli_addr);</span><br><span class="line">    <span class="keyword">for</span>(; ;)&#123;</span><br><span class="line">        errno = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// 从 established 队列中获取连接，</span></span><br><span class="line">        <span class="comment">// 如果队列为空，则阻塞此处</span></span><br><span class="line">        connfd = <span class="built_in">accept</span>(listenfd,(<span class="keyword">struct</span> sockaddr*)&amp;cli_addr, &amp;addrlen);</span><br><span class="line">        <span class="keyword">if</span>(connfd &lt;= <span class="number">0</span>)&#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;[Server] connection error : %d&quot;</span>,errno);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;[Server] connection from %s port: %d\n&quot;</span>, <span class="built_in">inet_ntop</span>(AF_INET, &amp;cli_addr.sin_addr,buff, <span class="built_in">sizeof</span>(buff)),<span class="built_in">ntohs</span>(cli_addr.sin_port));</span><br><span class="line">        <span class="type">char</span> str[] = <span class="string">&quot;hello world!\n&quot;</span>;</span><br><span class="line">        <span class="comment">// 向客户端发送数据</span></span><br><span class="line">        <span class="built_in">write</span>(connfd,str, <span class="built_in">sizeof</span>(str));</span><br><span class="line">        <span class="keyword">if</span>(errno != <span class="number">0</span>)&#123;</span><br><span class="line">           <span class="built_in">printf</span>(<span class="string">&quot;[Server]  connect error: %d\n&quot;</span>, errno);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 关闭连接</span></span><br><span class="line">        <span class="built_in">close</span>(connfd);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">close</span>(listenfd);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[Server]  connect close: %d\n&quot;</span>, <span class="built_in">getpid</span>());</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="server"><a href="#server" class="headerlink" title="server"></a><code>server</code></h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * @Author: sjhuang</span></span><br><span class="line"><span class="comment"> * @Date: 2022-03-05 16:35:28</span></span><br><span class="line"><span class="comment"> * @LastEditTime: 2022-03-11 12:44:02</span></span><br><span class="line"><span class="comment"> * @FilePath: /computer_network/src/socket_c/single_socket_c/server.c</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">"single_socket.h"</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> **argv)</span></span>{</span><br><span class="line"></span><br><span class="line">    <span class="comment">// listenfd 监听 fd</span></span><br><span class="line">    <span class="comment">// connfd 连接 fd</span></span><br><span class="line">    <span class="type">int</span> listenfd, connfd;</span><br><span class="line">    <span class="type">char</span> buff[<span class="number">30</span>];</span><br><span class="line">    <span class="comment">// 创建套接字，获取 listenfd</span></span><br><span class="line">    listenfd = <span class="built_in">socket</span>(AF_INET, SOCK_STREAM, IPPROTO_TCP);</span><br><span class="line">    <span class="comment">// 常见 sockaddr 结构</span></span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">sockaddr_in</span> serv_addr;</span><br><span class="line">    <span class="comment">// 填充 0</span></span><br><span class="line">    <span class="built_in">memset</span>(&amp;serv_addr, <span class="number">0</span>, <span class="built_in">sizeof</span>(serv_addr));</span><br><span class="line">    <span class="built_in">init_serv_addr</span>(&amp;serv_addr);</span><br><span class="line">    <span class="comment">// 监听， 将服务器协议地址赋予给一个套接字</span></span><br><span class="line">    <span class="built_in">bind</span>(listenfd, (<span class="keyword">struct</span> sockaddr*)&amp;serv_addr,<span class="built_in">sizeof</span>(serv_addr));</span><br><span class="line">    <span class="comment">// 监听 listenfd, 将获取的 SYN 的连接放入 SYN_RCVD 队列中</span></span><br><span class="line">    <span class="built_in">listen</span>(listenfd, BACK_LOG);</span><br><span class="line">    <span class="comment">// char buf[1024];</span></span><br><span class="line">     <span class="comment">// 客户端地址</span></span><br><span class="line">    <span class="comment">// int client_num = 0;</span></span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">sockaddr_in</span> cli_addr;</span><br><span class="line">    <span class="type">socklen_t</span> addrlen = <span class="built_in">sizeof</span>(cli_addr);</span><br><span class="line">    <span class="keyword">for</span>(; ;){</span><br><span class="line">        errno = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// 从 established 队列中获取连接，</span></span><br><span class="line">        <span class="comment">// 如果队列为空，则阻塞此处</span></span><br><span class="line">        connfd = <span class="built_in">accept</span>(listenfd,(<span class="keyword">struct</span> sockaddr*)&amp;cli_addr, &amp;addrlen);</span><br><span class="line">        <span class="keyword">if</span>(connfd &lt;= <span class="number">0</span>){</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"[Server] connection error : %d"</span>,errno);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        }</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"[Server] connection from %s port: %d\n"</span>, <span class="built_in">inet_ntop</span>(AF_INET, &amp;cli_addr.sin_addr,buff, <span class="built_in">sizeof</span>(buff)),<span class="built_in">ntohs</span>(cli_addr.sin_port));</span><br><span class="line">        <span class="type">char</span> str[] = <span class="string">"hello world!\n"</span>;</span><br><span class="line">        <span class="comment">// 向客户端发送数据</span></span><br><span class="line">        <span class="built_in">write</span>(connfd,str, <span class="built_in">sizeof</span>(str));</span><br><span class="line">        <span class="keyword">if</span>(errno != <span class="number">0</span>){</span><br><span class="line">           <span class="built_in">printf</span>(<span class="string">"[Server]  connect error: %d\n"</span>, errno);</span><br><span class="line">        }</span><br><span class="line">        <span class="comment">// 关闭连接</span></span><br><span class="line">        <span class="built_in">close</span>(connfd);</span><br><span class="line">    }</span><br><span class="line">    <span class="built_in">close</span>(listenfd);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"[Server]  connect close: %d\n"</span>, <span class="built_in">getpid</span>());</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></table></figure>
         </div>
 
         

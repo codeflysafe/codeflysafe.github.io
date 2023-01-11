@@ -203,7 +203,7 @@ mjx-container[display="true"] + br {
             <!--
  * @Author: sjhuang
  * @Date: 2022-04-08 09:47:24
- * @LastEditTime: 2023-01-01 11:00:04
+ * @LastEditTime: 2023-01-01 11:11:34
  * @FilePath: /notes/themes/keep/layout/_partial/header.ejs
 -->
 <header class="header-wrapper">
@@ -284,13 +284,6 @@ mjx-container[display="true"] + br {
     </div>
 
     <div class="window-mask"></div>
-    <script>
-        window.MathJax = {
-            tex: {
-                tags: 'ams'
-            }
-        };
-    </script>
 </header>
 
 
@@ -303,6 +296,61 @@ mjx-container[display="true"] + br {
                 
                     <div class="home-content-container fade-in-down-animation">
     <ul class="home-article-list">
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/2023/01/11/Temporal-shift-module/">
+                        Temporal shift module
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        Temporal Shift Module
+参照Spatial Shift直接移动增加有两个问题： 1. 大规模移动会耗时，有时间成本没有计算成本 2. 会破坏空间结构
+因此，提出了对应的解决方法：
+
+少量移动 
+残差网络保持空间结构 （想的很不错）...
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Wed Jan 11 2023 21:38:48 GMT+0800">2023-01-11</span></span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/weekly-paper/">weekly paper</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/temporal-shift/">temporal shift</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/2D-CNN/">2D CNN</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/2023/01/11/Temporal-shift-module/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
         
             <li class="home-article-item">
 
@@ -357,34 +405,6 @@ mjx-container[display="true"] + br {
     </div>
 
     <a href="/2022/12/31/linear-transformer/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2022/12/31/transformer/">
-                        transformer
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Sat Dec 31 2022 22:47:35 GMT+0800">2022-12-31</span></span>
-        
-        
-    </div>
-
-    <a href="/2022/12/31/transformer/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
 </div>
 
             </li>
@@ -499,8 +519,8 @@ self-attentionattentionq,k,v 代表 query、key、val...
 
                 <div class="home-article-content markdown-body">
                     
-                        Bitcask 存储模型Paper: Log-Structured Hash Table for Fast Key&#x2F;Value Data
-Achieving some of these is easy. Achieving them all...
+                        Bitcask 存储模型Paper: Log-Structured Hash Table for Fast Key/Value Data
+Achieving some of these is easy. Achieving them all is l...
                     
                 </div>
 
@@ -530,7 +550,7 @@ Achieving some of these is easy. Achieving them all...
                     
                         Bitcask 介绍Bitcask
 设计方案Entry
-1234567type Entry struct &#123;	Key       []byte	KeySize   uint32 // key 的长度	Value     []byte	Val...
+1234567type Entry struct {	Key       []byte	KeySize   uint32 // key 的长度	Value     []byte	ValueSiz...
                     
                 </div>
 
@@ -623,7 +643,7 @@ Achieving some of these is easy. Achieving them all...
  * @FilePath: /notes/source/_posts/recv_read_write_send区别.md
 -->
 <h1 id="socket编程中write、read和send、recv之间的区别"><a href="#socket编程中write、read和send、recv之间的区别" class="headerlink" title="socket编程中write、read和send、recv之间的区别"></a>socket编程中write、read和send、recv之间的区别</h1><blockquote>
-<p>from <a class="link"   target="_blank" rel="noopener" href="https://www.cnblogs.com/George1994/p/6731091.html" >https://www.cnblogs.com/George1994/p/6731091.html<i class="fas fa-external-link-alt"></i></a></p>
+<p>from <a class="link" target="_blank" rel="noopener" href="https://www.cnblogs.com/George1994/p/6731091.html">https://www.cnblogs.com/George1994/p/6731091.html<i class="fas fa-external-link-alt"></i></a></p>
 </blockquote>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">read/<span class="function">write</span></span><br><span class="line"><span class="function"><span class="type">ssize_t</span> <span class="title">read</span><span class="params">(<span class="type">int</span> fd,<span class="type">void</span> *buf,<span class="type">size_t</span> nbyte)</span></span></span><br><span class="line"><span class="function"><span class="type">ssize_t</span> <span class="title">write</span><span class="params">(<span class="type">int</span> fd, <span class="type">const</span> <span class="type">void</span>*buf,<span class="type">size_t</span> nbytes)</span></span>;</span><br></pre></td></tr></table></figure>
                     
@@ -683,7 +703,7 @@ Achieving some of these is easy. Achieving them all...
                 <div class="home-article-content markdown-body">
                     
                         <p>Created: March 5, 2022 3:09 PM<br>Tags: socket, tcp, 网络编程</p>
-<p><a class="link"   target="_blank" rel="noopener" href="https://github.com/codeflysafe/computer-network/tree/main/src/socket_c" >code<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link" target="_blank" rel="noopener" href="https://github.com/codeflysafe/computer-network/tree/main/src/socket_c">code<i class="fas fa-external-link-alt"></i></a></p>
                     
                 </div>
 

@@ -24,7 +24,119 @@
     KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/logo.jpeg","favicon":"/images/logo.jpeg","article_img_align":"center","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
     KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
   </script>
-<meta name="generator" content="Hexo 5.4.2"></head>
+<meta name="generator" content="Hexo 5.4.2"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 
 <body>
@@ -47,7 +159,7 @@
             <!--
  * @Author: sjhuang
  * @Date: 2022-04-08 09:47:24
- * @LastEditTime: 2023-01-01 11:00:04
+ * @LastEditTime: 2023-01-01 11:11:34
  * @FilePath: /notes/themes/keep/layout/_partial/header.ejs
 -->
 <header class="header-wrapper">
@@ -128,13 +240,6 @@
     </div>
 
     <div class="window-mask"></div>
-    <script>
-        window.MathJax = {
-            tex: {
-                tags: 'ams'
-            }
-        };
-    </script>
 </header>
 
 
@@ -224,16 +329,11 @@
         
 
         <div class="article-content markdown-body">
-            <h2 id="缓存一致性问题"><a href="#缓存一致性问题" class="headerlink" title="缓存一致性问题"></a>缓存一致性问题</h2><p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/cache_/Untitled.png"
-                      alt="Untitled"
-                ></p>
+            <h2 id="缓存一致性问题"><a href="#缓存一致性问题" class="headerlink" title="缓存一致性问题"></a>缓存一致性问题</h2><p><img lazyload="" src="/images/loading.svg" data-src="/img/cache_/Untitled.png" alt="Untitled"></p>
 <p>同一个数据在不同的缓存中看到的值是不同的，这就是缓存一致性问题</p>
-<p>考虑下面一个程序(cache_consistency&#x2F;SumTest.java)</p>
+<p>考虑下面一个程序(cache_consistency/SumTest.java)</p>
 <span id="more"></span>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cache_consistency;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span> sjhuang</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Email</span> sjhuang2020@163.com</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span> 2022/2/28</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SumTest</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">int</span> <span class="variable">sum</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">add</span><span class="params">(<span class="type">int</span> a)</span>&#123;</span><br><span class="line">        sum += a;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException &#123;</span><br><span class="line">       </span><br><span class="line">        <span class="type">Thread</span> <span class="variable">thread</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(<span class="keyword">new</span> <span class="title class_">Runnable</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">                add(<span class="number">3</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="type">Thread</span> <span class="variable">thread1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(<span class="keyword">new</span> <span class="title class_">Runnable</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">                add(<span class="number">7</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        thread.start();</span><br><span class="line">        thread1.start();</span><br><span class="line">        thread.join();</span><br><span class="line">        thread1.join();</span><br><span class="line">        System.out.println(sum);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cache_consistency;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span> sjhuang</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Email</span> sjhuang2020@163.com</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span> 2022/2/28</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SumTest</span> {</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">int</span> <span class="variable">sum</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">add</span><span class="params">(<span class="type">int</span> a)</span>{</span><br><span class="line">        sum += a;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException {</span><br><span class="line">       </span><br><span class="line">        <span class="type">Thread</span> <span class="variable">thread</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(<span class="keyword">new</span> <span class="title class_">Runnable</span>() {</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> {</span><br><span class="line">                add(<span class="number">3</span>);</span><br><span class="line">            }</span><br><span class="line">        });</span><br><span class="line">        <span class="type">Thread</span> <span class="variable">thread1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(<span class="keyword">new</span> <span class="title class_">Runnable</span>() {</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> {</span><br><span class="line">                add(<span class="number">7</span>);</span><br><span class="line">            }</span><br><span class="line">        });</span><br><span class="line"></span><br><span class="line">        thread.start();</span><br><span class="line">        thread1.start();</span><br><span class="line">        thread.join();</span><br><span class="line">        thread1.join();</span><br><span class="line">        System.out.println(sum);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
 
 <p>缓存一致性问题展示：如果没有缓存一致性</p>
 <table>
@@ -249,31 +349,31 @@
 <td>初始状态</td>
 <td>-</td>
 <td>-</td>
-<td>sum &#x3D; 0</td>
+<td>sum = 0</td>
 </tr>
 <tr>
 <td>t0 读入 sum</td>
-<td>sum &#x3D; 0</td>
+<td>sum = 0</td>
 <td>-</td>
-<td>sum &#x3D; 0</td>
+<td>sum = 0</td>
 </tr>
 <tr>
 <td>t0 将3累加到sm</td>
-<td>sum &#x3D; 3 脏</td>
+<td>sum = 3 脏</td>
 <td>-</td>
-<td>sum &#x3D; 0</td>
+<td>sum = 0</td>
 </tr>
 <tr>
 <td>t1 读入sum</td>
-<td>sum &#x3D; 3 脏</td>
-<td>sum &#x3D; 0</td>
-<td>sum &#x3D; 0</td>
+<td>sum = 3 脏</td>
+<td>sum = 0</td>
+<td>sum = 0</td>
 </tr>
 <tr>
 <td>t1 将7累加到sum</td>
-<td>sum &#x3D; 3 脏</td>
-<td>sum &#x3D; 7 脏</td>
-<td>sum &#x3D; 0</td>
+<td>sum = 3 脏</td>
+<td>sum = 7 脏</td>
+<td>sum = 0</td>
 </tr>
 </tbody></table>
 <p>缓存的写回策略有两种：<code>写回法</code>和<code>直写法</code>，上图是写回法可能出现的一种情况</p>
@@ -291,31 +391,31 @@
 <td>初始状态</td>
 <td>-</td>
 <td>-</td>
-<td>sum &#x3D; 0</td>
+<td>sum = 0</td>
 </tr>
 <tr>
 <td>t0 读入 sum</td>
-<td>sum &#x3D; 0</td>
+<td>sum = 0</td>
 <td>-</td>
-<td>sum &#x3D; 0</td>
+<td>sum = 0</td>
 </tr>
 <tr>
 <td>t0 将3累加到sm</td>
-<td>sum &#x3D; 3</td>
+<td>sum = 3</td>
 <td>-</td>
-<td>sum &#x3D; 3</td>
+<td>sum = 3</td>
 </tr>
 <tr>
 <td>t1 读入sum</td>
-<td>sum &#x3D; 3 脏</td>
-<td>sum &#x3D;  3</td>
-<td>sum &#x3D; 3</td>
+<td>sum = 3 脏</td>
+<td>sum =  3</td>
+<td>sum = 3</td>
 </tr>
 <tr>
 <td>t1 将累加到sum</td>
-<td>sum &#x3D; 3 脏</td>
-<td>sum &#x3D; 10 脏</td>
-<td>sum &#x3D; 10</td>
+<td>sum = 3 脏</td>
+<td>sum = 10 脏</td>
+<td>sum = 10</td>
 </tr>
 </tbody></table>
 <p>此时，内存中的值是正确的，但是缓存中的值是不同的</p>
@@ -324,27 +424,12 @@
 <h3 id="写传播"><a href="#写传播" class="headerlink" title="写传播"></a>写传播</h3><p>是指，需要将一个在高速缓存中修改的值同步传播到其它高速缓存中</p>
 <h3 id="事务串行化"><a href="#事务串行化" class="headerlink" title="事务串行化"></a>事务串行化</h3><p>事务串行化，分为<code>读写</code>和<code>写写</code></p>
 <p><strong>写写之间的串行化</strong></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/cache_/Untitled%201.png"
-                      alt="Untitled"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="/img/cache_/Untitled%201.png" alt="Untitled"></p>
 <p>如上图所示，在写回的缓存策略下，如果只有写传播而没有事务串行化，P1,P2,P3,P4 是四个处理器，P1在其缓存中写入1，与此同时P2在其缓存中写入2，然后两者同时传播到其它高速缓存中，将可能得到不同的结果(如下图所示)。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/cache_/Untitled%202.png"
-                      alt="Untitled"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="/img/cache_/Untitled%202.png" alt="Untitled"></p>
 <p><strong>读写之间的串行化</strong></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/cache_/Untitled%203.png"
-                      alt="Untitled"
-                ></p>
-<p>P1,P2,P3是三个处理器，P1将其高速缓存中的x修改为1，同时向P2，P3传播此修改。此时P2读取P3缓存内的x，将其作为新的x。结果是 P2认为新的x&#x3D;0， P3认为新的x&#x3D;1</p>
+<p><img lazyload="" src="/images/loading.svg" data-src="/img/cache_/Untitled%203.png" alt="Untitled"></p>
+<p>P1,P2,P3是三个处理器，P1将其高速缓存中的x修改为1，同时向P2，P3传播此修改。此时P2读取P3缓存内的x，将其作为新的x。结果是 P2认为新的x=0， P3认为新的x=1</p>
 <h2 id="基于总线的多处理器系统"><a href="#基于总线的多处理器系统" class="headerlink" title="基于总线的多处理器系统"></a>基于总线的多处理器系统</h2><h3 id="几个关于缓存的名词"><a href="#几个关于缓存的名词" class="headerlink" title="几个关于缓存的名词"></a>几个关于缓存的名词</h3><p><strong>缓存命中</strong></p>
 <p>写回:  先写到高速缓存中，直到缓存要被淘汰了，再写回到下一层中（比如内存）</p>
 <p>直写： 写到高速缓存中后，紧接着写回到下一层中（比如内存）</p>
@@ -363,17 +448,12 @@
 <p>总线仲裁</p>
 <p>总线仲裁是为了避免来自不同处理器的请求在总线上发生碰撞。选择不同的仲裁策略（链式查询、计数器定时查询、独立请求模式、分布式仲裁），将总线的控制权交给不同的端口</p>
 <p>命令传输</p>
-<p>把目标地址（主存地址或者I&#x2F;O端口)放到值直线上</p>
+<p>把目标地址（主存地址或者I/O端口)放到值直线上</p>
 <p>数据传输</p>
 <p>读操作，就将数据从存储器中放入总线，写操作，从缓存中放入到总线</p>
 <p><strong>一致性控制器</strong></p>
 <p>分离式事务总线系统，一致性控制器加到<code>处理器侧</code>与<code>存储器侧</code>（内存控制器里可以有对应的侦听器，来侦听总线事务）。里面有个侦听器，监听每一个总线事务，用来查询是否有数据块与该总线事务有关，然后做出相应的反应</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/cache_/Untitled%204.png"
-                      alt="Untitled"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="/img/cache_/Untitled%204.png" alt="Untitled"></p>
 <p><code>写回缓冲区</code>， 从缓存中发出去的数据会先被放在一个叫做写回缓存区的数据对队列</p>
 <h2 id="缓存一致性协议"><a href="#缓存一致性协议" class="headerlink" title="缓存一致性协议"></a>缓存一致性协议</h2><p>缓存一致性协议有很多种，如专门针对“写直达”的缓存一致性协议，还有针对写回的MSI、MESI、MOESI协议，这里记录的是MESI协议</p>
 <h3 id="缓存请求和总线侦听的请求"><a href="#缓存请求和总线侦听的请求" class="headerlink" title="缓存请求和总线侦听的请求"></a>缓存请求和总线侦听的请求</h3><p>处理器的缓存请求：</p>
@@ -395,117 +475,47 @@
 <p>Shared(S): 缓存块是干净的，但是多个缓存块存在缓存</p>
 <p>Invalid(I): 缓存块无效</p>
 <p>它的有限状态机是：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/cache_/Untitled%205.png"
-                      alt="Untitled"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="/img/cache_/Untitled%205.png" alt="Untitled"></p>
 <p>侦听到事务总线的状态机为：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/cache_/Untitled%206.png"
-                      alt="Untitled"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/cache_/Untitled%207.png"
-                      alt="Untitled"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="/img/cache_/Untitled%206.png" alt="Untitled"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="/img/cache_/Untitled%207.png" alt="Untitled"></p>
 <p> <code>**I→E**</code></p>
 <p>当前缓存块处于<code>I</code>状态，处理器发出<code>PrRd(x)</code>, 此时缓存未命中，总线监听到<code>BusRd(x)</code>请求.由于没有其它缓存块读取此数据，则将该缓存块状态置为<code>E</code></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/cache_/Untitled%208.png"
-                      alt="Untitled"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="/img/cache_/Untitled%208.png" alt="Untitled"></p>
 <p><code>**I→M**</code></p>
 <p>采用写分配方法，先从主存中加载数据块到缓存，然后在更新高速缓存（此时主存数据还未更新）</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/cache_/Untitled%209.png"
-                      alt="Untitled"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="/img/cache_/Untitled%209.png" alt="Untitled"></p>
 <p><code>**I→S/ E→S**</code></p>
 <p>MESI协议，提供了缓存到缓存的传输来优化性能，即干净且有效的缓存可以通过其它缓存的拷贝来提供而不仅是从主存中获取</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/cache_/Untitled%2010.png"
-                      alt="Untitled"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="/img/cache_/Untitled%2010.png" alt="Untitled"></p>
 <p><code>**S→I/S→M**</code></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/cache_/Untitled%2011.png"
-                      alt="Untitled"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="/img/cache_/Untitled%2011.png" alt="Untitled"></p>
 <p><code>**E→M**</code></p>
 <p>采用的是写回策略，缓存命中，直接修改高速缓存。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/cache_/Untitled%2012.png"
-                      alt="Untitled"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="/img/cache_/Untitled%2012.png" alt="Untitled"></p>
 <p><code>**M→S/I→S**</code></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/cache_/Untitled%2013.png"
-                      alt="Untitled"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="/img/cache_/Untitled%2013.png" alt="Untitled"></p>
 <h2 id="MESI-协议的优化"><a href="#MESI-协议的优化" class="headerlink" title="MESI 协议的优化"></a>MESI 协议的优化</h2><p>问题背景：Stall 的产生</p>
 <p>当处于<code>S</code>状态的处理器发出写请求时，会发出一个<code>BusUpgr</code>请求来无效化其它拷贝（其它处理器的缓存）。等其它处理器相应该请求后，该处理器的缓存状态变为<code>M</code>。这里面设计一个同步的问题，即处理器必须等到其它处理器相应无效后才能继续操作。</p>
 <blockquote>
 <p>Since CPU 0 must wait for the cache line to arrive before it can write to it, CPU 0 must <code>**stall**</code> for an extended period of time.</p>
 </blockquote>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/cache_/Untitled%2014.png"
-                      alt="Untitled"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="/img/cache_/Untitled%2014.png" alt="Untitled"></p>
 <h3 id="Store-Buffer"><a href="#Store-Buffer" class="headerlink" title="Store Buffer"></a>Store Buffer</h3><p>一种阻止这种不必要等待的方式是，在处理器和cache之间增加一个<code>Sotre Buffer</code></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/cache_/Untitled%2015.png"
-                      alt="Untitled"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/cache_/Untitled%2016.png"
-                      alt="Untitled"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="/img/cache_/Untitled%2015.png" alt="Untitled"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="/img/cache_/Untitled%2016.png" alt="Untitled"></p>
 <p>当处理器发出写命令后（PrWr), 处理器将要修改的数据写入到Store Buffer中，然后继续执行。当等到其它处理器响应完后，再将数据从Store Buffer更新到缓存中</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/cache_/Untitled%2017.png"
-                      alt="Untitled"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="/img/cache_/Untitled%2017.png" alt="Untitled"></p>
 <p>但是这里存在一个问题（cpu0执行）</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// a = 0, b = 0</span></span><br><span class="line"><span class="comment">// a in cpu 1, b in cpu 0</span></span><br><span class="line">a = <span class="number">1</span></span><br><span class="line">b = a + <span class="number">1</span></span><br><span class="line"><span class="keyword">assert</span>(b == <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
 
-<p>由于 <code>a = 1</code> 指令未将其它缓存无效化，且不是立刻写入缓存而是将a&#x3D;1放入Store Buffer, 因此当执行 <code>b = a + 1</code>时，此时a &#x3D; 0, b &#x3D; 1, 则<code>assert(b == 2) fail</code></p>
+<p>由于 <code>a = 1</code> 指令未将其它缓存无效化，且不是立刻写入缓存而是将a=1放入Store Buffer, 因此当执行 <code>b = a + 1</code>时，此时a = 0, b = 1, 则<code>assert(b == 2) fail</code></p>
 <h3 id="Store-Forwarding（存储转发）"><a href="#Store-Forwarding（存储转发）" class="headerlink" title="Store Forwarding（存储转发）"></a>Store Forwarding（<strong><strong>存储转发</strong></strong>）</h3><p>分析上面那个问题发现，数据存在两个copy，一个在缓存中，一个在Store Buffer中。由于缓存中存储的并不一定是最新的数据，这就造成了有可能将旧数据拿来运算的问题。解决这个问题的方法也很直观，就是在每次取数据时先去Store Buffer 寻找，然后再去缓存中读取，这就是“store forwarding“（<strong><strong>存储转发</strong></strong>）。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/cache_/Untitled%2018.png"
-                      alt="Untitled"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="/img/cache_/Untitled%2018.png" alt="Untitled"></p>
 <p>上面这个方法只是解决了在一个CPU中读取数据的问题，但是在并发条件下同样存在问题</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 代码片段3</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">foo</span><span class="params">()</span> &#123;</span><br><span class="line">    a = <span class="number">1</span>;</span><br><span class="line">    b = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">void</span> <span class="title function_">bar</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">while</span> (b == <span class="number">0</span>) <span class="keyword">continue</span>;</span><br><span class="line">    <span class="keyword">assert</span>(a == <span class="number">1</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 代码片段3</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">foo</span><span class="params">()</span> {</span><br><span class="line">    a = <span class="number">1</span>;</span><br><span class="line">    b = <span class="number">1</span>;</span><br><span class="line">}</span><br><span class="line"><span class="keyword">void</span> <span class="title function_">bar</span><span class="params">()</span> {</span><br><span class="line">    <span class="keyword">while</span> (b == <span class="number">0</span>) <span class="keyword">continue</span>;</span><br><span class="line">    <span class="keyword">assert</span>(a == <span class="number">1</span>)</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
 
-<p>初始状态 a &#x3D;0, b &#x3D; 0, a 在cpu1 cache 中， b 在cpu0 cache 中， 两者的状态均属于 E 状态</p>
+<p>初始状态 a =0, b = 0, a 在cpu1 cache 中， b 在cpu0 cache 中， 两者的状态均属于 E 状态</p>
 <p>cpu0 执行 foo函数， cpu1 执行 bar 函数</p>
 <table>
 <thead>
@@ -522,70 +532,70 @@
 <tbody><tr>
 <td>-</td>
 <td>初始化</td>
-<td>E, b&#x3D; 0</td>
+<td>E, b= 0</td>
 <td></td>
-<td>E, a&#x3D; 0</td>
+<td>E, a= 0</td>
 <td></td>
-<td>a&#x3D;0, b&#x3D; 0</td>
+<td>a=0, b= 0</td>
 </tr>
 <tr>
-<td>cpu1 while(b&#x3D;&#x3D;0)</td>
+<td>cpu1 while(b==0)</td>
 <td>cpu1 无 b, 发出PrRd(b)请求</td>
-<td>E,b&#x3D; 0</td>
+<td>E,b= 0</td>
 <td></td>
-<td>E,a&#x3D;0</td>
+<td>E,a=0</td>
 <td></td>
-<td>a&#x3D;0,b&#x3D;0</td>
+<td>a=0,b=0</td>
 </tr>
 <tr>
-<td>cpu0: a &#x3D; 1</td>
+<td>cpu0: a = 1</td>
 <td>cpu0 无 a, 发出 BusUpgr(a)请求</td>
-<td>E, b &#x3D;0</td>
-<td>a&#x3D; 1</td>
-<td>E,a &#x3D; 0</td>
+<td>E, b =0</td>
+<td>a= 1</td>
+<td>E,a = 0</td>
 <td></td>
-<td>a&#x3D;0,b&#x3D;0</td>
+<td>a=0,b=0</td>
 </tr>
 <tr>
-<td>cpu0:b&#x3D;1</td>
-<td>cpu0 执行 b &#x3D; 1</td>
-<td>M b&#x3D;1</td>
-<td>a&#x3D;1</td>
-<td>E,a&#x3D;0</td>
+<td>cpu0:b=1</td>
+<td>cpu0 执行 b = 1</td>
+<td>M b=1</td>
+<td>a=1</td>
+<td>E,a=0</td>
 <td></td>
-<td>a&#x3D;0,b&#x3D;0</td>
+<td>a=0,b=0</td>
 </tr>
 <tr>
 <td></td>
 <td>cpu1 收到PrRd(b)请求，循环结束</td>
-<td>S b&#x3D; 1</td>
-<td>a&#x3D;1</td>
-<td>S,b&#x3D;1, E a&#x3D; 0</td>
+<td>S b= 1</td>
+<td>a=1</td>
+<td>S,b=1, E a= 0</td>
 <td></td>
-<td>b&#x3D;1,a&#x3D;0</td>
+<td>b=1,a=0</td>
 </tr>
 <tr>
-<td>cpu1: asser（a&#x3D;&#x3D;1)</td>
+<td>cpu1: asser（a==1)</td>
 <td>a≠ 0, fail</td>
-<td>S b&#x3D; 1</td>
-<td>a&#x3D;1</td>
-<td>S b&#x3D; 1  E a&#x3D;0</td>
+<td>S b= 1</td>
+<td>a=1</td>
+<td>S b= 1  E a=0</td>
 <td></td>
-<td>a&#x3D;0,b&#x3D;1</td>
+<td>a=0,b=1</td>
 </tr>
 <tr>
 <td></td>
 <td>cpu1 收到 BusUpgr(a)</td>
-<td>E a&#x3D;1, S b &#x3D; 1</td>
+<td>E a=1, S b = 1</td>
 <td></td>
-<td>S b &#x3D; 1, I a &#x3D; 0</td>
+<td>S b = 1, I a = 0</td>
 <td></td>
-<td>a &#x3D; 1, b &#x3D; 1</td>
+<td>a = 1, b = 1</td>
 </tr>
 </tbody></table>
 <p>出现这个问题的原因在于CPU不知道a, b之间的数据依赖，CPU0对a的写入走的是Store Buffer(有延迟)，而对b的写入走的是Cache，因此b比a先在Cache中生效，导致CPU1读到<code>b=1</code><br>时，a还存在于Store Buffer中。</p>
 <h3 id="Memory-Barrier"><a href="#Memory-Barrier" class="headerlink" title="Memory Barrier"></a><strong><strong>Memory Barrier</strong></strong></h3><p>对于上面的内存不一致，很难从硬件层面优化，因为CPU不可能知道哪些值是相关联的，因此硬件工程师提供了一个叫内存屏障的东西，开发者可以用它来告诉CPU该如何处理值关联性。我们可以在<code>a=1</code>和<code>b=1</code>之间插入一个内存屏障</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 代码片段4</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">foo</span><span class="params">()</span> &#123;</span><br><span class="line">    a = <span class="number">1</span>;</span><br><span class="line">    smp_mb()</span><br><span class="line">    b = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">void</span> <span class="title function_">bar</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">while</span> (b == <span class="number">0</span>) <span class="keyword">continue</span>;</span><br><span class="line">    <span class="keyword">assert</span>(a == <span class="number">1</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 代码片段4</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">foo</span><span class="params">()</span> {</span><br><span class="line">    a = <span class="number">1</span>;</span><br><span class="line">    smp_mb()</span><br><span class="line">    b = <span class="number">1</span>;</span><br><span class="line">}</span><br><span class="line"><span class="keyword">void</span> <span class="title function_">bar</span><span class="params">()</span> {</span><br><span class="line">    <span class="keyword">while</span> (b == <span class="number">0</span>) <span class="keyword">continue</span>;</span><br><span class="line">    <span class="keyword">assert</span>(a == <span class="number">1</span>)</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
 
 <p>当CPU看到内存屏障<code>smp_mb()</code>时，会先刷新当前(屏障前)的Store Buffer，然后再执行后续(屏障后)的Cache写入。这里的”刷新Store Buffer”有两种实现方式: 一是简单地刷新Store Buffer(需要挂起等待相关的Cache Line到达)，二是将后续的写入也写到Store Buffer中，直到屏障前的条目全部应用到Cache Line(可以通过给屏障前的Store Buffer中的条目打个标记来实现)。这样保证了屏障前的写入一定先于屏障后的写入生效，第二种方案明显更优.</p>
 <h3 id="Invalid-Queue（失效队列）"><a href="#Invalid-Queue（失效队列）" class="headerlink" title="Invalid Queue（失效队列）"></a><strong><strong>Invalid Queue（失效队列）</strong></strong></h3><p>失效队列的引入：</p>
@@ -596,14 +606,9 @@
 <blockquote>
 <p>One reason that invalidate acknowledge messages can take so long is that they must ensure that the corresponding cache line is actually invalidated, and this invalidation can be delayed if the cache is busy,</p>
 </blockquote>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/cache_/Untitled%2019.png"
-                      alt="Untitled"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="/img/cache_/Untitled%2019.png" alt="Untitled"></p>
 <p>收到广播的CPU为了尽快响应 invalid ACK，所以就增加了一个失效队列，当收到其他CPU广播的invalid 消息后，不一定要马上处理，而是把放这个“失效队列里面”，然后就马上返回 invalid ack 。然后当自己有时间的时候再去处理失效队列里的消息，最后通过这种异步的方式，加快了CPU整个修改数据的过程。</p>
-<h3 id="读屏障-Read-Memory-Barrier-和写屏障-Write-Memory-Barrier"><a href="#读屏障-Read-Memory-Barrier-和写屏障-Write-Memory-Barrier" class="headerlink" title="读屏障(Read Memory Barrier)和写屏障(Write Memory Barrier)"></a>读屏障(Read Memory Barrier)和写屏障(Write Memory Barrier)</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 代码片段5</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">foo</span><span class="params">()</span> &#123;</span><br><span class="line">    a = <span class="number">1</span>;</span><br><span class="line">    b = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">void</span> <span class="title function_">bar</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">while</span> (b == <span class="number">0</span>) <span class="keyword">continue</span>;</span><br><span class="line">    <span class="keyword">assert</span>(a == <span class="number">1</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="读屏障-Read-Memory-Barrier-和写屏障-Write-Memory-Barrier"><a href="#读屏障-Read-Memory-Barrier-和写屏障-Write-Memory-Barrier" class="headerlink" title="读屏障(Read Memory Barrier)和写屏障(Write Memory Barrier)"></a>读屏障(Read Memory Barrier)和写屏障(Write Memory Barrier)</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 代码片段5</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">foo</span><span class="params">()</span> {</span><br><span class="line">    a = <span class="number">1</span>;</span><br><span class="line">    b = <span class="number">1</span>;</span><br><span class="line">}</span><br><span class="line"><span class="keyword">void</span> <span class="title function_">bar</span><span class="params">()</span> {</span><br><span class="line">    <span class="keyword">while</span> (b == <span class="number">0</span>) <span class="keyword">continue</span>;</span><br><span class="line">    <span class="keyword">assert</span>(a == <span class="number">1</span>)</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>读屏障: 任何读屏障前的读操作都会先于读屏障后的读操作完成</li>
@@ -623,7 +628,7 @@
 <p>编译器和处理器不会对存在数据依赖关系的操作做重排序，数据依赖（参见流水线中的数据冲突）</p>
 <p><code>写后读</code>、<code>读后写</code>、<code>写后写</code></p>
 <p>可以是用一个DAG图表示</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 代码片段5</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">foo</span><span class="params">()</span> &#123;</span><br><span class="line">    a = <span class="number">1</span>;</span><br><span class="line">    b = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">void</span> <span class="title function_">bar</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">while</span> (b == <span class="number">0</span>) <span class="keyword">continue</span>;</span><br><span class="line">    <span class="keyword">assert</span>(a == <span class="number">1</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 代码片段5</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">foo</span><span class="params">()</span> {</span><br><span class="line">    a = <span class="number">1</span>;</span><br><span class="line">    b = <span class="number">1</span>;</span><br><span class="line">}</span><br><span class="line"><span class="keyword">void</span> <span class="title function_">bar</span><span class="params">()</span> {</span><br><span class="line">    <span class="keyword">while</span> (b == <span class="number">0</span>) <span class="keyword">continue</span>;</span><br><span class="line">    <span class="keyword">assert</span>(a == <span class="number">1</span>)</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
 
 <p>如果上面这个程序发生了指令重拍</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">b = <span class="number">1</span>;</span><br><span class="line"><span class="comment">// assert(a==0)</span></span><br><span class="line">a = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
@@ -633,10 +638,10 @@
 <p>保持可见性， 禁止指令重拍</p>
 </blockquote>
 <p><code>java</code>中可以通过<code>volatile</code>关键字来保证变量的可见性，并限制局部的指令重排。它的实现原理是在每个volatile变量写操作前插入<code>StoreStore</code>屏障，在写操作后插入<code>StoreLoad</code>屏障，在每个<code>volatile</code>变量读操作前插入<code>LoadLoad</code>屏障，在读操作后插入<code>LoadStore</code>屏障来完成。</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p><a class="link"   target="_blank" rel="noopener" href="https://book.douban.com/subject/30481523/" >并行多核体系结构基础<i class="fas fa-external-link-alt"></i></a></p>
-<p><a class="link"   target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/84500221" >并发基础理论：缓存可见性、MESI协议、内存屏障、JMM<i class="fas fa-external-link-alt"></i></a></p>
-<p><a class="link"   target="_blank" rel="noopener" href="http://www.rdrop.com/~paulmck/scalability/paper/whymb.2010.07.23a.pdf" ><i class="fas fa-external-link-alt"></i></a></p>
-<p><a class="link"   target="_blank" rel="noopener" href="https://wudaijun.com/2019/04/cpu-cache-and-memory-model/" >Cache一致性和内存模型<i class="fas fa-external-link-alt"></i></a></p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p><a class="link" target="_blank" rel="noopener" href="https://book.douban.com/subject/30481523/">并行多核体系结构基础<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link" target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/84500221">并发基础理论：缓存可见性、MESI协议、内存屏障、JMM<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link" target="_blank" rel="noopener" href="http://www.rdrop.com/~paulmck/scalability/paper/whymb.2010.07.23a.pdf"><i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link" target="_blank" rel="noopener" href="https://wudaijun.com/2019/04/cpu-cache-and-memory-model/">Cache一致性和内存模型<i class="fas fa-external-link-alt"></i></a></p>
 
         </div>
 

@@ -24,7 +24,119 @@
     KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/logo.jpeg","favicon":"/images/logo.jpeg","article_img_align":"center","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
     KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
   </script>
-<meta name="generator" content="Hexo 5.4.2"></head>
+<meta name="generator" content="Hexo 5.4.2"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 
 <body>
@@ -47,7 +159,7 @@
             <!--
  * @Author: sjhuang
  * @Date: 2022-04-08 09:47:24
- * @LastEditTime: 2023-01-01 11:00:04
+ * @LastEditTime: 2023-01-01 11:11:34
  * @FilePath: /notes/themes/keep/layout/_partial/header.ejs
 -->
 <header class="header-wrapper">
@@ -128,13 +240,6 @@
     </div>
 
     <div class="window-mask"></div>
-    <script>
-        window.MathJax = {
-            tex: {
-                tags: 'ams'
-            }
-        };
-    </script>
 </header>
 
 
@@ -190,56 +295,41 @@
         
 
         <div class="article-content markdown-body">
-            <h2 id="I-x2F-O-模型"><a href="#I-x2F-O-模型" class="headerlink" title="I&#x2F;O 模型"></a>I&#x2F;O 模型</h2><p>数据的读取分为两个阶段：</p>
+            <h2 id="I-x2F-O-模型"><a href="#I-x2F-O-模型" class="headerlink" title="I/O 模型"></a>I/O 模型</h2><p>数据的读取分为两个阶段：</p>
 <ol>
 <li>准备数据</li>
 <li>将数据从内核拷贝到进程（用户空间）</li>
 </ol>
 <p>对于套接字的输入操作，第一步通常是等待数据从网络中到达，当所有分组到达时，将它复制到内核的某个缓冲区（准备数据）；第二步是把数据从内核缓冲区复制到应用进程缓冲区</p>
 <span id="more"></span>
-<h3 id="5种I-x2F-O-模型"><a href="#5种I-x2F-O-模型" class="headerlink" title="5种I&#x2F;O 模型"></a>5种I&#x2F;O 模型</h3><p><strong>阻塞式I&#x2F;O</strong></p>
+<h3 id="5种I-x2F-O-模型"><a href="#5种I-x2F-O-模型" class="headerlink" title="5种I/O 模型"></a>5种I/O 模型</h3><p><strong>阻塞式I/O</strong></p>
 <p><img src="/img/io%E5%A4%8D%E7%94%A8/Untitled.png" alt="blocking i/o"></p>
-<p>blocking i&#x2F;o</p>
-<p><strong>非阻塞式I&#x2F;O</strong></p>
+<p>blocking i/o</p>
+<p><strong>非阻塞式I/O</strong></p>
 <p>采用轮训式，一旦内核中数据准备好，便等待数据复制后返回</p>
 <p><img src="/img/io%E5%A4%8D%E7%94%A8/Untitled%201.png" alt="nonblocking i/o"></p>
-<p>nonblocking i&#x2F;o</p>
-<p><strong>I&#x2F;O复用</strong></p>
+<p>nonblocking i/o</p>
+<p><strong>I/O复用</strong></p>
 <p>分为两步，采用<code>select（poll）</code>函数（阻塞），等待数据报套接字变成可读。当<code>select</code>返回这一条件后，再调用 <code>recvfrom</code> 函数去读取数据</p>
 <p><img src="/img/io%E5%A4%8D%E7%94%A8/Untitled%202.png" alt="i/o multiplexing"></p>
-<p>i&#x2F;o multiplexing</p>
-<p><strong>信号驱动式I&#x2F;O</strong></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/io%E5%A4%8D%E7%94%A8/Untitled%203.png"
-                      alt="信号驱动式"
-                ></p>
+<p>i/o multiplexing</p>
+<p><strong>信号驱动式I/O</strong></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="/img/io%E5%A4%8D%E7%94%A8/Untitled%203.png" alt="信号驱动式"></p>
 <p>信号驱动式</p>
-<p><strong>异步I&#x2F;O</strong></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/io%E5%A4%8D%E7%94%A8/Untitled%204.png"
-                      alt="Untitled"
-                ></p>
+<p><strong>异步I/O</strong></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="/img/io%E5%A4%8D%E7%94%A8/Untitled%204.png" alt="Untitled"></p>
 <h3 id="对比"><a href="#对比" class="headerlink" title="对比"></a>对比</h3><p>前四种在第二阶段相似，都在等待数据从内核复制到用户进程那里阻塞</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/io%E5%A4%8D%E7%94%A8/Untitled%205.png"
-                      alt="5种模型的对比"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="/img/io%E5%A4%8D%E7%94%A8/Untitled%205.png" alt="5种模型的对比"></p>
 <p>5种模型的对比</p>
 <h2 id="I-O复用"><a href="#I-O复用" class="headerlink" title="I/O复用"></a><code>I/O</code>复用</h2><h3 id="select-函数"><a href="#select-函数" class="headerlink" title="select 函数"></a><code>select</code> 函数</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span>   <span class="title">select</span><span class="params">(<span class="type">int</span> maxfd1, fd_set * __restrict, fd_set * __restrict,</span></span></span><br><span class="line"><span class="params"><span class="function">    fd_set * __restrict, <span class="keyword">struct</span> timeval * __restrict)</span></span></span><br></pre></td></tr></table></figure>
 
-<h3 id="struct-timeval"><a href="#struct-timeval" class="headerlink" title="struct timeval"></a><code>struct timeval</code></h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">_STRUCT_TIMEVAL</span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">__darwin_time_t</span>         tv_sec;         <span class="comment">/* seconds */</span></span><br><span class="line">	<span class="type">__darwin_suseconds_t</span>    tv_usec;        <span class="comment">/* and microseconds */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="struct-timeval"><a href="#struct-timeval" class="headerlink" title="struct timeval"></a><code>struct timeval</code></h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">_STRUCT_TIMEVAL</span><br><span class="line">{</span><br><span class="line">	<span class="type">__darwin_time_t</span>         tv_sec;         <span class="comment">/* seconds */</span></span><br><span class="line">	<span class="type">__darwin_suseconds_t</span>    tv_usec;        <span class="comment">/* and microseconds */</span></span><br><span class="line">};</span><br></pre></td></tr></table></figure>
 
 <p>告知内核等待所制定描述符中的任何一个就绪可花费多长时间</p>
 <p>这个参数有三种可能：</p>
 <ol>
-<li>永远等待下去，有一个描述符准备好后I&#x2F;O才返回，此时将该 <code>__restrict</code> 设置为 null</li>
-<li>等待一段固定时间, 有一个描述符准备好后I&#x2F;O才返回, 等待固定时间（<code>__restrict</code>）未收到也直接返回</li>
+<li>永远等待下去，有一个描述符准备好后I/O才返回，此时将该 <code>__restrict</code> 设置为 null</li>
+<li>等待一段固定时间, 有一个描述符准备好后I/O才返回, 等待固定时间（<code>__restrict</code>）未收到也直接返回</li>
 <li>不等待， 检查描述符后立刻返回，类似于<code>轮询</code>的方式 <code>__restrict</code> 设置为0</li>
 </ol>
 <p>其实第1，3都是第2中的一种特例，区分在于时间的设置</p>
@@ -251,39 +341,24 @@
 </ol>
 <p><code>fd_set</code></p>
 <p>是一个<code>整数数组</code>，最大可以表示1024个描述符数量，它底层是一个整数数组（int型数组，大小为32个）</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> __DARWIN_FD_SETSIZE     1024</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __DARWIN_NBBY           8                               <span class="comment">/* bits in a byte */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __DARWIN_NFDBITS        (sizeof(__int32_t) * __DARWIN_NBBY) <span class="comment">/* bits per mask */</span></span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">fd_set</span> &#123;</span><br><span class="line">	<span class="type">__int32_t</span>       fds_bits[__DARWIN_howmany(__DARWIN_FD_SETSIZE, __DARWIN_NFDBITS)];</span><br><span class="line">&#125; fd_set;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> __DARWIN_FD_SETSIZE     1024</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __DARWIN_NBBY           8                               <span class="comment">/* bits in a byte */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __DARWIN_NFDBITS        (sizeof(__int32_t) * __DARWIN_NBBY) <span class="comment">/* bits per mask */</span></span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">fd_set</span> {</span><br><span class="line">	<span class="type">__int32_t</span>       fds_bits[__DARWIN_howmany(__DARWIN_FD_SETSIZE, __DARWIN_NFDBITS)];</span><br><span class="line">} fd_set;</span><br></pre></td></tr></table></figure>
 
 <p><strong>操作<code>fd_set</code></strong></p>
 <p>主要使用以下宏</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/io%E5%A4%8D%E7%94%A8/Untitled%206.png"
-                      alt="Untitled"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="/img/io%E5%A4%8D%E7%94%A8/Untitled%206.png" alt="Untitled"></p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">fd_set rset;</span><br><span class="line"><span class="comment">// 重置为0</span></span><br><span class="line"><span class="built_in">FD_ZERO</span>(&amp;rset);</span><br><span class="line"><span class="comment">// 设置位置， 最大是1024</span></span><br><span class="line"><span class="built_in">FD_SET</span>(<span class="number">1000</span>, &amp;rset);</span><br><span class="line"><span class="comment">// 判断此位是否设置</span></span><br><span class="line"><span class="built_in">FD_ISSET</span>(<span class="number">1000</span>, &amp;rset);</span><br><span class="line"><span class="comment">// 将该位置位0</span></span><br><span class="line"><span class="built_in">FD_CLR</span>(<span class="number">1000</span>, &amp;rset);</span><br></pre></td></tr></table></figure>
 
 <p><strong>判定条件</strong></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/io%E5%A4%8D%E7%94%A8/Untitled%207.png"
-                      alt="Untitled"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="/img/io%E5%A4%8D%E7%94%A8/Untitled%207.png" alt="Untitled"></p>
 <h3 id="maxfd1"><a href="#maxfd1" class="headerlink" title="maxfd1"></a><code>maxfd1</code></h3><p>带测试描述符的个数，通常为最大描述符+1</p>
 <p>因为，它扫描 <code>0～maxfd1</code>  区间的描述符</p>
-<h3 id="poll-函数"><a href="#poll-函数" class="headerlink" title="poll 函数"></a><code>poll</code> 函数</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">poll</span><span class="params">(<span class="keyword">struct</span> pollfd *, <span class="type">nfds_t</span>, <span class="type">int</span>)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="keyword">struct</span> pollfd </span>&#123;</span><br><span class="line">	<span class="type">int</span>     fd;</span><br><span class="line">	<span class="type">short</span>   events;</span><br><span class="line">	<span class="type">short</span>   revents;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">unsigned</span> <span class="type">int</span> <span class="type">nfds_t</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="poll-函数"><a href="#poll-函数" class="headerlink" title="poll 函数"></a><code>poll</code> 函数</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">poll</span><span class="params">(<span class="keyword">struct</span> pollfd *, <span class="type">nfds_t</span>, <span class="type">int</span>)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="keyword">struct</span> pollfd </span>{</span><br><span class="line">	<span class="type">int</span>     fd;</span><br><span class="line">	<span class="type">short</span>   events;</span><br><span class="line">	<span class="type">short</span>   revents;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">unsigned</span> <span class="type">int</span> <span class="type">nfds_t</span>;</span><br></pre></td></tr></table></figure>
 
 <p>从函数可以看出，它于<code>select</code>的最大区别在于，它将fd组织成了一个链表，这样突破了1024的限制，理论上是无限的。它将三种事件描述符（可读、可写、异常发生）绑定到每个fd上，</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">pollfd</span> &#123;</span><br><span class="line">	<span class="type">int</span>     fd;</span><br><span class="line">	<span class="type">short</span>   events;</span><br><span class="line">	<span class="type">short</span>   revents;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">pollfd</span> {</span><br><span class="line">	<span class="type">int</span>     fd;</span><br><span class="line">	<span class="type">short</span>   events;</span><br><span class="line">	<span class="type">short</span>   revents;</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
 
 <p>他将事件分为以下几种，通过判定revents字段来确认是否准备完毕</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/io%E5%A4%8D%E7%94%A8/Untitled%208.png"
-                      alt="Untitled"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="/img/io%E5%A4%8D%E7%94%A8/Untitled%208.png" alt="Untitled"></p>
 <table>
 <thead>
 <tr>
@@ -294,7 +369,7 @@
 </thead>
 <tbody><tr>
 <td>fd 限制</td>
-<td>有 FD_SETSIZE (1024&#x2F;2048)</td>
+<td>有 FD_SETSIZE (1024/2048)</td>
 <td>无</td>
 </tr>
 <tr>
@@ -320,7 +395,7 @@
 <p><code>epoll</code>所支持的FD上限是最大可以打开文件的数目，这个数字一般远大于<code>2048</code>,举个例子,在<code>1GB</code>内存的机器上大约是<code>10</code>万左 右，具体数目可以<code>cat /proc/sys/fs/file-max</code>察看,一般来说这个数目和系统内存关系很大。</p>
 </li>
 <li><p>IO 效率不随FD数目增加而线性下降</p>
-<pre><code>在内核实现中epoll是根据每个`fd`上面的`callback`函数实现的,只有&quot;活跃&quot;的`socket`才会主动的去调用 `callback`函数，其他`idle`状态`socket`则不会
+<pre><code>在内核实现中epoll是根据每个`fd`上面的`callback`函数实现的,只有"活跃"的`socket`才会主动的去调用 `callback`函数，其他`idle`状态`socket`则不会
 </code></pre>
 </li>
 <li><p>使用mmap加速内核 与用户空间的消息传递。</p>
@@ -329,16 +404,16 @@
 </li>
 </ol>
 <p>epoll 分为三种函数</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建一个 epfd</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">epoll_create</span> <span class="params">(<span class="type">int</span> __size)</span></span>;</span><br><span class="line"><span class="comment">// Manipulate an epoll instance &quot;epfd&quot;， 向其中增加、修改、删除 事件监听</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">epoll_ctl</span> <span class="params">(<span class="type">int</span> __epfd, <span class="type">int</span> __op, <span class="type">int</span> __fd, <span class="keyword">struct</span> epoll_event *__event)</span></span></span><br><span class="line"><span class="function"><span class="comment">// Wait for events on an epoll instance &quot;epfd&quot;</span></span></span><br><span class="line"><span class="function"><span class="comment">// Returns the number of triggered events returned in &quot;events&quot; buffer</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">epoll_wait</span> <span class="params">(<span class="type">int</span> __epfd, <span class="keyword">struct</span> epoll_event *__events, <span class="type">int</span> __maxevents, <span class="type">int</span> __timeout)</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建一个 epfd</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">epoll_create</span> <span class="params">(<span class="type">int</span> __size)</span></span>;</span><br><span class="line"><span class="comment">// Manipulate an epoll instance "epfd"， 向其中增加、修改、删除 事件监听</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">epoll_ctl</span> <span class="params">(<span class="type">int</span> __epfd, <span class="type">int</span> __op, <span class="type">int</span> __fd, <span class="keyword">struct</span> epoll_event *__event)</span></span></span><br><span class="line"><span class="function"><span class="comment">// Wait for events on an epoll instance "epfd"</span></span></span><br><span class="line"><span class="function"><span class="comment">// Returns the number of triggered events returned in "events" buffer</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">epoll_wait</span> <span class="params">(<span class="type">int</span> __epfd, <span class="keyword">struct</span> epoll_event *__events, <span class="type">int</span> __maxevents, <span class="type">int</span> __timeout)</span></span></span><br></pre></td></tr></table></figure>
 
 <p>一种典型的用法</p>
-<p>参考 <a class="link"   target="_blank" rel="noopener" href="https://github.com/codeflysafe/computer-network/blob/main/src/socket_c/epoll_socket/epoll_client.c" >[github]<i class="fas fa-external-link-alt"></i></a></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * @Author: sjhuang</span></span><br><span class="line"><span class="comment"> * @Date: 2022-03-06 13:31:08</span></span><br><span class="line"><span class="comment"> * @LastEditTime: 2022-03-06 13:43:56</span></span><br><span class="line"><span class="comment"> * @FilePath: /computer_network/src/socket_c/epoll_socket/epoll_client.c</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;epoll_socket.h&quot;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// epoll fd 和 socket fd</span></span><br><span class="line">    <span class="type">int</span> epfd, sockfd;</span><br><span class="line">    <span class="type">int</span> max_epoll_size = <span class="number">5</span>, nready, n;</span><br><span class="line">    <span class="type">pid_t</span>  pid = <span class="built_in">getpid</span>();</span><br><span class="line">    <span class="type">char</span> buf[BUF_SIZE];</span><br><span class="line">    <span class="comment">// 创建 socket fd</span></span><br><span class="line">    sockfd = <span class="built_in">socket</span>(AF_INET, SOCK_STREAM ,IPPROTO_TCP);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 创建 server socket adder</span></span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">sockaddr_in</span> server_addr;</span><br><span class="line">    <span class="built_in">memset</span>(&amp;server_addr, <span class="number">0</span>, <span class="built_in">sizeof</span>(server_addr));</span><br><span class="line">    server_addr.sin_family = AF_INET;</span><br><span class="line">    server_addr.sin_port = <span class="built_in">ntohs</span>(SERVER_PORT);</span><br><span class="line">    server_addr.sin_addr.s_addr = <span class="built_in">inet_addr</span>(SERVER_IP);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 创建一个 epoll fd</span></span><br><span class="line">    epfd = <span class="built_in">epoll_create</span>(max_epoll_size);</span><br><span class="line">    <span class="comment">// epoll event</span></span><br><span class="line">    <span class="comment">// ev 用于注册时间， event 用以接收准备好的时间</span></span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">epoll_event</span> ev, events[max_epoll_size];</span><br><span class="line">    <span class="comment">// 注册监听事件</span></span><br><span class="line">    ev.fd = sockfd;</span><br><span class="line">    ev.events = EPOLLIN;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 向内核中注册事件监听</span></span><br><span class="line">    <span class="built_in">epoll_ctl</span>(epfd, EPOLL_CTL_ADD, sockfd, &amp;ev);</span><br><span class="line">    nready = <span class="built_in">epoll_wait</span>(epfd, events,max_epoll_size, <span class="number">-1</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; nready; i++)&#123;</span><br><span class="line">        <span class="comment">// 可读</span></span><br><span class="line">        <span class="keyword">if</span>(events[i].fd == sockfd &amp;&amp; events[i].events &amp; EPOLLIN)&#123;</span><br><span class="line">            n = <span class="built_in">read</span>(sockfd, buf, BUF_SIZE);</span><br><span class="line">            <span class="keyword">if</span>(n &gt; <span class="number">0</span>)&#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;[Client] %d received from server msg: %s\n&quot;</span>, pid, buf);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 关闭 socket 套接字</span></span><br><span class="line">    <span class="built_in">close</span>(sockfd);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>参考 <a class="link" target="_blank" rel="noopener" href="https://github.com/codeflysafe/computer-network/blob/main/src/socket_c/epoll_socket/epoll_client.c">[github]<i class="fas fa-external-link-alt"></i></a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * @Author: sjhuang</span></span><br><span class="line"><span class="comment"> * @Date: 2022-03-06 13:31:08</span></span><br><span class="line"><span class="comment"> * @LastEditTime: 2022-03-06 13:43:56</span></span><br><span class="line"><span class="comment"> * @FilePath: /computer_network/src/socket_c/epoll_socket/epoll_client.c</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">"epoll_socket.h"</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>{</span><br><span class="line"></span><br><span class="line">    <span class="comment">// epoll fd 和 socket fd</span></span><br><span class="line">    <span class="type">int</span> epfd, sockfd;</span><br><span class="line">    <span class="type">int</span> max_epoll_size = <span class="number">5</span>, nready, n;</span><br><span class="line">    <span class="type">pid_t</span>  pid = <span class="built_in">getpid</span>();</span><br><span class="line">    <span class="type">char</span> buf[BUF_SIZE];</span><br><span class="line">    <span class="comment">// 创建 socket fd</span></span><br><span class="line">    sockfd = <span class="built_in">socket</span>(AF_INET, SOCK_STREAM ,IPPROTO_TCP);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 创建 server socket adder</span></span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">sockaddr_in</span> server_addr;</span><br><span class="line">    <span class="built_in">memset</span>(&amp;server_addr, <span class="number">0</span>, <span class="built_in">sizeof</span>(server_addr));</span><br><span class="line">    server_addr.sin_family = AF_INET;</span><br><span class="line">    server_addr.sin_port = <span class="built_in">ntohs</span>(SERVER_PORT);</span><br><span class="line">    server_addr.sin_addr.s_addr = <span class="built_in">inet_addr</span>(SERVER_IP);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 创建一个 epoll fd</span></span><br><span class="line">    epfd = <span class="built_in">epoll_create</span>(max_epoll_size);</span><br><span class="line">    <span class="comment">// epoll event</span></span><br><span class="line">    <span class="comment">// ev 用于注册时间， event 用以接收准备好的时间</span></span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">epoll_event</span> ev, events[max_epoll_size];</span><br><span class="line">    <span class="comment">// 注册监听事件</span></span><br><span class="line">    ev.fd = sockfd;</span><br><span class="line">    ev.events = EPOLLIN;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 向内核中注册事件监听</span></span><br><span class="line">    <span class="built_in">epoll_ctl</span>(epfd, EPOLL_CTL_ADD, sockfd, &amp;ev);</span><br><span class="line">    nready = <span class="built_in">epoll_wait</span>(epfd, events,max_epoll_size, <span class="number">-1</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; nready; i++){</span><br><span class="line">        <span class="comment">// 可读</span></span><br><span class="line">        <span class="keyword">if</span>(events[i].fd == sockfd &amp;&amp; events[i].events &amp; EPOLLIN){</span><br><span class="line">            n = <span class="built_in">read</span>(sockfd, buf, BUF_SIZE);</span><br><span class="line">            <span class="keyword">if</span>(n &gt; <span class="number">0</span>){</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"[Client] %d received from server msg: %s\n"</span>, pid, buf);</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 关闭 socket 套接字</span></span><br><span class="line">    <span class="built_in">close</span>(sockfd);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">}</span><br></pre></td></tr></table></figure>
 
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p><a class="link"   target="_blank" rel="noopener" href="https://book.douban.com/subject/4859464/" >UNIX网络编程 卷1：套接字联网API（第3版）<i class="fas fa-external-link-alt"></i></a></p>
-<p><a class="link"   target="_blank" rel="noopener" href="https://www.cnblogs.com/alantu2018/p/8612722.html" >linux select函数详解<i class="fas fa-external-link-alt"></i></a></p>
-<p><a class="link"   target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000003063859" >Linux IO模式及 select、poll、epoll详解<i class="fas fa-external-link-alt"></i></a></p>
-<p><a class="link"   target="_blank" rel="noopener" href="http://blog.chinaunix.net/uid-28541347-id-4232252.html" >Epoll模型详解-lvyilong316-ChinaUnix博客<i class="fas fa-external-link-alt"></i></a></p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p><a class="link" target="_blank" rel="noopener" href="https://book.douban.com/subject/4859464/">UNIX网络编程 卷1：套接字联网API（第3版）<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link" target="_blank" rel="noopener" href="https://www.cnblogs.com/alantu2018/p/8612722.html">linux select函数详解<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link" target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000003063859">Linux IO模式及 select、poll、epoll详解<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link" target="_blank" rel="noopener" href="http://blog.chinaunix.net/uid-28541347-id-4232252.html">Epoll模型详解-lvyilong316-ChinaUnix博客<i class="fas fa-external-link-alt"></i></a></p>
 
         </div>
 

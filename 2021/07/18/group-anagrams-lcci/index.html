@@ -24,7 +24,119 @@
     KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/logo.jpeg","favicon":"/images/logo.jpeg","article_img_align":"center","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
     KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
   </script>
-<meta name="generator" content="Hexo 5.4.2"></head>
+<meta name="generator" content="Hexo 5.4.2"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 
 <body>
@@ -47,7 +159,7 @@
             <!--
  * @Author: sjhuang
  * @Date: 2022-04-08 09:47:24
- * @LastEditTime: 2023-01-01 11:00:04
+ * @LastEditTime: 2023-01-01 11:11:34
  * @FilePath: /notes/themes/keep/layout/_partial/header.ejs
 -->
 <header class="header-wrapper">
@@ -128,13 +240,6 @@
     </div>
 
     <div class="window-mask"></div>
-    <script>
-        window.MathJax = {
-            tex: {
-                tags: 'ams'
-            }
-        };
-    </script>
 </header>
 
 
@@ -219,16 +324,16 @@
             <p>编写一种方法，对字符串数组进行排序，将所有变位词组合在一起。变位词是指字母相同，但排列不同的字符串。</p>
 <p>注意：本题相对原题稍作修改</p>
 <p>示例:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">输入: [&quot;eat&quot;, &quot;tea&quot;, &quot;tan&quot;, &quot;ate&quot;, &quot;nat&quot;, &quot;bat&quot;],</span><br><span class="line">输出:</span><br><span class="line">[</span><br><span class="line">  [&quot;ate&quot;,&quot;eat&quot;,&quot;tea&quot;],</span><br><span class="line">  [&quot;nat&quot;,&quot;tan&quot;],</span><br><span class="line">  [&quot;bat&quot;]</span><br><span class="line">]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">输入: ["eat", "tea", "tan", "ate", "nat", "bat"],</span><br><span class="line">输出:</span><br><span class="line">[</span><br><span class="line">  ["ate","eat","tea"],</span><br><span class="line">  ["nat","tan"],</span><br><span class="line">  ["bat"]</span><br><span class="line">]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <span id="more"></span>
 <p>说明：</p>
 <ul>
 <li>所有输入均为小写字母。</li>
 <li>不考虑答案输出的顺序。</li>
 </ul>
-<p>来源：力扣（LeetCode）<br>链接：<a class="link"   target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/group-anagrams-lcci" >https://leetcode-cn.com/problems/group-anagrams-lcci<i class="fas fa-external-link-alt"></i></a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+<p>来源：力扣（LeetCode）<br>链接：<a class="link" target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/group-anagrams-lcci">https://leetcode-cn.com/problems/group-anagrams-lcci<i class="fas fa-external-link-alt"></i></a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
 <h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><p>由于只有小写字母，只需要申请一个长度为<code>26</code>的数组统计每一个字符串的字母数量即可（类似于hashcode的构造思想）。<br>这样所有的变位词可以映射到相同的数组，使用map，将数组（或者转为字符串）作为key，value 即是对应的字符数组。</p>
-<h3 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">   </span><br><span class="line">   <span class="function">string <span class="title">hashcode</span><span class="params">(vector&lt;<span class="type">int</span>&gt; chs)</span></span>&#123;</span><br><span class="line">       string ans = <span class="string">&quot;&quot;</span>;</span><br><span class="line">       <span class="keyword">for</span>(<span class="type">int</span> ch: chs)&#123;</span><br><span class="line">           ans.<span class="built_in">append</span>(<span class="built_in">to_string</span>(ch) + <span class="string">&quot;_&quot;</span>);</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> ans;</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">    vector&lt;vector&lt;string&gt;&gt; <span class="built_in">groupAnagrams</span>(vector&lt;string&gt;&amp; strs) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// hash 编码</span></span><br><span class="line">        <span class="comment">// eat tea tan ate nat bat</span></span><br><span class="line">        unordered_map&lt;string,vector&lt;string&gt;&gt; containers;</span><br><span class="line">        <span class="keyword">for</span>(string str: strs)&#123;</span><br><span class="line">            <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">counts</span><span class="params">(<span class="number">26</span>,<span class="number">0</span>)</span></span>;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">char</span> c: str)&#123;</span><br><span class="line">                counts[c-<span class="string">&#x27;a&#x27;</span>] ++;</span><br><span class="line">            &#125;</span><br><span class="line">            containers[<span class="built_in">hashcode</span>(counts)].<span class="built_in">emplace_back</span>(str);</span><br><span class="line">        &#125;</span><br><span class="line">        vector&lt;vector&lt;string&gt;&gt; res;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> &amp;p: containers)&#123;</span><br><span class="line">            res.<span class="built_in">push_back</span>(p.second);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> {</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">   </span><br><span class="line">   <span class="function">string <span class="title">hashcode</span><span class="params">(vector&lt;<span class="type">int</span>&gt; chs)</span></span>{</span><br><span class="line">       string ans = <span class="string">""</span>;</span><br><span class="line">       <span class="keyword">for</span>(<span class="type">int</span> ch: chs){</span><br><span class="line">           ans.<span class="built_in">append</span>(<span class="built_in">to_string</span>(ch) + <span class="string">"_"</span>);</span><br><span class="line">       }</span><br><span class="line">       <span class="keyword">return</span> ans;</span><br><span class="line">   }</span><br><span class="line">   </span><br><span class="line">    vector&lt;vector&lt;string&gt;&gt; <span class="built_in">groupAnagrams</span>(vector&lt;string&gt;&amp; strs) {</span><br><span class="line"></span><br><span class="line">        <span class="comment">// hash 编码</span></span><br><span class="line">        <span class="comment">// eat tea tan ate nat bat</span></span><br><span class="line">        unordered_map&lt;string,vector&lt;string&gt;&gt; containers;</span><br><span class="line">        <span class="keyword">for</span>(string str: strs){</span><br><span class="line">            <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">counts</span><span class="params">(<span class="number">26</span>,<span class="number">0</span>)</span></span>;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">char</span> c: str){</span><br><span class="line">                counts[c-<span class="string">'a'</span>] ++;</span><br><span class="line">            }</span><br><span class="line">            containers[<span class="built_in">hashcode</span>(counts)].<span class="built_in">emplace_back</span>(str);</span><br><span class="line">        }</span><br><span class="line">        vector&lt;vector&lt;string&gt;&gt; res;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> &amp;p: containers){</span><br><span class="line">            res.<span class="built_in">push_back</span>(p.second);</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line"></span><br><span class="line">    }</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
 
         </div>
 

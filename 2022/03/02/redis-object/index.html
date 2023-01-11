@@ -24,7 +24,119 @@
     KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/logo.jpeg","favicon":"/images/logo.jpeg","article_img_align":"center","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
     KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
   </script>
-<meta name="generator" content="Hexo 5.4.2"></head>
+<meta name="generator" content="Hexo 5.4.2"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 
 <body>
@@ -47,7 +159,7 @@
             <!--
  * @Author: sjhuang
  * @Date: 2022-04-08 09:47:24
- * @LastEditTime: 2023-01-01 11:00:04
+ * @LastEditTime: 2023-01-01 11:11:34
  * @FilePath: /notes/themes/keep/layout/_partial/header.ejs
 -->
 <header class="header-wrapper">
@@ -128,13 +240,6 @@
     </div>
 
     <div class="window-mask"></div>
-    <script>
-        window.MathJax = {
-            tex: {
-                tags: 'ams'
-            }
-        };
-    </script>
 </header>
 
 
@@ -220,69 +325,34 @@
         
 
         <div class="article-content markdown-body">
-            <p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/redis_/Untitled.png"
-                      alt="Untitled"
-                ></p>
+            <p><img lazyload="" src="/images/loading.svg" data-src="/img/redis_/Untitled.png" alt="Untitled"></p>
 <span id="more"></span>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">redisObject</span> &#123;</span><br><span class="line">    <span class="comment">// 类型 主要是五种 string、list、 hash、set、zset</span></span><br><span class="line">    <span class="type">unsigned</span> type:<span class="number">4</span>;</span><br><span class="line">    <span class="comment">// 编码 对象所使用的编码</span></span><br><span class="line">    <span class="type">unsigned</span> encoding:<span class="number">4</span>;</span><br><span class="line">    <span class="comment">// lru </span></span><br><span class="line">    <span class="type">unsigned</span> lru:REDIS_LRU_BITS; <span class="comment">/* lru time (relative to server.lruclock) */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 引用计数个数</span></span><br><span class="line">    <span class="type">int</span> refcount;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 指向底层数据库对象</span></span><br><span class="line">    <span class="type">void</span> *ptr;</span><br><span class="line">&#125; robj;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">redisObject</span> {</span><br><span class="line">    <span class="comment">// 类型 主要是五种 string、list、 hash、set、zset</span></span><br><span class="line">    <span class="type">unsigned</span> type:<span class="number">4</span>;</span><br><span class="line">    <span class="comment">// 编码 对象所使用的编码</span></span><br><span class="line">    <span class="type">unsigned</span> encoding:<span class="number">4</span>;</span><br><span class="line">    <span class="comment">// lru </span></span><br><span class="line">    <span class="type">unsigned</span> lru:REDIS_LRU_BITS; <span class="comment">/* lru time (relative to server.lruclock) */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 引用计数个数</span></span><br><span class="line">    <span class="type">int</span> refcount;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 指向底层数据库对象</span></span><br><span class="line">    <span class="type">void</span> *ptr;</span><br><span class="line">} robj;</span><br></pre></td></tr></table></figure>
 
 <p><code>redisObject</code> 对象结构，从上图可以清晰的看出，下面记录一下相同对象类型的对象编码是如何切换的</p>
-<h2 id="String-字符串对象"><a href="#String-字符串对象" class="headerlink" title="String 字符串对象"></a>String 字符串对象</h2><p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/redis_/Untitled%201.png"
-                      alt="Untitled"
-                ></p>
+<h2 id="String-字符串对象"><a href="#String-字符串对象" class="headerlink" title="String 字符串对象"></a>String 字符串对象</h2><p><img lazyload="" src="/images/loading.svg" data-src="/img/redis_/Untitled%201.png" alt="Untitled"></p>
 <p>embstr 编码格式字符串是SDS结构的优化编码方式，它采用<code>一次内存分配</code>，将 redisObject 和 sdshdr 结构 同时分配一块连续的空间。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/redis_/Untitled%202.png"
-                      alt="Untitled"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="/img/redis_/Untitled%202.png" alt="Untitled"></p>
 <p>浮点数（long double ）也是保存为字符串形式，执行加法等操作时，会将它先转为浮点数操作，后面在转为字符串存储</p>
-<h3 id="编码的转换"><a href="#编码的转换" class="headerlink" title="编码的转换"></a>编码的转换</h3><p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/redis_/Untitled%203.png"
-                      alt="Untitled"
-                ></p>
+<h3 id="编码的转换"><a href="#编码的转换" class="headerlink" title="编码的转换"></a>编码的转换</h3><p><img lazyload="" src="/images/loading.svg" data-src="/img/redis_/Untitled%203.png" alt="Untitled"></p>
 <p>状态转换图如上</p>
 <p><code>**int → raw**</code></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; <span class="built_in">set</span> number 123</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; object encoding number</span><br><span class="line"><span class="string">&quot;int&quot;</span></span><br><span class="line">127.0.0.1:6379&gt; append number 4</span><br><span class="line">(<span class="built_in">integer</span>) 4</span><br><span class="line">127.0.0.1:6379&gt; object encoding number</span><br><span class="line"><span class="string">&quot;raw&quot;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; <span class="built_in">set</span> number 123</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; object encoding number</span><br><span class="line"><span class="string">"int"</span></span><br><span class="line">127.0.0.1:6379&gt; append number 4</span><br><span class="line">(<span class="built_in">integer</span>) 4</span><br><span class="line">127.0.0.1:6379&gt; object encoding number</span><br><span class="line"><span class="string">"raw"</span></span><br></pre></td></tr></table></figure>
 
 <p><code>**embstr → raw**</code></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; <span class="built_in">set</span> msg <span class="string">&quot;hello world&quot;</span></span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; object encoding msg</span><br><span class="line"><span class="string">&quot;embstr&quot;</span></span><br><span class="line">127.0.0.1:6379&gt; append 1</span><br><span class="line">(error) ERR wrong number of arguments <span class="keyword">for</span> <span class="string">&#x27;append&#x27;</span> <span class="built_in">command</span></span><br><span class="line">127.0.0.1:6379&gt; append msg 1</span><br><span class="line">(<span class="built_in">integer</span>) 12</span><br><span class="line">127.0.0.1:6379&gt; object encoding msg</span><br><span class="line"><span class="string">&quot;raw&quot;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; <span class="built_in">set</span> msg <span class="string">"hello world"</span></span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; object encoding msg</span><br><span class="line"><span class="string">"embstr"</span></span><br><span class="line">127.0.0.1:6379&gt; append 1</span><br><span class="line">(error) ERR wrong number of arguments <span class="keyword">for</span> <span class="string">'append'</span> <span class="built_in">command</span></span><br><span class="line">127.0.0.1:6379&gt; append msg 1</span><br><span class="line">(<span class="built_in">integer</span>) 12</span><br><span class="line">127.0.0.1:6379&gt; object encoding msg</span><br><span class="line"><span class="string">"raw"</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="list-对象"><a href="#list-对象" class="headerlink" title="list 对象"></a>list 对象</h2><p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/redis_/Untitled%204.png"
-                      alt="Untitled"
-                ></p>
+<h2 id="list-对象"><a href="#list-对象" class="headerlink" title="list 对象"></a>list 对象</h2><p><img lazyload="" src="/images/loading.svg" data-src="/img/redis_/Untitled%204.png" alt="Untitled"></p>
 <p>转换一样是破坏上面那两个条件</p>
 <p>但是新版的redis list 只有 quicklist， 下面去学习一下</p>
-<h2 id="哈希对象"><a href="#哈希对象" class="headerlink" title="哈希对象"></a>哈希对象</h2><p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/redis_/Untitled%205.png"
-                      alt="Untitled"
-                ></p>
+<h2 id="哈希对象"><a href="#哈希对象" class="headerlink" title="哈希对象"></a>哈希对象</h2><p><img lazyload="" src="/images/loading.svg" data-src="/img/redis_/Untitled%205.png" alt="Untitled"></p>
 <p>转换一样是破坏上面那两个条件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; hset prifile name <span class="string">&quot;Tom&quot;</span></span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">127.0.0.1:6379&gt; hset prifile age 25</span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">127.0.0.1:6379&gt; hset prifile career <span class="string">&quot;Progresser&quot;</span></span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">127.0.0.1:6379&gt; object encoding prifile</span><br><span class="line"><span class="string">&quot;ziplist&quot;</span></span><br><span class="line">127.0.0.1:6379&gt; hset prifile time <span class="string">&quot;11111111111111111111111111111111111111111111111111111111111111111111&quot;</span><span class="string">&quot;</span></span><br><span class="line"><span class="string">Invalid argument(s)</span></span><br><span class="line"><span class="string">127.0.0.1:6379&gt; hset prifile time &quot;</span>11111111111111111111111111111111111111111111111111111111111111111111<span class="string">&quot;</span></span><br><span class="line"><span class="string">(integer) 1</span></span><br><span class="line"><span class="string">127.0.0.1:6379&gt; object encoding prifile</span></span><br><span class="line"><span class="string">&quot;</span>hashtable<span class="string">&quot;</span></span><br><span class="line"><span class="string">127.0.0.1:6379&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; hset prifile name <span class="string">"Tom"</span></span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">127.0.0.1:6379&gt; hset prifile age 25</span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">127.0.0.1:6379&gt; hset prifile career <span class="string">"Progresser"</span></span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">127.0.0.1:6379&gt; object encoding prifile</span><br><span class="line"><span class="string">"ziplist"</span></span><br><span class="line">127.0.0.1:6379&gt; hset prifile time <span class="string">"11111111111111111111111111111111111111111111111111111111111111111111"</span><span class="string">"</span></span><br><span class="line"><span class="string">Invalid argument(s)</span></span><br><span class="line"><span class="string">127.0.0.1:6379&gt; hset prifile time "</span>11111111111111111111111111111111111111111111111111111111111111111111<span class="string">"</span></span><br><span class="line"><span class="string">(integer) 1</span></span><br><span class="line"><span class="string">127.0.0.1:6379&gt; object encoding prifile</span></span><br><span class="line"><span class="string">"</span>hashtable<span class="string">"</span></span><br><span class="line"><span class="string">127.0.0.1:6379&gt;</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="集合对象"><a href="#集合对象" class="headerlink" title="集合对象"></a>集合对象</h2><p>无序的（ 虽说intset 是有序的，但是集合本身是无序的）</p>
-<h3 id="编码转换"><a href="#编码转换" class="headerlink" title="编码转换"></a>编码转换</h3><p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/redis_/Untitled%206.png"
-                      alt="Untitled"
-                ></p>
+<h3 id="编码转换"><a href="#编码转换" class="headerlink" title="编码转换"></a>编码转换</h3><p><img lazyload="" src="/images/loading.svg" data-src="/img/redis_/Untitled%206.png" alt="Untitled"></p>
 <p>破环上面的条件，可以完成编码转换</p>
-<h2 id="有序集合对象"><a href="#有序集合对象" class="headerlink" title="有序集合对象"></a>有序集合对象</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">zset</span> &#123;</span></span><br><span class="line">    dict *dict;</span><br><span class="line">    zskiplist *zsl;</span><br><span class="line">&#125; zset;</span><br></pre></td></tr></table></figure>
+<h2 id="有序集合对象"><a href="#有序集合对象" class="headerlink" title="有序集合对象"></a>有序集合对象</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">zset</span> {</span></span><br><span class="line">    dict *dict;</span><br><span class="line">    zskiplist *zsl;</span><br><span class="line">} zset;</span><br></pre></td></tr></table></figure>
 
 <p>有序集合的编码可以使用 ziplist 或者 skiplist </p>
 <p>使用 ziplist ,是将其按照 score 大小从小到大排列</p>
@@ -291,30 +361,25 @@
 <li>可以兼顾两者的有点</li>
 <li>在O(1）时间内可以得到元素的score， 又可以实现范围查询操作 <code>ZRANGE</code></li>
 </ol>
-<h3 id="编码的转换-1"><a href="#编码的转换-1" class="headerlink" title="编码的转换"></a>编码的转换</h3><p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/redis_/Untitled%207.png"
-                      alt="Untitled"
-                ></p>
+<h3 id="编码的转换-1"><a href="#编码的转换-1" class="headerlink" title="编码的转换"></a>编码的转换</h3><p><img lazyload="" src="/images/loading.svg" data-src="/img/redis_/Untitled%207.png" alt="Untitled"></p>
 <h2 id="类型检查和多态"><a href="#类型检查和多态" class="headerlink" title="类型检查和多态"></a>类型检查和多态</h2><h3 id="类型检查"><a href="#类型检查" class="headerlink" title="类型检查"></a>类型检查</h3><p>使用 object的 type 进行类型检查</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">llenCommand</span><span class="params">(redisClient *c)</span> &#123;</span><br><span class="line">    robj *o = lookupKeyReadOrReply(c,c-&gt;argv[<span class="number">1</span>],shared.czero);</span><br><span class="line">    <span class="keyword">if</span> (o == <span class="literal">NULL</span> || checkType(c,o,REDIS_LIST)) <span class="keyword">return</span>;</span><br><span class="line">    addReplyLongLong(c,listTypeLength(o));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">llenCommand</span><span class="params">(redisClient *c)</span> {</span><br><span class="line">    robj *o = lookupKeyReadOrReply(c,c-&gt;argv[<span class="number">1</span>],shared.czero);</span><br><span class="line">    <span class="keyword">if</span> (o == <span class="literal">NULL</span> || checkType(c,o,REDIS_LIST)) <span class="keyword">return</span>;</span><br><span class="line">    addReplyLongLong(c,listTypeLength(o));</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
 
 <h3 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h3><p>使用object的 encoding 进行区分底层数据结构，来实现多态</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> <span class="type">long</span> <span class="title function_">listTypeLength</span><span class="params">(robj *subject)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (subject-&gt;encoding == REDIS_ENCODING_ZIPLIST) &#123;</span><br><span class="line">        <span class="keyword">return</span> ziplistLen(subject-&gt;ptr);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (subject-&gt;encoding == REDIS_ENCODING_LINKEDLIST) &#123;</span><br><span class="line">        <span class="keyword">return</span> listLength((<span class="built_in">list</span>*)subject-&gt;ptr);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        redisPanic(<span class="string">&quot;Unknown list encoding&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> <span class="type">long</span> <span class="title function_">listTypeLength</span><span class="params">(robj *subject)</span> {</span><br><span class="line">    <span class="keyword">if</span> (subject-&gt;encoding == REDIS_ENCODING_ZIPLIST) {</span><br><span class="line">        <span class="keyword">return</span> ziplistLen(subject-&gt;ptr);</span><br><span class="line">    } <span class="keyword">else</span> <span class="keyword">if</span> (subject-&gt;encoding == REDIS_ENCODING_LINKEDLIST) {</span><br><span class="line">        <span class="keyword">return</span> listLength((<span class="built_in">list</span>*)subject-&gt;ptr);</span><br><span class="line">    } <span class="keyword">else</span> {</span><br><span class="line">        redisPanic(<span class="string">"Unknown list encoding"</span>);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
 
 <h2 id="内存回收"><a href="#内存回收" class="headerlink" title="内存回收"></a>内存回收</h2><p>采用的是引用技术技术实现的内存回收机制</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">redisObject</span> &#123;</span></span><br><span class="line">    <span class="comment">// 类型 主要是五种 string、list、 hash、set、zset</span></span><br><span class="line">    <span class="type">unsigned</span> type:<span class="number">4</span>;</span><br><span class="line">    <span class="comment">// 编码 对象所使用的编码</span></span><br><span class="line">    <span class="type">unsigned</span> encoding:<span class="number">4</span>;</span><br><span class="line">    <span class="comment">// lru </span></span><br><span class="line">    <span class="type">unsigned</span> lru:REDIS_LRU_BITS; <span class="comment">/* lru time (relative to server.lruclock) */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 引用计数个数</span></span><br><span class="line">    <span class="type">int</span> refcount;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 指向底层数据库对象</span></span><br><span class="line">    <span class="type">void</span> *ptr;</span><br><span class="line">&#125; robj;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">redisObject</span> {</span></span><br><span class="line">    <span class="comment">// 类型 主要是五种 string、list、 hash、set、zset</span></span><br><span class="line">    <span class="type">unsigned</span> type:<span class="number">4</span>;</span><br><span class="line">    <span class="comment">// 编码 对象所使用的编码</span></span><br><span class="line">    <span class="type">unsigned</span> encoding:<span class="number">4</span>;</span><br><span class="line">    <span class="comment">// lru </span></span><br><span class="line">    <span class="type">unsigned</span> lru:REDIS_LRU_BITS; <span class="comment">/* lru time (relative to server.lruclock) */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 引用计数个数</span></span><br><span class="line">    <span class="type">int</span> refcount;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 指向底层数据库对象</span></span><br><span class="line">    <span class="type">void</span> *ptr;</span><br><span class="line">} robj;</span><br></pre></td></tr></table></figure>
 
 <p>引用计数技术的GC，比较简单，放到GC里面学习，这里不过多介绍</p>
 <p>唯一值得介绍的是，回收是在引用个数减为0的时候回收的</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">decrRefCount</span><span class="params">(robj *o)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (o-&gt;refcount &lt;= <span class="number">0</span>) redisPanic(<span class="string">&quot;decrRefCount against refcount &lt;= 0&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (o-&gt;refcount == <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">switch</span>(o-&gt;type) &#123;</span><br><span class="line">        <span class="keyword">case</span> REDIS_STRING: freeStringObject(o); <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> REDIS_LIST: freeListObject(o); <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> REDIS_SET: freeSetObject(o); <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> REDIS_ZSET: freeZsetObject(o); <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> REDIS_HASH: freeHashObject(o); <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>: redisPanic(<span class="string">&quot;Unknown object type&quot;</span>); <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        zfree(o);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        o-&gt;refcount--;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">decrRefCount</span><span class="params">(robj *o)</span> {</span><br><span class="line">    <span class="keyword">if</span> (o-&gt;refcount &lt;= <span class="number">0</span>) redisPanic(<span class="string">"decrRefCount against refcount &lt;= 0"</span>);</span><br><span class="line">    <span class="keyword">if</span> (o-&gt;refcount == <span class="number">1</span>) {</span><br><span class="line">        <span class="keyword">switch</span>(o-&gt;type) {</span><br><span class="line">        <span class="keyword">case</span> REDIS_STRING: freeStringObject(o); <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> REDIS_LIST: freeListObject(o); <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> REDIS_SET: freeSetObject(o); <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> REDIS_ZSET: freeZsetObject(o); <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> REDIS_HASH: freeHashObject(o); <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>: redisPanic(<span class="string">"Unknown object type"</span>); <span class="keyword">break</span>;</span><br><span class="line">        }</span><br><span class="line">        zfree(o);</span><br><span class="line">    } <span class="keyword">else</span> {</span><br><span class="line">        o-&gt;refcount--;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
 
 <h2 id="对象共享"><a href="#对象共享" class="headerlink" title="对象共享"></a>对象共享</h2><p>对象的引用计数属性还带有对象共享的作用(只针对整数值）</p>
 <p>为了节约内存，redis使用了对象共享计数。一个简单的例子，假设健A和健B均包换整数值100，如果建立一个100的字符串作为值对象，让健共享这个值对象，就可以更加节约内存</p>
 <p>如何相同值越多，采用对象共享机制，节约的内存也越多</p>
 <p>Redis 在初始化时，已经缓存了0～9999的所有整数值。不共享字符串的原因是，验证操作时间复杂度为O(N),</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; REDIS_SHARED_INTEGERS; j++) &#123;</span><br><span class="line">        shared.integers[j] = createObject(REDIS_STRING,(<span class="type">void</span>*)(<span class="type">long</span>)j);</span><br><span class="line">        shared.integers[j]-&gt;encoding = REDIS_ENCODING_INT;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; REDIS_SHARED_INTEGERS; j++) {</span><br><span class="line">        shared.integers[j] = createObject(REDIS_STRING,(<span class="type">void</span>*)(<span class="type">long</span>)j);</span><br><span class="line">        shared.integers[j]-&gt;encoding = REDIS_ENCODING_INT;</span><br><span class="line">    }</span><br></pre></td></tr></table></figure>
         </div>
 
         

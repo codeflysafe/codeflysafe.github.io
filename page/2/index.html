@@ -22,7 +22,119 @@
     KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/logo.jpeg","favicon":"/images/logo.jpeg","article_img_align":"center","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
     KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
   </script>
-<meta name="generator" content="Hexo 5.4.2"></head>
+<meta name="generator" content="Hexo 5.4.2"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 
 <body>
@@ -45,7 +157,7 @@
             <!--
  * @Author: sjhuang
  * @Date: 2022-04-08 09:47:24
- * @LastEditTime: 2023-01-01 11:00:04
+ * @LastEditTime: 2023-01-01 11:11:34
  * @FilePath: /notes/themes/keep/layout/_partial/header.ejs
 -->
 <header class="header-wrapper">
@@ -126,13 +238,6 @@
     </div>
 
     <div class="window-mask"></div>
-    <script>
-        window.MathJax = {
-            tex: {
-                tags: 'ams'
-            }
-        };
-    </script>
 </header>
 
 
@@ -160,7 +265,7 @@
                     
                         <p>Created: March 16, 2022 3:15 PM<br>Tags: epoll, io复用, tcp, 网络编程</p>
 <p>修改和转载自，下面这一些列<code>blog</code>写的特别清晰</p>
-<p><a class="link"   target="_blank" rel="noopener" href="http://blog.chinaunix.net/uid-28541347-id-4296180.html" >彻底学会使用epoll（四）–ET的写操作实例分析-lvyilong316-ChinaUnix博客<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link" target="_blank" rel="noopener" href="http://blog.chinaunix.net/uid-28541347-id-4296180.html">彻底学会使用epoll（四）–ET的写操作实例分析-lvyilong316-ChinaUnix博客<i class="fas fa-external-link-alt"></i></a></p>
                     
                 </div>
 
@@ -188,7 +293,7 @@
 
                 <div class="home-article-content markdown-body">
                     
-                        <h2 id="I-x2F-O-模型"><a href="#I-x2F-O-模型" class="headerlink" title="I&#x2F;O 模型"></a>I&#x2F;O 模型</h2><p>数据的读取分为两个阶段：</p>
+                        <h2 id="I-x2F-O-模型"><a href="#I-x2F-O-模型" class="headerlink" title="I/O 模型"></a>I/O 模型</h2><p>数据的读取分为两个阶段：</p>
 <ol>
 <li>准备数据</li>
 <li>将数据从内核拷贝到进程（用户空间）</li>
@@ -221,12 +326,7 @@
 
                 <div class="home-article-content markdown-body">
                     
-                        <p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/redis_/Untitled.png"
-                      alt="Untitled"
-                ></p>
+                        <p><img lazyload="" src="/images/loading.svg" data-src="/img/redis_/Untitled.png" alt="Untitled"></p>
                     
                 </div>
 
@@ -288,14 +388,9 @@
 
                 <div class="home-article-content markdown-body">
                     
-                        <h2 id="缓存一致性问题"><a href="#缓存一致性问题" class="headerlink" title="缓存一致性问题"></a>缓存一致性问题</h2><p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/cache_/Untitled.png"
-                      alt="Untitled"
-                ></p>
+                        <h2 id="缓存一致性问题"><a href="#缓存一致性问题" class="headerlink" title="缓存一致性问题"></a>缓存一致性问题</h2><p><img lazyload="" src="/images/loading.svg" data-src="/img/cache_/Untitled.png" alt="Untitled"></p>
 <p>同一个数据在不同的缓存中看到的值是不同的，这就是缓存一致性问题</p>
-<p>考虑下面一个程序(cache_consistency&#x2F;SumTest.java)</p>
+<p>考虑下面一个程序(cache_consistency/SumTest.java)</p>
                     
                 </div>
 
@@ -424,12 +519,7 @@
 
                 <div class="home-article-content markdown-body">
                     
-                        <p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://s3.bmp.ovh/imgs/2022/02/ecd8d22994e5c3de.png"
-                     
-                ></p>
+                        <p><img lazyload="" src="/images/loading.svg" data-src="https://s3.bmp.ovh/imgs/2022/02/ecd8d22994e5c3de.png"></p>
 <blockquote>
 <p>GC 算法，可以称之为内存回收算法，是将程序不用的内存空间回收以便与重复利用。可以简单分为两个步骤：找垃圾和回收垃圾</p>
 </blockquote>
@@ -495,7 +585,7 @@
 
                 <div class="home-article-content markdown-body">
                     
-                        <p><a class="link"   target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/distinct-subsequences/" >力扣<i class="fas fa-external-link-alt"></i></a></p>
+                        <p><a class="link" target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/distinct-subsequences/">力扣<i class="fas fa-external-link-alt"></i></a></p>
 <p>给定一个字符串 s 和一个字符串 t ，计算在 s 的子序列中 t 出现的个数。</p>
 <p>字符串的一个 子序列 是指，通过删除一些（也可以不删除）字符且不干扰剩余字符相对位置所组成的新字符串。（例如，”ACE” 是 “ABCDE” 的一个子序列，而 “AEC” 不是）</p>
 <p>题目数据保证答案符合 32 位带符号整数范围。</p>
@@ -555,7 +645,7 @@
 
                 <div class="home-article-content markdown-body">
                     
-                        <p><a class="link"   target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/pascals-triangle/" >力扣<i class="fas fa-external-link-alt"></i></a></p>
+                        <p><a class="link" target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/pascals-triangle/">力扣<i class="fas fa-external-link-alt"></i></a></p>
 <p><img src="https://pic.leetcode-cn.com/1626927345-DZmfxB-PascalTriangleAnimated2.gif" alt="https://pic.leetcode-cn.com/1626927345-DZmfxB-PascalTriangleAnimated2.gif"></p>
                     
                 </div>

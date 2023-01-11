@@ -24,7 +24,119 @@
     KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/logo.jpeg","favicon":"/images/logo.jpeg","article_img_align":"center","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
     KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
   </script>
-<meta name="generator" content="Hexo 5.4.2"></head>
+<meta name="generator" content="Hexo 5.4.2"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 
 <body>
@@ -47,7 +159,7 @@
             <!--
  * @Author: sjhuang
  * @Date: 2022-04-08 09:47:24
- * @LastEditTime: 2023-01-01 11:00:04
+ * @LastEditTime: 2023-01-01 11:11:34
  * @FilePath: /notes/themes/keep/layout/_partial/header.ejs
 -->
 <header class="header-wrapper">
@@ -128,13 +240,6 @@
     </div>
 
     <div class="window-mask"></div>
-    <script>
-        window.MathJax = {
-            tex: {
-                tags: 'ams'
-            }
-        };
-    </script>
 </header>
 
 
@@ -190,34 +295,24 @@
         
 
         <div class="article-content markdown-body">
-            <h1 id="Bitcask-存储模型"><a href="#Bitcask-存储模型" class="headerlink" title="Bitcask 存储模型"></a>Bitcask 存储模型</h1><p>Paper: Log-Structured Hash Table for Fast Key&#x2F;Value Data</p>
+            <h1 id="Bitcask-存储模型"><a href="#Bitcask-存储模型" class="headerlink" title="Bitcask 存储模型"></a>Bitcask 存储模型</h1><p>Paper: Log-Structured Hash Table for Fast Key/Value Data</p>
 <p>Achieving some of these is easy. Achieving them all is less so.</p>
 <p><code>Bitcask</code> 原来是用于记录<code>Riak distributed database</code>的历史。在<code>Risk</code>的集群中，每个<code>node</code>使用插件式的存储引擎，几乎所有<code>key-value</code>类型的存储引擎都可以作为单个node节点的存储引擎。这种内嵌式的存储引擎可以在不影响其它<code>codebase</code>的情况下提升和测试。</p>
 <p>BitCask 的设计目标是：</p>
 <ol>
 <li>读写低延迟 low latency per item read or written</li>
 <li>高吞吐量，high throughput, especially when writing an incoming stream of random items</li>
-<li>处理更大的数据  ability to handle datasets much larger than RAM w&#x2F;o degradation</li>
+<li>处理更大的数据  ability to handle datasets much larger than RAM w/o degradation</li>
 <li>崩溃恢复容易并且不会丢失数据: crash friendliness, both in terms of fast recovery and not losing data</li>
 <li>容易备份和存储 ease of backup and restore</li>
 <li>一个相当简单并且容易理解的数据形式 a relatively simple, understandable (and thus supportable) code structure and data format</li>
 <li>predictable behavior under heavy access load or large volume</li>
 </ol>
 <p>采用 <code>hash table log merging</code>， 有可能比 <code>LSM-trees</code> 更快</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/codeflysafe/gitalk/main/img/20220409165506.png"
-                     
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/codeflysafe/gitalk/main/img/20220409165506.png"></p>
 <p>一个bitcask实例就是一个目录，在设计上强制在任意时刻，只有一个操作系统进程可以打开bitcask进行写操作，这个进程就可以看作是bitcask服务。在任意时刻，这个目录中只有一个文件是active的，只有这个文件是可以被写入的。当这个active的文件大小达到一个临界值的时候，bitcask就会创建一个新的文件，用来取代当前的active文件。被取代的文件被称为老文件，之后永远都是不可变的，不会再有任何进程往里面写入数据。</p>
 <p>当前存活的文件(active file) 只允许追加写(appendinf)，这意味着顺序写并不要求磁盘 <code>disk seek</code>，每一个被写入的 entry 非常简单，</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/codeflysafe/gitalk/main/img/20220409165528.png"
-                     
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/codeflysafe/gitalk/main/img/20220409165528.png"></p>
 <ul>
 <li>crc：一个检验值，在这里可以忽略</li>
 <li>tstamp：时间戳</li>
@@ -225,41 +320,21 @@
 <li>value_sz : value的大小。</li>
 </ul>
 <p>对于每一个写，一个新的entry追加写到文件中。而删除操作，被看成一种特殊的写操作，它将在merge的过程中删除。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/codeflysafe/gitalk/main/img/20220409165558.png"
-                     
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/codeflysafe/gitalk/main/img/20220409165558.png"></p>
 <p>追加写完成之后，一个内存结构<code>keydir</code> 被更新。keydir是一个hash table，key就是插入数据的key，value指向了插入数据value在文件系统中的具体位置。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/codeflysafe/gitalk/main/img/20220409165618.png"
-                     
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/codeflysafe/gitalk/main/img/20220409165618.png"></p>
 <p><code>write</code> 操作：</p>
 <p>当一个写操作发生的时候，keydir会自动更新最新数据所在的位置。旧的数据仍然存在磁盘上，但是任何新的读操作都将读取新的数据。</p>
 <p><code>read</code> 操作：</p>
-<p>主需要至多一次(more than a single disk seek), <em><strong>为什么？</strong></em>从内存中的keydir查询key，从这里知道了value所在的file_id，位置，大小，然后只要调用系统的读取接口就行了。一般操作系统都还会有自己独立的disk读缓存，所以这个操作实际上可以更快。<br><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/codeflysafe/gitalk/main/img/20220409165636.png"
-                     
-                ></p>
+<p>主需要至多一次(more than a single disk seek), <em><strong>为什么？</strong></em>从内存中的keydir查询key，从这里知道了value所在的file_id，位置，大小，然后只要调用系统的读取接口就行了。一般操作系统都还会有自己独立的disk读缓存，所以这个操作实际上可以更快。<br><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/codeflysafe/gitalk/main/img/20220409165636.png"></p>
 <p><code>merge</code> 过程：</p>
 <p>合并进程遍历所有的老文件，产生一个只包含当前最新版本数据的文件。这部分完成的时候，还会产生一个hint file，这个文件本质上和data 文件一样，只不过他们保存的是value所在文件上的位置，而不是value本身。这个文件可以加速从目录文件重建keydir的过程。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/codeflysafe/gitalk/main/img/20220409165653.png"
-                     
-                ></p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a class="link"   target="_blank" rel="noopener" href="https://riak.com/assets/bitcask-intro.pdf" >bitcask-intro<i class="fas fa-external-link-alt"></i></a></p>
-<p><a class="link"   target="_blank" rel="noopener" href="https://github.com/basho/bitcask" >https://github.com/basho/bitcask<i class="fas fa-external-link-alt"></i></a></p>
-<p><a class="link"   target="_blank" rel="noopener" href="https://juejin.cn/post/6844903774377476109" >bitcask存储引擎 - 掘金<i class="fas fa-external-link-alt"></i></a></p>
-<p><a class="link"   target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/s8s6VtqwdyjthR6EtuhnUA" >从零实现一个 k-v 存储引擎<i class="fas fa-external-link-alt"></i></a></p>
-<p><a class="link"   target="_blank" rel="noopener" href="https://github.com/flower-corp/minidb" >https://github.com/flower-corp/minidb<i class="fas fa-external-link-alt"></i></a></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/codeflysafe/gitalk/main/img/20220409165653.png"></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a class="link" target="_blank" rel="noopener" href="https://riak.com/assets/bitcask-intro.pdf">bitcask-intro<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link" target="_blank" rel="noopener" href="https://github.com/basho/bitcask">https://github.com/basho/bitcask<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link" target="_blank" rel="noopener" href="https://juejin.cn/post/6844903774377476109">bitcask存储引擎 - 掘金<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link" target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/s8s6VtqwdyjthR6EtuhnUA">从零实现一个 k-v 存储引擎<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link" target="_blank" rel="noopener" href="https://github.com/flower-corp/minidb">https://github.com/flower-corp/minidb<i class="fas fa-external-link-alt"></i></a></p>
 
         </div>
 

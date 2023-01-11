@@ -24,7 +24,119 @@
     KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/logo.jpeg","favicon":"/images/logo.jpeg","article_img_align":"center","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
     KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
   </script>
-<meta name="generator" content="Hexo 5.4.2"></head>
+<meta name="generator" content="Hexo 5.4.2"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 
 <body>
@@ -47,7 +159,7 @@
             <!--
  * @Author: sjhuang
  * @Date: 2022-04-08 09:47:24
- * @LastEditTime: 2023-01-01 11:00:04
+ * @LastEditTime: 2023-01-01 11:11:34
  * @FilePath: /notes/themes/keep/layout/_partial/header.ejs
 -->
 <header class="header-wrapper">
@@ -128,13 +240,6 @@
     </div>
 
     <div class="window-mask"></div>
-    <script>
-        window.MathJax = {
-            tex: {
-                tags: 'ams'
-            }
-        };
-    </script>
 </header>
 
 
@@ -223,22 +328,22 @@
             <p>T1、T2、T3 过了，T4 有点思路，没抓住重点，加油！！！</p>
 <span id="more"></span>
 
-<h3 id="6008-统计包含给定前缀的字符串-简单"><a href="#6008-统计包含给定前缀的字符串-简单" class="headerlink" title="****6008. 统计包含给定前缀的字符串 简单**"></a>****<a class="link"   target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/counting-words-with-a-given-prefix/" >6008. 统计包含给定前缀的字符串<i class="fas fa-external-link-alt"></i></a> 简单**</h3><p><a class="link"   target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/counting-words-with-a-given-prefix/" >力扣<i class="fas fa-external-link-alt"></i></a></p>
+<h3 id="6008-统计包含给定前缀的字符串-简单"><a href="#6008-统计包含给定前缀的字符串-简单" class="headerlink" title="****6008. 统计包含给定前缀的字符串 简单**"></a>****<a class="link" target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/counting-words-with-a-given-prefix/">6008. 统计包含给定前缀的字符串<i class="fas fa-external-link-alt"></i></a> 简单**</h3><p><a class="link" target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/counting-words-with-a-given-prefix/">力扣<i class="fas fa-external-link-alt"></i></a></p>
 <p>没啥好说的，模拟即可</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">prefixCount</span><span class="params">(vector&lt;string&gt;&amp; words, string pref)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="type">int</span> ans = <span class="number">0</span>, m = pref.<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">bool</span> flag = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">for</span>(string word: words)&#123;</span><br><span class="line">            <span class="keyword">if</span>(word.<span class="built_in">size</span>() &gt;= m)&#123;</span><br><span class="line">                flag = <span class="literal">true</span>;</span><br><span class="line">                <span class="keyword">for</span>(<span class="type">int</span> i =<span class="number">0</span>; i &lt; m; i++)&#123;</span><br><span class="line">                    <span class="keyword">if</span>(pref[i] != word[i]) flag = <span class="literal">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span>(flag) ans ++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> {</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">prefixCount</span><span class="params">(vector&lt;string&gt;&amp; words, string pref)</span> </span>{</span><br><span class="line">        </span><br><span class="line">        <span class="type">int</span> ans = <span class="number">0</span>, m = pref.<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">bool</span> flag = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">for</span>(string word: words){</span><br><span class="line">            <span class="keyword">if</span>(word.<span class="built_in">size</span>() &gt;= m){</span><br><span class="line">                flag = <span class="literal">true</span>;</span><br><span class="line">                <span class="keyword">for</span>(<span class="type">int</span> i =<span class="number">0</span>; i &lt; m; i++){</span><br><span class="line">                    <span class="keyword">if</span>(pref[i] != word[i]) flag = <span class="literal">false</span>;</span><br><span class="line">                }</span><br><span class="line">                <span class="keyword">if</span>(flag) ans ++;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">        </span><br><span class="line">    }</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
 
-<h3 id="6009-使两字符串互为字母异位词的最少步骤数-中等"><a href="#6009-使两字符串互为字母异位词的最少步骤数-中等" class="headerlink" title="****6009. 使两字符串互为字母异位词的最少步骤数 中等**"></a>****<a class="link"   target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/minimum-number-of-steps-to-make-two-strings-anagram-ii/" >6009. 使两字符串互为字母异位词的最少步骤数<i class="fas fa-external-link-alt"></i></a> 中等**</h3><p><a class="link"   target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/minimum-number-of-steps-to-make-two-strings-anagram-ii/" >力扣<i class="fas fa-external-link-alt"></i></a></p>
+<h3 id="6009-使两字符串互为字母异位词的最少步骤数-中等"><a href="#6009-使两字符串互为字母异位词的最少步骤数-中等" class="headerlink" title="****6009. 使两字符串互为字母异位词的最少步骤数 中等**"></a>****<a class="link" target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/minimum-number-of-steps-to-make-two-strings-anagram-ii/">6009. 使两字符串互为字母异位词的最少步骤数<i class="fas fa-external-link-alt"></i></a> 中等**</h3><p><a class="link" target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/minimum-number-of-steps-to-make-two-strings-anagram-ii/">力扣<i class="fas fa-external-link-alt"></i></a></p>
 <p>主要是理解，找到两个字符串不同字符的个数即可</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">minSteps</span><span class="params">(string s, string t)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">count1</span><span class="params">(<span class="number">26</span>,<span class="number">0</span>)</span></span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">char</span> c: s)&#123;</span><br><span class="line">            count1[c - <span class="string">&#x27;a&#x27;</span>] ++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">char</span> c: t)&#123;</span><br><span class="line">            count1[c - <span class="string">&#x27;a&#x27;</span>] --;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="type">int</span> ans = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i =<span class="number">0</span>; i &lt; <span class="number">26</span>; i++)&#123;</span><br><span class="line">            ans += <span class="built_in">abs</span>(count1[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> {</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">minSteps</span><span class="params">(string s, string t)</span> </span>{</span><br><span class="line">        </span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">count1</span><span class="params">(<span class="number">26</span>,<span class="number">0</span>)</span></span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">char</span> c: s){</span><br><span class="line">            count1[c - <span class="string">'a'</span>] ++;</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">char</span> c: t){</span><br><span class="line">            count1[c - <span class="string">'a'</span>] --;</span><br><span class="line">        }</span><br><span class="line">        </span><br><span class="line">        <span class="type">int</span> ans = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i =<span class="number">0</span>; i &lt; <span class="number">26</span>; i++){</span><br><span class="line">            ans += <span class="built_in">abs</span>(count1[i]);</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">        </span><br><span class="line">    }</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
 
-<h3 id="6010-完成旅途的最少时间-中等"><a href="#6010-完成旅途的最少时间-中等" class="headerlink" title="****6010. 完成旅途的最少时间 中等**"></a>****<a class="link"   target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/minimum-time-to-complete-trips/" >6010. 完成旅途的最少时间<i class="fas fa-external-link-alt"></i></a> 中等**</h3><p><a class="link"   target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/minimum-time-to-complete-trips/" >力扣<i class="fas fa-external-link-alt"></i></a></p>
+<h3 id="6010-完成旅途的最少时间-中等"><a href="#6010-完成旅途的最少时间-中等" class="headerlink" title="****6010. 完成旅途的最少时间 中等**"></a>****<a class="link" target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/minimum-time-to-complete-trips/">6010. 完成旅途的最少时间<i class="fas fa-external-link-alt"></i></a> 中等**</h3><p><a class="link" target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/minimum-time-to-complete-trips/">力扣<i class="fas fa-external-link-alt"></i></a></p>
 <p>二分法，找到最小和最大时间，在判断是否可以完成旅途，算是一个二分+判断的典型题</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">minimumTime</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; time, <span class="type">int</span> totalTrips)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 采用二分法</span></span><br><span class="line">        <span class="type">int</span> n = time.<span class="built_in">size</span>();</span><br><span class="line">        <span class="comment">// long long a</span></span><br><span class="line">        <span class="comment">// if(n == 1) return totalTrips*time[0];</span></span><br><span class="line">        <span class="type">long</span> <span class="type">long</span> minTime = <span class="number">10000001</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">long</span> <span class="type">long</span> t: time)&#123;</span><br><span class="line">            minTime = <span class="built_in">min</span>(t, minTime);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 最多这么多次</span></span><br><span class="line">        <span class="type">long</span> <span class="type">long</span> r = totalTrips *  minTime;</span><br><span class="line">        <span class="type">long</span> <span class="type">long</span> l = <span class="number">1</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="type">long</span> <span class="type">long</span> sz = <span class="number">0</span>;</span><br><span class="line">        <span class="type">long</span> <span class="type">long</span> ans = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// 找到 &gt;= totalTrips 的最小值</span></span><br><span class="line">        <span class="keyword">while</span>(l &lt;= r)&#123;</span><br><span class="line">            <span class="type">long</span> <span class="type">long</span>  m  = l + ( (r - l) &gt;&gt; <span class="number">1</span>);</span><br><span class="line">            sz = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> t: time)&#123;</span><br><span class="line">                sz += m/t;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(sz &gt;= totalTrips)&#123;</span><br><span class="line">                ans = m;</span><br><span class="line">                r = m - <span class="number">1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                l = m + <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> {</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">minimumTime</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; time, <span class="type">int</span> totalTrips)</span> </span>{</span><br><span class="line">        <span class="comment">// 采用二分法</span></span><br><span class="line">        <span class="type">int</span> n = time.<span class="built_in">size</span>();</span><br><span class="line">        <span class="comment">// long long a</span></span><br><span class="line">        <span class="comment">// if(n == 1) return totalTrips*time[0];</span></span><br><span class="line">        <span class="type">long</span> <span class="type">long</span> minTime = <span class="number">10000001</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">long</span> <span class="type">long</span> t: time){</span><br><span class="line">            minTime = <span class="built_in">min</span>(t, minTime);</span><br><span class="line">        }</span><br><span class="line">        <span class="comment">// 最多这么多次</span></span><br><span class="line">        <span class="type">long</span> <span class="type">long</span> r = totalTrips *  minTime;</span><br><span class="line">        <span class="type">long</span> <span class="type">long</span> l = <span class="number">1</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="type">long</span> <span class="type">long</span> sz = <span class="number">0</span>;</span><br><span class="line">        <span class="type">long</span> <span class="type">long</span> ans = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// 找到 &gt;= totalTrips 的最小值</span></span><br><span class="line">        <span class="keyword">while</span>(l &lt;= r){</span><br><span class="line">            <span class="type">long</span> <span class="type">long</span>  m  = l + ( (r - l) &gt;&gt; <span class="number">1</span>);</span><br><span class="line">            sz = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> t: time){</span><br><span class="line">                sz += m/t;</span><br><span class="line">            }</span><br><span class="line">            <span class="keyword">if</span>(sz &gt;= totalTrips){</span><br><span class="line">                ans = m;</span><br><span class="line">                r = m - <span class="number">1</span>;</span><br><span class="line">            }<span class="keyword">else</span>{</span><br><span class="line">                l = m + <span class="number">1</span>;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    }</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
 
-<h3 id="6011-完成比赛的最少时间-困难"><a href="#6011-完成比赛的最少时间-困难" class="headerlink" title="6011. 完成比赛的最少时间 困难"></a><strong><a class="link"   target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/minimum-time-to-finish-the-race/" >6011. 完成比赛的最少时间<i class="fas fa-external-link-alt"></i></a> 困难</strong></h3><p><a class="link"   target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/minimum-time-to-finish-the-race/" >力扣<i class="fas fa-external-link-alt"></i></a></p>
+<h3 id="6011-完成比赛的最少时间-困难"><a href="#6011-完成比赛的最少时间-困难" class="headerlink" title="6011. 完成比赛的最少时间 困难"></a><strong><a class="link" target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/minimum-time-to-finish-the-race/">6011. 完成比赛的最少时间<i class="fas fa-external-link-alt"></i></a> 困难</strong></h3><p><a class="link" target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/minimum-time-to-finish-the-race/">力扣<i class="fas fa-external-link-alt"></i></a></p>
 <p>没做出来</p>
-<p><a class="link"   target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/minimum-time-to-finish-the-race/solution/jie-he-xing-zhi-qiao-miao-dp-by-endlessc-b963/" >力扣<i class="fas fa-external-link-alt"></i></a></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">minimumFinishTime</span><span class="params">(vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; tires, <span class="type">int</span> changeTime, <span class="type">int</span> numLaps)</span> </span>&#123;</span><br><span class="line">        <span class="comment">/* mintimes[i] = 用一个轮胎跑 i 圈的最小花费 */</span></span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">mintimes</span><span class="params">(<span class="number">20</span>, <span class="number">1e9</span>)</span></span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span>&amp; v : tires) &#123;</span><br><span class="line">            <span class="type">long</span> <span class="type">long</span> f = v[<span class="number">0</span>], r = v[<span class="number">1</span>], fir = f + changeTime <span class="comment">/* 第一次用该轮胎的耗费 */</span>;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>, sum = fir; f &lt;= fir; i++, f = f * r, sum += f) &#123;</span><br><span class="line">                mintimes[i] = <span class="built_in">min</span>(mintimes[i], sum);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">/* dp[i] = 跑 i 圈的最小花费 */</span></span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">dp</span><span class="params">(numLaps + <span class="number">1</span>, <span class="number">1e9</span>)</span></span>;</span><br><span class="line">        dp[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= numLaps; ++i) &#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">1</span>; j &lt;= <span class="built_in">min</span>(<span class="number">19</span>, i); ++j) &#123;</span><br><span class="line">                dp[i] = <span class="built_in">min</span>(dp[i], dp[i-j] + mintimes[j]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">/* 最后需要减去一次换轮胎的时间 */</span></span><br><span class="line">        <span class="keyword">return</span> dp[numLaps] - changeTime;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><a class="link" target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/minimum-time-to-finish-the-race/solution/jie-he-xing-zhi-qiao-miao-dp-by-endlessc-b963/">力扣<i class="fas fa-external-link-alt"></i></a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> {</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">minimumFinishTime</span><span class="params">(vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; tires, <span class="type">int</span> changeTime, <span class="type">int</span> numLaps)</span> </span>{</span><br><span class="line">        <span class="comment">/* mintimes[i] = 用一个轮胎跑 i 圈的最小花费 */</span></span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">mintimes</span><span class="params">(<span class="number">20</span>, <span class="number">1e9</span>)</span></span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span>&amp; v : tires) {</span><br><span class="line">            <span class="type">long</span> <span class="type">long</span> f = v[<span class="number">0</span>], r = v[<span class="number">1</span>], fir = f + changeTime <span class="comment">/* 第一次用该轮胎的耗费 */</span>;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>, sum = fir; f &lt;= fir; i++, f = f * r, sum += f) {</span><br><span class="line">                mintimes[i] = <span class="built_in">min</span>(mintimes[i], sum);</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        <span class="comment">/* dp[i] = 跑 i 圈的最小花费 */</span></span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">dp</span><span class="params">(numLaps + <span class="number">1</span>, <span class="number">1e9</span>)</span></span>;</span><br><span class="line">        dp[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= numLaps; ++i) {</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">1</span>; j &lt;= <span class="built_in">min</span>(<span class="number">19</span>, i); ++j) {</span><br><span class="line">                dp[i] = <span class="built_in">min</span>(dp[i], dp[i-j] + mintimes[j]);</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        <span class="comment">/* 最后需要减去一次换轮胎的时间 */</span></span><br><span class="line">        <span class="keyword">return</span> dp[numLaps] - changeTime;</span><br><span class="line">    }</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
         </div>
 
         
