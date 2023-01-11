@@ -24,7 +24,7 @@
     KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/logo.jpeg","favicon":"/images/logo.jpeg","article_img_align":"center","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
     KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
   </script>
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.2"></head>
 
 
 <body>
@@ -44,7 +44,13 @@
     <div class="page-main-content">
 
         <div class="page-main-content-top">
-            <header class="header-wrapper">
+            <!--
+ * @Author: sjhuang
+ * @Date: 2022-04-08 09:47:24
+ * @LastEditTime: 2023-01-01 11:00:04
+ * @FilePath: /notes/themes/keep/layout/_partial/header.ejs
+-->
+<header class="header-wrapper">
 
     <div class="header-content">
         <div class="left">
@@ -122,7 +128,13 @@
     </div>
 
     <div class="window-mask"></div>
-
+    <script>
+        window.MathJax = {
+            tex: {
+                tags: 'ams'
+            }
+        };
+    </script>
 </header>
 
 
@@ -214,7 +226,7 @@
                      data-src="https://s3.bmp.ovh/imgs/2022/02/fc23066cd97819ea.png"
                      
                 ><a name="b2xBz"></a></p>
-<h2 id="1-线性回归模型"><a href="#1-线性回归模型" class="headerlink" title="1. 线性回归模型"></a>1. 线性回归模型</h2><p>给定数据集 $D = { (x_1,y_1),(x_2,y_2) …,(x_n,y_n)}$, 其中 $x_i = (x_i^1, x_i^2, … x_i^m)$。 线性回归是试图使用一个线性模型来尽可能的预测实际数值的输出标记。</p>
+<h2 id="1-线性回归模型"><a href="#1-线性回归模型" class="headerlink" title="1. 线性回归模型"></a>1. 线性回归模型</h2><p>给定数据集 $D &#x3D; { (x_1,y_1),(x_2,y_2) …,(x_n,y_n)}$, 其中 $x_i &#x3D; (x_i^1, x_i^2, … x_i^m)$。 线性回归是试图使用一个线性模型来尽可能的预测实际数值的输出标记。</p>
 <span id="more"></span>
 
 <p>假设，使用函数: </p>
@@ -228,24 +240,24 @@ $$
 
 
 <p>b 是一个 <code>scalar</code> 。<br><br />使用均方误差作为回归模型的性能度量，则可以转化为一个无约束的优化问题：</p>
-<p> $\min_{w,b} L(w,b) = \frac{1}{2n}\sum_i^n(y_i - \hat{y}_i)^2$</p>
+<p> $\min_{w,b} L(w,b) &#x3D; \frac{1}{2n}\sum_i^n(y_i - \hat{y}_i)^2$</p>
 <p>解决这个优化问题，可以求导并令其偏导数为0，即可。下面是分别对 <code>w</code> , <code>b</code> 求导的结果</p>
-<p>$$<br>\begin{aligned}<br> \frac{dL}{dw} &amp;= \frac{1}{2n}\sum_i^n 2(y_i-\hat{y}_i)\frac{dy_i}{dw}   \<br>&amp;= \frac{1}{n}\sum_i^n(y_i-\hat{y}_i)x_i \qquad (1)\<br>\frac{dL}{db} &amp;= \frac{1}{n}\sum_i^n(y_i - \hat{y}_i) \qquad (2)<br>\end{aligned}<br>$$</p>
+<p>$$<br>\begin{aligned}<br> \frac{dL}{dw} &amp;&#x3D; \frac{1}{2n}\sum_i^n 2(y_i-\hat{y}_i)\frac{dy_i}{dw}   \<br>&amp;&#x3D; \frac{1}{n}\sum_i^n(y_i-\hat{y}_i)x_i \qquad (1)\<br>\frac{dL}{db} &amp;&#x3D; \frac{1}{n}\sum_i^n(y_i - \hat{y}_i) \qquad (2)<br>\end{aligned}<br>$$</p>
 <br />
 <br />通常会把(1),(2) 式写成矩阵的形式，即:<br />
 <br />
 
-<p>$$<br>\begin{aligned}<br>\frac{dL}{dw}&amp;= \frac{1}{n}X^T(Xw - \hat{Y}) \qquad (3) \<br>\frac{dL}{db}&amp;= \frac{1}{n}I(Xw -\hat{Y})   \qquad (4) \<br>\end{aligned}<br>$$</p>
-<p><br />其中 $X=\begin{bmatrix}x_1 \ x_2 \ … \ x_n \end{bmatrix}$, $\hat{Y}=\begin{bmatrix}\hat{y}_1 \ \hat{y}_2 \ … \ \hat{y}_n\end{bmatrix}$, $I=\begin{bmatrix}1,1 … 1\end{bmatrix}$<br /></p>
-<p><br />令式（3）等于0， 可以得到 $w^{\star} = (X^TX)^{-1}X^T\hat{Y}$, 此时 $A = X^TX$ 必须是非奇异矩阵。<br />但是实际情况下，可能存在A并不是满秩的，比如特征的维度大于样本数。 因此，此时可能会接触多个w，能够使均方误差最小化。选择哪一个作为最优的w，由算法的归纳偏好来决定，比如引入正则化项。</p>
+<p>$$<br>\begin{aligned}<br>\frac{dL}{dw}&amp;&#x3D; \frac{1}{n}X^T(Xw - \hat{Y}) \qquad (3) \<br>\frac{dL}{db}&amp;&#x3D; \frac{1}{n}I(Xw -\hat{Y})   \qquad (4) \<br>\end{aligned}<br>$$</p>
+<p><br />其中 $X&#x3D;\begin{bmatrix}x_1 \ x_2 \ … \ x_n \end{bmatrix}$, $\hat{Y}&#x3D;\begin{bmatrix}\hat{y}_1 \ \hat{y}_2 \ … \ \hat{y}_n\end{bmatrix}$, $I&#x3D;\begin{bmatrix}1,1 … 1\end{bmatrix}$<br /></p>
+<p><br />令式（3）等于0， 可以得到 $w^{\star} &#x3D; (X^TX)^{-1}X^T\hat{Y}$, 此时 $A &#x3D; X^TX$ 必须是非奇异矩阵。<br />但是实际情况下，可能存在A并不是满秩的，比如特征的维度大于样本数。 因此，此时可能会接触多个w，能够使均方误差最小化。选择哪一个作为最优的w，由算法的归纳偏好来决定，比如引入正则化项。</p>
 <p><a name="83Wqd"></a></p>
-<h2 id="2-对数似然估计"><a href="#2-对数似然估计" class="headerlink" title="2. 对数似然估计"></a>2. 对数似然估计</h2><p><br />使用线性回归做分类问题，以二分类问题为例。 可以将其结果y映射到[0,1]区间，然后规定其值大于0.5作为正例，否则作为反例。 <br />如何选择映射函数 <code>f</code> 呢，这里可以采用 <code>sigmoid</code> 函数：<br /><br><br /><br>$$<br>\begin{aligned}<br> f &amp;= \sigma(z) = \frac{1}{1 + \exp{-z}} \<br> z &amp;= w^Tx + b \<br>\end{aligned}<br>$$<br><br />其曲线为：<br /><br><img  
+<h2 id="2-对数似然估计"><a href="#2-对数似然估计" class="headerlink" title="2. 对数似然估计"></a>2. 对数似然估计</h2><p><br />使用线性回归做分类问题，以二分类问题为例。 可以将其结果y映射到[0,1]区间，然后规定其值大于0.5作为正例，否则作为反例。 <br />如何选择映射函数 <code>f</code> 呢，这里可以采用 <code>sigmoid</code> 函数：<br /><br><br /><br>$$<br>\begin{aligned}<br> f &amp;&#x3D; \sigma(z) &#x3D; \frac{1}{1 + \exp{-z}} \<br> z &amp;&#x3D; w^Tx + b \<br>\end{aligned}<br>$$<br><br />其曲线为：<br /><br><img  
                      lazyload
                      src="/images/loading.svg"
                      data-src="https://s3.bmp.ovh/imgs/2022/02/629ee62f32647f97.png"
                      
                 ><br><br />sigmoid 曲线<br />此时，将f看作是概率分布，可以采用最大似然概率作为性能度量（它等价于最小化交叉熵）<br />等价于优化问题：<br><br /></p>
-<p>$$<br>\min_{w,b} L(w,b) = -\sum_i^n(\hat{y}_i\log(f(x_i))  + (1-\hat{y}_i)\log(1 - f(x_i)))<br>$$</p>
+<p>$$<br>\min_{w,b} L(w,b) &#x3D; -\sum_i^n(\hat{y}_i\log(f(x_i))  + (1-\hat{y}_i)\log(1 - f(x_i)))<br>$$</p>
 <br />
 <br />分别对 w,b求偏导数可得：<br />
 
@@ -260,19 +272,19 @@ $$
 $$
 
 
-<p><br />分别对为w,b求偏导数<br />其中$f = f(x_i)$。 可以发现与线性回归的偏导数有一样的格式。</p>
+<p><br />分别对为w,b求偏导数<br />其中$f &#x3D; f(x_i)$。 可以发现与线性回归的偏导数有一样的格式。</p>
 <p><a name="1xotj"></a></p>
 <h2 id="3-LDA-线性判别分析"><a href="#3-LDA-线性判别分析" class="headerlink" title="3. LDA 线性判别分析"></a>3. LDA 线性判别分析</h2><p><br />LDA（Linear Discriminant Analysis), 又称为 <code>fisher 判别分析</code> 。它的主要思想是，将给定的样本，投影到一条直线上，并且保证类内的投影点越接近越好，但是类间的投影点越分散越好。<br /><br><br />类内投影点，越接近越好，可以采用方差（协方差举证）指标来衡量，即使其同类样本之间的协反差尽可能的小。<br />对于类间的投影点，越分散越好。这里可以采用不同类别之间的均值相差尽可能的大。<br /><br><br />总结起来的公式为:<br /></p>
-<p>$$\max_{w} J(w) = \frac{||w^T\mu_0 - w^T\mu_1||}{w^T\Sigma_0w + w^T\Sigma_1w}<br>$$</p>
+<p>$$\max_{w} J(w) &#x3D; \frac{||w^T\mu_0 - w^T\mu_1||}{w^T\Sigma_0w + w^T\Sigma_1w}<br>$$</p>
 <p><br />LDA的度量函数<br /><br><br />w 代表被投影的直线。</p>
-<p>令$S_w = \Sigma_0 + \Sigma_1$,$S_b = (\mu_0 - \mu_1)(\mu_0 - \mu_1)^T$<br />则$J(w) = \frac{w^TS_bw}{w^TS_ww}$。<br />由于w代表被投影的直线，只与其方向有关，不妨设置$w^TS_ww = 1$, 则转化为以下有约束的优化问题</p>
-<p>$$<br>\begin{aligned}<br>&amp;\min_{w}\quad -w^TS_bw \<br>&amp;s.t \quad w^TS_ww = 1<br>\end{aligned}$$</p>
+<p>令$S_w &#x3D; \Sigma_0 + \Sigma_1$,$S_b &#x3D; (\mu_0 - \mu_1)(\mu_0 - \mu_1)^T$<br />则$J(w) &#x3D; \frac{w^TS_bw}{w^TS_ww}$。<br />由于w代表被投影的直线，只与其方向有关，不妨设置$w^TS_ww &#x3D; 1$, 则转化为以下有约束的优化问题</p>
+<p>$$<br>\begin{aligned}<br>&amp;\min_{w}\quad -w^TS_bw \<br>&amp;s.t \quad w^TS_ww &#x3D; 1<br>\end{aligned}$$</p>
 <p><br />可以使用拉格朗日乘法公式，可得:<br /><br><br /></p>
-<p>$$\begin{aligned}<br>L(w) &amp;= -w^TS_bw + \lambda(w^TS_ww - 1)  \<br>\frac{dL}{dw} &amp;= -2S_bw + 2\lambda S_ww = 0 \<br>&amp; S_w^{-1}S_bw = \lambda w<br>\end{aligned}<br>$$</p>
+<p>$$\begin{aligned}<br>L(w) &amp;&#x3D; -w^TS_bw + \lambda(w^TS_ww - 1)  \<br>\frac{dL}{dw} &amp;&#x3D; -2S_bw + 2\lambda S_ww &#x3D; 0 \<br>&amp; S_w^{-1}S_bw &#x3D; \lambda w<br>\end{aligned}<br>$$</p>
 <br />
 
 <p>易知，$\lambda$ 为矩阵 $S_w^{-1}S_w$的特征值和特征向量。</p>
-<p>求解$S_w^{-1}$时，要考虑其稳定性，通常采用其SVD分解。即$S_w^{-1} = V\Sigma^{-1}U^T$。</p>
+<p>求解$S_w^{-1}$时，要考虑其稳定性，通常采用其SVD分解。即$S_w^{-1} &#x3D; V\Sigma^{-1}U^T$。</p>
 
         </div>
 
@@ -426,7 +438,7 @@ $$
               <span>2020</span>
               -
             
-            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">codeflysafe</a>
+            2023&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">codeflysafe</a>
         </div>
         
             <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>

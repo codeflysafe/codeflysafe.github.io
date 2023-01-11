@@ -22,7 +22,7 @@
     KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/logo.jpeg","favicon":"/images/logo.jpeg","article_img_align":"center","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
     KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
   </script>
-<meta name="generator" content="Hexo 5.4.0"><style>mjx-container[jax="SVG"] {
+<meta name="generator" content="Hexo 5.4.2"><style>mjx-container[jax="SVG"] {
   direction: ltr;
 }
 
@@ -200,7 +200,13 @@ mjx-container[display="true"] + br {
     <div class="page-main-content">
 
         <div class="page-main-content-top">
-            <header class="header-wrapper">
+            <!--
+ * @Author: sjhuang
+ * @Date: 2022-04-08 09:47:24
+ * @LastEditTime: 2023-01-01 11:00:04
+ * @FilePath: /notes/themes/keep/layout/_partial/header.ejs
+-->
+<header class="header-wrapper">
 
     <div class="header-content has-first-screen">
         <div class="left">
@@ -278,7 +284,13 @@ mjx-container[display="true"] + br {
     </div>
 
     <div class="window-mask"></div>
-
+    <script>
+        window.MathJax = {
+            tex: {
+                tags: 'ams'
+            }
+        };
+    </script>
 </header>
 
 
@@ -291,6 +303,91 @@ mjx-container[display="true"] + br {
                 
                     <div class="home-content-container fade-in-down-animation">
     <ul class="home-article-list">
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/2022/12/31/linear-transformer/">
+                        linear transformer
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        Linear transformer 线性变换两个特点：
+
+直线保持不变
+原点保持不变
+
+主要是保持网格线平行和等距分布
+以  为例：只需要求出变换后的  和  即可
+几种常见的线性变换对于常见的线性变换，只需要记住一点：只需要找出变换后的基坐标即可...
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Sat Dec 31 2022 22:47:57 GMT+0800">2022-12-31</span></span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/math/">math</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/matrix/">matrix</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/linear-transformer/">linear transformer</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/2022/12/31/linear-transformer/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/2022/12/31/transformer/">
+                        transformer
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Sat Dec 31 2022 22:47:35 GMT+0800">2022-12-31</span></span>
+        
+        
+    </div>
+
+    <a href="/2022/12/31/transformer/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
         
             <li class="home-article-item">
 
@@ -402,8 +499,8 @@ self-attentionattentionq,k,v 代表 query、key、val...
 
                 <div class="home-article-content markdown-body">
                     
-                        Bitcask 存储模型Paper: Log-Structured Hash Table for Fast Key/Value Data
-Achieving some of these is easy. Achieving them all is l...
+                        Bitcask 存储模型Paper: Log-Structured Hash Table for Fast Key&#x2F;Value Data
+Achieving some of these is easy. Achieving them all...
                     
                 </div>
 
@@ -528,7 +625,7 @@ Achieving some of these is easy. Achieving them all is l...
 <h1 id="socket编程中write、read和send、recv之间的区别"><a href="#socket编程中write、read和send、recv之间的区别" class="headerlink" title="socket编程中write、read和send、recv之间的区别"></a>socket编程中write、read和send、recv之间的区别</h1><blockquote>
 <p>from <a class="link"   target="_blank" rel="noopener" href="https://www.cnblogs.com/George1994/p/6731091.html" >https://www.cnblogs.com/George1994/p/6731091.html<i class="fas fa-external-link-alt"></i></a></p>
 </blockquote>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">read/<span class="function">write</span></span><br><span class="line"><span class="function"><span class="keyword">ssize_t</span> <span class="title">read</span><span class="params">(<span class="keyword">int</span> fd,<span class="keyword">void</span> *buf,<span class="keyword">size_t</span> nbyte)</span></span></span><br><span class="line"><span class="function"><span class="keyword">ssize_t</span> <span class="title">write</span><span class="params">(<span class="keyword">int</span> fd, <span class="keyword">const</span> <span class="keyword">void</span>*buf,<span class="keyword">size_t</span> nbytes)</span></span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">read/<span class="function">write</span></span><br><span class="line"><span class="function"><span class="type">ssize_t</span> <span class="title">read</span><span class="params">(<span class="type">int</span> fd,<span class="type">void</span> *buf,<span class="type">size_t</span> nbyte)</span></span></span><br><span class="line"><span class="function"><span class="type">ssize_t</span> <span class="title">write</span><span class="params">(<span class="type">int</span> fd, <span class="type">const</span> <span class="type">void</span>*buf,<span class="type">size_t</span> nbytes)</span></span>;</span><br></pre></td></tr></table></figure>
                     
                 </div>
 
@@ -602,69 +699,6 @@ Achieving some of these is easy. Achieving them all is l...
 
             </li>
         
-            <li class="home-article-item">
-
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2022/03/04/epoll/">
-                        彻底搞懂 epoll - ET 和 LT 模式的触发
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        <p>Created: March 16, 2022 3:15 PM<br>Tags: epoll, io复用, tcp, 网络编程</p>
-<p>修改和转载自，下面这一些列<code>blog</code>写的特别清晰</p>
-<p><a class="link"   target="_blank" rel="noopener" href="http://blog.chinaunix.net/uid-28541347-id-4296180.html" >彻底学会使用epoll（四）–ET的写操作实例分析-lvyilong316-ChinaUnix博客<i class="fas fa-external-link-alt"></i></a></p>
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Fri Mar 04 2022 22:42:05 GMT+0800">2022-03-04</span></span>
-        
-        
-    </div>
-
-    <a href="/2022/03/04/epoll/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2022/03/04/io%E5%A4%8D%E7%94%A8/">
-                        I/O 复用select\poll\epoll 初探
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        <h2 id="I-O-模型"><a href="#I-O-模型" class="headerlink" title="I/O 模型"></a>I/O 模型</h2><p>数据的读取分为两个阶段：</p>
-<ol>
-<li>准备数据</li>
-<li>将数据从内核拷贝到进程（用户空间）</li>
-</ol>
-<p>对于套接字的输入操作，第一步通常是等待数据从网络中到达，当所有分组到达时，将它复制到内核的某个缓冲区（准备数据）；第二步是把数据从内核缓冲区复制到应用进程缓冲区</p>
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Fri Mar 04 2022 22:42:05 GMT+0800">2022-03-04</span></span>
-        
-        
-    </div>
-
-    <a href="/2022/03/04/io%E5%A4%8D%E7%94%A8/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
     </ul>
 
     <div class="home-paginator">
@@ -696,7 +730,7 @@ Achieving some of these is easy. Achieving them all is l...
               <span>2020</span>
               -
             
-            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">codeflysafe</a>
+            2023&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">codeflysafe</a>
         </div>
         
             <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>

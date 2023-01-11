@@ -24,7 +24,7 @@
     KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/logo.jpeg","favicon":"/images/logo.jpeg","article_img_align":"center","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
     KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
   </script>
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.2"></head>
 
 
 <body>
@@ -44,7 +44,13 @@
     <div class="page-main-content">
 
         <div class="page-main-content-top">
-            <header class="header-wrapper">
+            <!--
+ * @Author: sjhuang
+ * @Date: 2022-04-08 09:47:24
+ * @LastEditTime: 2023-01-01 11:00:04
+ * @FilePath: /notes/themes/keep/layout/_partial/header.ejs
+-->
+<header class="header-wrapper">
 
     <div class="header-content">
         <div class="left">
@@ -122,7 +128,13 @@
     </div>
 
     <div class="window-mask"></div>
-
+    <script>
+        window.MathJax = {
+            tex: {
+                tags: 'ams'
+            }
+        };
+    </script>
 </header>
 
 
@@ -240,44 +252,44 @@ $$
 公式（1）：优化问题的标准形式
 
 <p><a name="8T6nb"></a></p>
-<h2 id="1-无约束优化"><a href="#1-无约束优化" class="headerlink" title="1. 无约束优化"></a>1. 无约束优化</h2><p><br />无约束优化的标准形式为：<br /><br>$\begin{aligned}<br>&amp;\min_{x\in X } \quad f(x) \<br>\end{aligned}$<br />公式（2）：无约束优化的标准形式<br /><br><br />假设f(x)在X上处处可导，则局部最优点 $x^{\star}$的充分必要条件为：<br />$\bigtriangledown_{x} f(x^{\star}) = 0 \quad and \quad G = \bigtriangledown^2_{x}f(^{\star}) &gt;= 0$。<br />公式（3）<br><a name="AinNC"></a></p>
-<h3 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h3><p><br />将f(x)使用泰勒公式在$x^{\star}$处展开：<br />$\begin{aligned}<br>&amp;f(x) = f(x^{\star}) + \bigtriangledown^Tf(x^{\star})(x-x^{\star}) + \frac{1}{2}(x-x^{\star})^T\bigtriangledown^2f(x^{\star})(x-x^{\star}) + O(||x-x^{\star}||) \<br>\end{aligned}$<br />公式（4）<br />​<br /><br><a name="a6109"></a></p>
-<h4 id="充分条件"><a href="#充分条件" class="headerlink" title="充分条件"></a>充分条件</h4><p>$\begin{aligned}<br>&amp;f(x) - f(x^{\star}) = \frac{1}{2}(x-x^{\star})^T\bigtriangledown^2f(x^{\star})(x-x^{\star}) \geq 0 \quad\to充分条件 \<br>\end{aligned}$<br />​<br /><br><a name="A2uLB"></a></p>
+<h2 id="1-无约束优化"><a href="#1-无约束优化" class="headerlink" title="1. 无约束优化"></a>1. 无约束优化</h2><p><br />无约束优化的标准形式为：<br /><br>$\begin{aligned}<br>&amp;\min_{x\in X } \quad f(x) \<br>\end{aligned}$<br />公式（2）：无约束优化的标准形式<br /><br><br />假设f(x)在X上处处可导，则局部最优点 $x^{\star}$的充分必要条件为：<br />$\bigtriangledown_{x} f(x^{\star}) &#x3D; 0 \quad and \quad G &#x3D; \bigtriangledown^2_{x}f(^{\star}) &gt;&#x3D; 0$。<br />公式（3）<br><a name="AinNC"></a></p>
+<h3 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h3><p><br />将f(x)使用泰勒公式在$x^{\star}$处展开：<br />$\begin{aligned}<br>&amp;f(x) &#x3D; f(x^{\star}) + \bigtriangledown^Tf(x^{\star})(x-x^{\star}) + \frac{1}{2}(x-x^{\star})^T\bigtriangledown^2f(x^{\star})(x-x^{\star}) + O(||x-x^{\star}||) \<br>\end{aligned}$<br />公式（4）<br />​<br /><br><a name="a6109"></a></p>
+<h4 id="充分条件"><a href="#充分条件" class="headerlink" title="充分条件"></a>充分条件</h4><p>$\begin{aligned}<br>&amp;f(x) - f(x^{\star}) &#x3D; \frac{1}{2}(x-x^{\star})^T\bigtriangledown^2f(x^{\star})(x-x^{\star}) \geq 0 \quad\to充分条件 \<br>\end{aligned}$<br />​<br /><br><a name="A2uLB"></a></p>
 <h4 id="必要条件"><a href="#必要条件" class="headerlink" title="必要条件"></a>必要条件</h4><p><a name="Ggnyf"></a></p>
-<h5 id="1-若f-x-在-x-star-处可导且取得局部最小值，则有-bigtriangledown-f-x-star-0"><a href="#1-若f-x-在-x-star-处可导且取得局部最小值，则有-bigtriangledown-f-x-star-0" class="headerlink" title="1. 若f(x) 在 $x^{\star}$ 处可导且取得局部最小值，则有$\bigtriangledown f(x^{\star}) = 0$"></a>1. 若f(x) 在 $x^{\star}$ 处可导且取得局部最小值，则有$\bigtriangledown f(x^{\star}) = 0$</h5><p>证明，使用反证法：<br />​</p>
-<p>$\begin{aligned}<br>&amp;假设 f(x^{\star}) \neq 0 \<br>&amp;f(x) = f(x^{\star}) + \bigtriangledown ^Tf(x^{\star})(x-x^{\star}) \<br>&amp; 令 (x-x^{\star}) = -\bigtriangledown f(x^{\star}) \<br>&amp;f(x) - f(x^{\star}) = -\bigtriangledown ^Tf(x^{\star})\bigtriangledown f(x^{\star}) &lt; 0<br>\ &amp;\to 不符合实际（局部最小值）<br>\end{aligned}$<br />​<br /><br><a name="tME33"></a></p>
-<h5 id="2-若f-x-在-x-star-处可导且取得局部最小值，且-bigtriangledown-f-x-star-0-，则-bigtriangledown-2f-x-star-gt-0-（半正定矩阵）"><a href="#2-若f-x-在-x-star-处可导且取得局部最小值，且-bigtriangledown-f-x-star-0-，则-bigtriangledown-2f-x-star-gt-0-（半正定矩阵）" class="headerlink" title="2. 若f(x) 在 $x^{\star}$ 处可导且取得局部最小值，且$\bigtriangledown f(x^{\star}) = 0$，则$\bigtriangledown^2f(x^{\star}) &gt;=0 （半正定矩阵）$"></a>2. 若f(x) 在 $x^{\star}$ 处可导且取得局部最小值，且$\bigtriangledown f(x^{\star}) = 0$，则$\bigtriangledown^2f(x^{\star}) &gt;=0 （半正定矩阵）$</h5><p>证明：<br />$\begin{aligned}<br>&amp;f(x) = f(x^{\star}) + \bigtriangledown^Tf(x^{\star})(x-x^{\star}) + \frac{1}{2}(x-x^{\star})^T\bigtriangledown^2f(x^{\star})(x-x^{\star}) + O(||x-x^{\star}||) \<br>&amp;\to f(x) - f(x^{\star}) = \frac{1}{2}(x-x^{\star})^T\bigtriangledown^2f(x^{\star})(x-x^{\star})  &gt;= 0 \<br>&amp;\to(x-x^{\star})^T\bigtriangledown^2f(x^{\star})(x-x^{\star}) \<br>&amp;\to \lambda^T\bigtriangledown^2f(x^{\star})\lambda &gt;= 0 \<br>\end{aligned}$<br />​</p>
-<p>则必要条件为: $\bigtriangledown_{x} f(x^{\star}) = 0 \quad and \quad G = \bigtriangledown^2_{x}f(^{\star}) &gt;= 0$<br />​<br /><br><a name="chSzT"></a></p>
-<h2 id="2-等式约束优化"><a href="#2-等式约束优化" class="headerlink" title="2. 等式约束优化"></a>2. 等式约束优化</h2><p>$\begin{aligned}<br>&amp;\min_{x\in X } \quad f(x) \<br>&amp;s.t \quad g_i(x) = 0 \quad i = 1,2… \<br>\end{aligned}$<br /><br><br />​</p>
+<h5 id="1-若f-x-在-x-star-处可导且取得局部最小值，则有-bigtriangledown-f-x-star-x3D-0"><a href="#1-若f-x-在-x-star-处可导且取得局部最小值，则有-bigtriangledown-f-x-star-x3D-0" class="headerlink" title="1. 若f(x) 在 $x^{\star}$ 处可导且取得局部最小值，则有$\bigtriangledown f(x^{\star}) &#x3D; 0$"></a>1. 若f(x) 在 $x^{\star}$ 处可导且取得局部最小值，则有$\bigtriangledown f(x^{\star}) &#x3D; 0$</h5><p>证明，使用反证法：<br />​</p>
+<p>$\begin{aligned}<br>&amp;假设 f(x^{\star}) \neq 0 \<br>&amp;f(x) &#x3D; f(x^{\star}) + \bigtriangledown ^Tf(x^{\star})(x-x^{\star}) \<br>&amp; 令 (x-x^{\star}) &#x3D; -\bigtriangledown f(x^{\star}) \<br>&amp;f(x) - f(x^{\star}) &#x3D; -\bigtriangledown ^Tf(x^{\star})\bigtriangledown f(x^{\star}) &lt; 0<br>\ &amp;\to 不符合实际（局部最小值）<br>\end{aligned}$<br />​<br /><br><a name="tME33"></a></p>
+<h5 id="2-若f-x-在-x-star-处可导且取得局部最小值，且-bigtriangledown-f-x-star-x3D-0-，则-bigtriangledown-2f-x-star-gt-x3D-0-（半正定矩阵）"><a href="#2-若f-x-在-x-star-处可导且取得局部最小值，且-bigtriangledown-f-x-star-x3D-0-，则-bigtriangledown-2f-x-star-gt-x3D-0-（半正定矩阵）" class="headerlink" title="2. 若f(x) 在 $x^{\star}$ 处可导且取得局部最小值，且$\bigtriangledown f(x^{\star}) &#x3D; 0$，则$\bigtriangledown^2f(x^{\star}) &gt;&#x3D;0 （半正定矩阵）$"></a>2. 若f(x) 在 $x^{\star}$ 处可导且取得局部最小值，且$\bigtriangledown f(x^{\star}) &#x3D; 0$，则$\bigtriangledown^2f(x^{\star}) &gt;&#x3D;0 （半正定矩阵）$</h5><p>证明：<br />$\begin{aligned}<br>&amp;f(x) &#x3D; f(x^{\star}) + \bigtriangledown^Tf(x^{\star})(x-x^{\star}) + \frac{1}{2}(x-x^{\star})^T\bigtriangledown^2f(x^{\star})(x-x^{\star}) + O(||x-x^{\star}||) \<br>&amp;\to f(x) - f(x^{\star}) &#x3D; \frac{1}{2}(x-x^{\star})^T\bigtriangledown^2f(x^{\star})(x-x^{\star})  &gt;&#x3D; 0 \<br>&amp;\to(x-x^{\star})^T\bigtriangledown^2f(x^{\star})(x-x^{\star}) \<br>&amp;\to \lambda^T\bigtriangledown^2f(x^{\star})\lambda &gt;&#x3D; 0 \<br>\end{aligned}$<br />​</p>
+<p>则必要条件为: $\bigtriangledown_{x} f(x^{\star}) &#x3D; 0 \quad and \quad G &#x3D; \bigtriangledown^2_{x}f(^{\star}) &gt;&#x3D; 0$<br />​<br /><br><a name="chSzT"></a></p>
+<h2 id="2-等式约束优化"><a href="#2-等式约束优化" class="headerlink" title="2. 等式约束优化"></a>2. 等式约束优化</h2><p>$\begin{aligned}<br>&amp;\min_{x\in X } \quad f(x) \<br>&amp;s.t \quad g_i(x) &#x3D; 0 \quad i &#x3D; 1,2… \<br>\end{aligned}$<br /><br><br />​</p>
 <p>其实一般有两种做法，拉格朗日乘法和消元法，但是消元法遇到等式约束较多时比较难以处理。因此，使用拉格朗日乘法较为方便。<br />​</p>
-<p>转化为拉格朗日乘法:<br />  $\min_{x\in X} F(x,\lambda) = f(x) + \sum_i \lambda_ig_i(x)$<br />​</p>
-<p>以一个具体的例子为例：<br />$f(x) = x_1 + x_2 \quad and \quad g(x) = x_1^2 + x_2^2 - 2$<br /><br><br /><br><br /><img  
+<p>转化为拉格朗日乘法:<br />  $\min_{x\in X} F(x,\lambda) &#x3D; f(x) + \sum_i \lambda_ig_i(x)$<br />​</p>
+<p>以一个具体的例子为例：<br />$f(x) &#x3D; x_1 + x_2 \quad and \quad g(x) &#x3D; x_1^2 + x_2^2 - 2$<br /><br><br /><br><br /><img  
                      lazyload
                      src="/images/loading.svg"
                      data-src="https://s3.bmp.ovh/imgs/2022/02/5fe15718dff30256.png"
                      
-                ><br><br />没有加等式约束时，它的最小值时不存在的（无穷小）<br />而加了等式约束之后，假设当前点为$x_F$, 下一点为 $x_F + \delta x$ , 则需要有：<br />$f(x_F + \delta x) &lt; f(x_F) \quad and \quad g(x_F + \delta x) = 0$<br /><br><br />要保证:$f(x_F + \delta x) &lt; f(x_F)$,<br />$f(x_F + \delta x) = f(x_F) + \bigtriangledown^T f(x_F) \delta_x + O(|\delta x)|) &lt; f(x_F) \<br>\to -\bigtriangledown f(x_F) \delta_x &gt; 0$<br />要保证: $g(x_F + \delta x) = 0,$要求：<br />$g(x_F + \delta x) = g(x_F) + \bigtriangledown^T g(x_F)\delta x = 0 \<br>\to \bigtriangledown^T g(x_F)\delta x  = 0$<br /><br><br />同样由几何意义可知，<br /><br><br /><img  
+                ><br><br />没有加等式约束时，它的最小值时不存在的（无穷小）<br />而加了等式约束之后，假设当前点为$x_F$, 下一点为 $x_F + \delta x$ , 则需要有：<br />$f(x_F + \delta x) &lt; f(x_F) \quad and \quad g(x_F + \delta x) &#x3D; 0$<br /><br><br />要保证:$f(x_F + \delta x) &lt; f(x_F)$,<br />$f(x_F + \delta x) &#x3D; f(x_F) + \bigtriangledown^T f(x_F) \delta_x + O(|\delta x)|) &lt; f(x_F) \<br>\to -\bigtriangledown f(x_F) \delta_x &gt; 0$<br />要保证: $g(x_F + \delta x) &#x3D; 0,$要求：<br />$g(x_F + \delta x) &#x3D; g(x_F) + \bigtriangledown^T g(x_F)\delta x &#x3D; 0 \<br>\to \bigtriangledown^T g(x_F)\delta x  &#x3D; 0$<br /><br><br />同样由几何意义可知，<br /><br><br /><img  
                      lazyload
                      src="/images/loading.svg"
                      data-src="https://s3.bmp.ovh/imgs/2022/02/5fe15718dff30256.png"
                      
-                ><br />即，f(x) 取得极值的地方为: 约束g(x) = 0 与 f(x) = C （等值线）相切的地方，如上图M1,M2。<br />此时有：<br /></p>
-<p>$$\bigtriangledown f(x) = \mu\bigtriangledown g(x) = 0$$</p>
-<p><br />因此可以，构造 $F = f(x) + \mu g(x)$, 并要求：<br /><br>$$\begin{cases}<br> \bigtriangledown F_x(x^{\star},\mu^{\star}) = 0 \<br> \bigtriangledown F_{\mu}(x^{\star},\mu^{\star}) = 0 \<br>\lambda^T\bigtriangledown_xx^2 L(x^{\star},\mu^{\star})\lambda  &gt;= 0 （半正定）<br>\end{cases}$$</p>
+                ><br />即，f(x) 取得极值的地方为: 约束g(x) &#x3D; 0 与 f(x) &#x3D; C （等值线）相切的地方，如上图M1,M2。<br />此时有：<br /></p>
+<p>$$\bigtriangledown f(x) &#x3D; \mu\bigtriangledown g(x) &#x3D; 0$$</p>
+<p><br />因此可以，构造 $F &#x3D; f(x) + \mu g(x)$, 并要求：<br /><br>$$\begin{cases}<br> \bigtriangledown F_x(x^{\star},\mu^{\star}) &#x3D; 0 \<br> \bigtriangledown F_{\mu}(x^{\star},\mu^{\star}) &#x3D; 0 \<br>\lambda^T\bigtriangledown_xx^2 L(x^{\star},\mu^{\star})\lambda  &gt;&#x3D; 0 （半正定）<br>\end{cases}$$</p>
 <br />
 
 <p><a name="4tiAP"></a></p>
-<h3 id="另一种理解，KKT条件"><a href="#另一种理解，KKT条件" class="headerlink" title="另一种理解，KKT条件"></a>另一种理解，KKT条件</h3><p><br />构造 $\theta_p(x) = \max_{\mu} L(x,\mu) =  \max_{\mu} {f(x) + \mu g(x)}$, 假设在 $x^{\star}$处取得最大值，存在两种情况：</p>
+<h3 id="另一种理解，KKT条件"><a href="#另一种理解，KKT条件" class="headerlink" title="另一种理解，KKT条件"></a>另一种理解，KKT条件</h3><p><br />构造 $\theta_p(x) &#x3D; \max_{\mu} L(x,\mu) &#x3D;  \max_{\mu} {f(x) + \mu g(x)}$, 假设在 $x^{\star}$处取得最大值，存在两种情况：</p>
 <ol>
-<li> x 满足 $g(x) = 0$, 此时 $\theta_p(x) = f(x)$</li>
-<li> x 不满足  $g(x) = 0$, 此时 存在 $\theta_p(x) = +\infty$</li>
+<li>x 满足 $g(x) &#x3D; 0$, 此时 $\theta_p(x) &#x3D; f(x)$</li>
+<li>x 不满足  $g(x) &#x3D; 0$, 此时 存在 $\theta_p(x) &#x3D; +\infty$</li>
 </ol>
 <p>​</p>
-<p>而， $\min_{x} \theta_p(x) = \min_x \max_{\mu}L(x,\mu) = \min_{x} f(x)$<br />​</p>
+<p>而， $\min_{x} \theta_p(x) &#x3D; \min_x \max_{\mu}L(x,\mu) &#x3D; \min_{x} f(x)$<br />​</p>
 <p>此时要求条件为：<br />​</p>
-<p>$\begin{cases}<br> \nabla_xL(x^{\star},\mu^{\star}) = 0 \<br> g(x^{\star}) = 0 \<br>\end{cases}$<br /></p>
+<p>$\begin{cases}<br> \nabla_xL(x^{\star},\mu^{\star}) &#x3D; 0 \<br> g(x^{\star}) &#x3D; 0 \<br>\end{cases}$<br /></p>
 <p><a name="Sk4Rv"></a></p>
-<h2 id="3-不等式约束"><a href="#3-不等式约束" class="headerlink" title="3. 不等式约束"></a>3. 不等式约束</h2><p>$\begin{aligned}<br>&amp;\min_{x\in X } \quad f(x) \<br>&amp;s.t \quad g_i(x) \leq 0 \quad i = 1,2… \<br>\end{aligned}$<br /><br><br /><br><br />假设局部最小值点为 $x^{\star}$, 此时存在两种情况：<br /></p>
+<h2 id="3-不等式约束"><a href="#3-不等式约束" class="headerlink" title="3. 不等式约束"></a>3. 不等式约束</h2><p>$\begin{aligned}<br>&amp;\min_{x\in X } \quad f(x) \<br>&amp;s.t \quad g_i(x) \leq 0 \quad i &#x3D; 1,2… \<br>\end{aligned}$<br /><br><br /><br><br />假设局部最小值点为 $x^{\star}$, 此时存在两种情况：<br /></p>
 <p><a name="TEmxa"></a></p>
 <h3 id="x-star-在约束条件之内"><a href="#x-star-在约束条件之内" class="headerlink" title="$x^{\star}$ 在约束条件之内"></a>$x^{\star}$ 在约束条件之内</h3><p><img  
                      lazyload
@@ -292,21 +304,21 @@ $$
                      data-src="https://s3.bmp.ovh/imgs/2022/02/112f5b96e19aac4b.png"
                      
                 >​</p>
-<p>此时由几何关系可知，局部最小值位于g(x) = 0 与 f(x) = C 的切线上，由等式约束可知，此时有<br />​</p>
-<p>$\nabla g(x) = -\lambda \nabla f(x) \quad and \quad \lambda &gt; 0$<br />综合以上有:<br />​</p>
-<p>拉格朗日乘法: $L(x,\lambda) = f(x) + \lambda g(x), \lambda &gt;= 0$<br />​</p>
-<p>$\begin{cases}<br>\nabla_x L(x^{\star},\lambda^{\star}) = 0 \<br>\lambda^{\star} \geq 0 \<br>\lambda^{\star}g(x^{\star}) = 0 \<br>g(x^{\star}) \leq 0\<br>\end{cases}$<br />以上便是KKT条件<br /><br><br /></p>
+<p>此时由几何关系可知，局部最小值位于g(x) &#x3D; 0 与 f(x) &#x3D; C 的切线上，由等式约束可知，此时有<br />​</p>
+<p>$\nabla g(x) &#x3D; -\lambda \nabla f(x) \quad and \quad \lambda &gt; 0$<br />综合以上有:<br />​</p>
+<p>拉格朗日乘法: $L(x,\lambda) &#x3D; f(x) + \lambda g(x), \lambda &gt;&#x3D; 0$<br />​</p>
+<p>$\begin{cases}<br>\nabla_x L(x^{\star},\lambda^{\star}) &#x3D; 0 \<br>\lambda^{\star} \geq 0 \<br>\lambda^{\star}g(x^{\star}) &#x3D; 0 \<br>g(x^{\star}) \leq 0\<br>\end{cases}$<br />以上便是KKT条件<br /><br><br /></p>
 <p><a name="MLZOh"></a></p>
-<h3 id="另一个直观的解释为"><a href="#另一个直观的解释为" class="headerlink" title="另一个直观的解释为:"></a>另一个直观的解释为:</h3><p><br />构造 $\theta_p(x) = \max_{\mu} L(x,\mu) =  \max_{\mu} {f(x) + \mu g(x)}, \mu &gt;= 0$, 假设在 $x^{\star}$处取得最大值，存在两种情况：</p>
+<h3 id="另一个直观的解释为"><a href="#另一个直观的解释为" class="headerlink" title="另一个直观的解释为:"></a>另一个直观的解释为:</h3><p><br />构造 $\theta_p(x) &#x3D; \max_{\mu} L(x,\mu) &#x3D;  \max_{\mu} {f(x) + \mu g(x)}, \mu &gt;&#x3D; 0$, 假设在 $x^{\star}$处取得最大值，存在两种情况：</p>
 <ol>
-<li> x 满足 $g(x) = 0$, 此时 $\theta_p(x) = f(x)$</li>
-<li> x 满足 $g(x) &lt; 0$, 此时 $\mu = 0 \to \theta_p(x) = f(x)$</li>
-<li> x 不满足  $g(x) \leq 0$, 此时 $\theta_p(x) = +\infty$</li>
+<li>x 满足 $g(x) &#x3D; 0$, 此时 $\theta_p(x) &#x3D; f(x)$</li>
+<li>x 满足 $g(x) &lt; 0$, 此时 $\mu &#x3D; 0 \to \theta_p(x) &#x3D; f(x)$</li>
+<li>x 不满足  $g(x) \leq 0$, 此时 $\theta_p(x) &#x3D; +\infty$</li>
 </ol>
-<p><br />而， $\min_{x} \theta_p(x) = \min_x \max_{\mu}L(x,\mu) = \min_{x} f(x)$<br /><br><br />此时要求条件为：<br /><br><br />$\begin{cases}<br> \nabla_xL(x^{\star},\mu^{\star}) = 0 \<br> g(x^{\star}) \leq 0 \<br>\mu^{\star} &gt;= 0\<br>\mu^{\star} g(x^{\star})= 0\<br>\end{cases}$<br /><br><br /></p>
+<p><br />而， $\min_{x} \theta_p(x) &#x3D; \min_x \max_{\mu}L(x,\mu) &#x3D; \min_{x} f(x)$<br /><br><br />此时要求条件为：<br /><br><br />$\begin{cases}<br> \nabla_xL(x^{\star},\mu^{\star}) &#x3D; 0 \<br> g(x^{\star}) \leq 0 \<br>\mu^{\star} &gt;&#x3D; 0\<br>\mu^{\star} g(x^{\star})&#x3D; 0\<br>\end{cases}$<br /><br><br /></p>
 <p><a name="5qJXy"></a></p>
-<h2 id="4-等式和不等式约束"><a href="#4-等式和不等式约束" class="headerlink" title="4. 等式和不等式约束"></a>4. 等式和不等式约束</h2><p>$\begin{aligned}<br>&amp;\min_{x\in X } \quad f(x) \<br>&amp;s.t \quad \begin{cases}<br>g_i(x) = 0 \quad i = 1,2… \<br>h_j(x) &lt;= 0 \quad j = 1,2…\\end{cases}<br>\end{aligned}$<br /><br><br />此时，是2，3 的综合情况，只需要构造拉格朗日乘法<br />$L(x,\lambda,\mu) = f(x) + \sum_i \lambda_ig_i(x) + \sum_j \mu_j h_j(x) \quad, \quad\mu_j &gt;= 0$<br />若$x^{\star}$满足此条件,则有：<br />​</p>
-<p>$\begin{cases}<br>\nabla_xL(x^{\star},\lambda^{\star},\mu^{\star}) = 0 \<br> g_i(x^{\star}) = 0 \<br>h_j(x^{\star}) \leq 0 \<br>\mu^{\star} &gt;= 0\<br>\mu^{\star} h_j(x^{\star})= 0\<br>\end{cases}$<br /></p>
+<h2 id="4-等式和不等式约束"><a href="#4-等式和不等式约束" class="headerlink" title="4. 等式和不等式约束"></a>4. 等式和不等式约束</h2><p>$\begin{aligned}<br>&amp;\min_{x\in X } \quad f(x) \<br>&amp;s.t \quad \begin{cases}<br>g_i(x) &#x3D; 0 \quad i &#x3D; 1,2… \<br>h_j(x) &lt;&#x3D; 0 \quad j &#x3D; 1,2…\\end{cases}<br>\end{aligned}$<br /><br><br />此时，是2，3 的综合情况，只需要构造拉格朗日乘法<br />$L(x,\lambda,\mu) &#x3D; f(x) + \sum_i \lambda_ig_i(x) + \sum_j \mu_j h_j(x) \quad, \quad\mu_j &gt;&#x3D; 0$<br />若$x^{\star}$满足此条件,则有：<br />​</p>
+<p>$\begin{cases}<br>\nabla_xL(x^{\star},\lambda^{\star},\mu^{\star}) &#x3D; 0 \<br> g_i(x^{\star}) &#x3D; 0 \<br>h_j(x^{\star}) \leq 0 \<br>\mu^{\star} &gt;&#x3D; 0\<br>\mu^{\star} h_j(x^{\star})&#x3D; 0\<br>\end{cases}$<br /></p>
 <p><a name="1olZc"></a></p>
 <h2 id="5-附件📎"><a href="#5-附件📎" class="headerlink" title="5. 附件📎"></a>5. 附件📎</h2>
         </div>
@@ -457,7 +469,7 @@ $$
               <span>2020</span>
               -
             
-            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">codeflysafe</a>
+            2023&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">codeflysafe</a>
         </div>
         
             <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>

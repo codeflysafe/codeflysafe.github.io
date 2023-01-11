@@ -24,7 +24,7 @@
     KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/logo.jpeg","favicon":"/images/logo.jpeg","article_img_align":"center","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
     KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
   </script>
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.2"></head>
 
 
 <body>
@@ -44,7 +44,13 @@
     <div class="page-main-content">
 
         <div class="page-main-content-top">
-            <header class="header-wrapper">
+            <!--
+ * @Author: sjhuang
+ * @Date: 2022-04-08 09:47:24
+ * @LastEditTime: 2023-01-01 11:00:04
+ * @FilePath: /notes/themes/keep/layout/_partial/header.ejs
+-->
+<header class="header-wrapper">
 
     <div class="header-content">
         <div class="left">
@@ -122,7 +128,13 @@
     </div>
 
     <div class="window-mask"></div>
-
+    <script>
+        window.MathJax = {
+            tex: {
+                tags: 'ams'
+            }
+        };
+    </script>
 </header>
 
 
@@ -212,34 +224,34 @@
 <span id="more"></span>
 
 <h2 id="1-基础理论"><a href="#1-基础理论" class="headerlink" title="1. 基础理论"></a>1. 基础理论</h2><p>根据条件概率或者贝叶斯理论有：</p>
-<p>$$<br>P(Y = c_k/ X = x) = \frac{P(Y = c_k, X = x)}{P(X = x)} = \frac{ P(X = x/ Y = c_k)P(Y = c_k)}{\sum_k^K  P(X = x/ Y = c_k)P(Y = c_k) } \<br>$$</p>
+<p>$$<br>P(Y &#x3D; c_k&#x2F; X &#x3D; x) &#x3D; \frac{P(Y &#x3D; c_k, X &#x3D; x)}{P(X &#x3D; x)} &#x3D; \frac{ P(X &#x3D; x&#x2F; Y &#x3D; c_k)P(Y &#x3D; c_k)}{\sum_k^K  P(X &#x3D; x&#x2F; Y &#x3D; c_k)P(Y &#x3D; c_k) } \<br>$$</p>
 <p>其中 Y 为类别集合 {${c_1,c_2,…c_k}$};<br>X 为输入空间的 n 维向量集合 {${x_i,x_2,…x_n}$} 。</p>
 <p>目标为对于给定的一个输入向量，通过模型能够获取其类别（这里取给定x情况下，取概率最大的类别作为最终类别），即</p>
-<p>$$Given,x \in X \<br>y = f(x) = \arg\max_{ck}P(Y = c_k/X = x), k =1,2,3…K$$<br>求解概率 $P(Y = c_k/X = x)$，可以有贝叶斯理论可知，先求解<br>$P(Y = c_k, X = x), P(X = x)$。</p>
-<h3 id="1-1-求解-P-Y-c-k-X-x"><a href="#1-1-求解-P-Y-c-k-X-x" class="headerlink" title="1.1 求解$P(Y = c_k,X = x)$"></a>1.1 求解$P(Y = c_k,X = x)$</h3><p>这里假设了，对于变量<br>$$<br>x = [x^{(1)},…,x^{(m)}]<br>$$<br>的不同特征之间相互独立，因此:</p>
-<p>$$<br>\begin{aligned}<br>P(Y=c_k,X=x) &amp;= P(Y=c_k,X^{(1)} \<br>   &amp;= x^{(1)},…,X^{(m)} = x^{(m)} ) \<br>   &amp;= \prod_{i}^m P(Y=c_k,X^{(i)} = x^{(i)}) \<br>   &amp;= P(Y = c_k) \prod_{i}^m P(X^{(i)}= x^{(i)}/ Y = c_k )<br>\end{aligned}<br>$$</p>
-<h3 id="1-2-求解-P-X-x"><a href="#1-2-求解-P-X-x" class="headerlink" title="1.2 求解 $P(X = x)$"></a>1.2 求解 $P(X = x)$</h3><p>有贝叶斯可知：<br>$$<br>\begin{aligned}<br>P(X = x) &amp;= \sum_k^K  P(X = x/ Y = c_k)P(Y = c_k) \<br>&amp;= \sum_k^K P(Y=c_k) \prod_i^m P(X^{(i)} = x^{(i)}/ Y = c_k )<br>\end{aligned}<br>$$</p>
+<p>$$Given,x \in X \<br>y &#x3D; f(x) &#x3D; \arg\max_{ck}P(Y &#x3D; c_k&#x2F;X &#x3D; x), k &#x3D;1,2,3…K$$<br>求解概率 $P(Y &#x3D; c_k&#x2F;X &#x3D; x)$，可以有贝叶斯理论可知，先求解<br>$P(Y &#x3D; c_k, X &#x3D; x), P(X &#x3D; x)$。</p>
+<h3 id="1-1-求解-P-Y-x3D-c-k-X-x3D-x"><a href="#1-1-求解-P-Y-x3D-c-k-X-x3D-x" class="headerlink" title="1.1 求解$P(Y &#x3D; c_k,X &#x3D; x)$"></a>1.1 求解$P(Y &#x3D; c_k,X &#x3D; x)$</h3><p>这里假设了，对于变量<br>$$<br>x &#x3D; [x^{(1)},…,x^{(m)}]<br>$$<br>的不同特征之间相互独立，因此:</p>
+<p>$$<br>\begin{aligned}<br>P(Y&#x3D;c_k,X&#x3D;x) &amp;&#x3D; P(Y&#x3D;c_k,X^{(1)} \<br>   &amp;&#x3D; x^{(1)},…,X^{(m)} &#x3D; x^{(m)} ) \<br>   &amp;&#x3D; \prod_{i}^m P(Y&#x3D;c_k,X^{(i)} &#x3D; x^{(i)}) \<br>   &amp;&#x3D; P(Y &#x3D; c_k) \prod_{i}^m P(X^{(i)}&#x3D; x^{(i)}&#x2F; Y &#x3D; c_k )<br>\end{aligned}<br>$$</p>
+<h3 id="1-2-求解-P-X-x3D-x"><a href="#1-2-求解-P-X-x3D-x" class="headerlink" title="1.2 求解 $P(X &#x3D; x)$"></a>1.2 求解 $P(X &#x3D; x)$</h3><p>有贝叶斯可知：<br>$$<br>\begin{aligned}<br>P(X &#x3D; x) &amp;&#x3D; \sum_k^K  P(X &#x3D; x&#x2F; Y &#x3D; c_k)P(Y &#x3D; c_k) \<br>&amp;&#x3D; \sum_k^K P(Y&#x3D;c_k) \prod_i^m P(X^{(i)} &#x3D; x^{(i)}&#x2F; Y &#x3D; c_k )<br>\end{aligned}<br>$$</p>
 <blockquote>
-<p>但是 $P(Y = c_k ) , , P(X^{(i)} = x^{(i)}/ Y = c_k )$ 如何确定呢？</p>
+<p>但是 $P(Y &#x3D; c_k ) , , P(X^{(i)} &#x3D; x^{(i)}&#x2F; Y &#x3D; c_k )$ 如何确定呢？</p>
 </blockquote>
-<h2 id="2-最大化后验概率或者最小化期望风险"><a href="#2-最大化后验概率或者最小化期望风险" class="headerlink" title="2. 最大化后验概率或者最小化期望风险"></a>2. 最大化后验概率或者最小化期望风险</h2><p>后验概率最大化即：$\max P(Y=c_k/X=x)$</p>
-<p>假设误差损失函数：<br>$$<br>\begin{aligned}<br>L(Y, f(X)) = \begin{cases}<br> 0 &amp;, Y = f(X) \<br> 1 &amp;, Y \neq f(X)\<br>\end{cases}<br>\end{aligned}<br>$$<br>则模型目标为最小化期望风险即：</p>
-<p>$$<br>\begin{aligned}<br>R_{exp}(f) &amp;= E[L(Y,f(X)]<br>\&amp;= E_X\sum_k^KP(c_k/X) L(c_k,f(X))  \&amp;= E_X\sum_k^{K}L(y,c_k)P(c_k/X=x) \&amp;= E_X\sum_k^{K}P(y \neq c_k/X=x) \qquad  (1)<br>\end{aligned}<br>$$</p>
-<p>最小化式子(1)，只需要对 X=x 逐个最小化即可。</p>
-<p>$$<br>\begin{aligned}<br>f(x) &amp;= \arg\min P(y\neq c_k/X=x) \<br>&amp;= \arg\min (1 - P(y = c_k/X= x)) \<br>&amp;= \arg \max P(y=c_k/X=x)<br>\end{aligned}<br>$$</p>
+<h2 id="2-最大化后验概率或者最小化期望风险"><a href="#2-最大化后验概率或者最小化期望风险" class="headerlink" title="2. 最大化后验概率或者最小化期望风险"></a>2. 最大化后验概率或者最小化期望风险</h2><p>后验概率最大化即：$\max P(Y&#x3D;c_k&#x2F;X&#x3D;x)$</p>
+<p>假设误差损失函数：<br>$$<br>\begin{aligned}<br>L(Y, f(X)) &#x3D; \begin{cases}<br> 0 &amp;, Y &#x3D; f(X) \<br> 1 &amp;, Y \neq f(X)\<br>\end{cases}<br>\end{aligned}<br>$$<br>则模型目标为最小化期望风险即：</p>
+<p>$$<br>\begin{aligned}<br>R_{exp}(f) &amp;&#x3D; E[L(Y,f(X)]<br>\&amp;&#x3D; E_X\sum_k^KP(c_k&#x2F;X) L(c_k,f(X))  \&amp;&#x3D; E_X\sum_k^{K}L(y,c_k)P(c_k&#x2F;X&#x3D;x) \&amp;&#x3D; E_X\sum_k^{K}P(y \neq c_k&#x2F;X&#x3D;x) \qquad  (1)<br>\end{aligned}<br>$$</p>
+<p>最小化式子(1)，只需要对 X&#x3D;x 逐个最小化即可。</p>
+<p>$$<br>\begin{aligned}<br>f(x) &amp;&#x3D; \arg\min P(y\neq c_k&#x2F;X&#x3D;x) \<br>&amp;&#x3D; \arg\min (1 - P(y &#x3D; c_k&#x2F;X&#x3D; x)) \<br>&amp;&#x3D; \arg \max P(y&#x3D;c_k&#x2F;X&#x3D;x)<br>\end{aligned}<br>$$</p>
 <p>因此，两者是等价的</p>
-<h2 id="3-贝叶斯的参数估计"><a href="#3-贝叶斯的参数估计" class="headerlink" title="3. 贝叶斯的参数估计"></a>3. 贝叶斯的参数估计</h2><p>前面提到问题：但是 $P(Y = c_k ) , , P(X^{(i)} = x^{(i)}/ Y = c_k )$ 如何确定呢？<br>对于离散变量，一个直观的概念是使用其统计学方法来近似估计概率。<br>对于连续变量，采用一个概率分布拟合其变量分布，如高斯分布</p>
-<h3 id="3-1-离散型变量估计"><a href="#3-1-离散型变量估计" class="headerlink" title="3.1 离散型变量估计"></a>3.1 离散型变量估计</h3><p>令 $\theta = P(Y = c_k)$ 参与极大似然概率来估计 $\theta$, 设变量个数为n,其中类别为$c_k$的有t个，则有：</p>
-<p>$$<br>\begin{aligned}<br>&amp;L(\theta) = (\theta)^{t}(1 - \theta)^{(n-t)} \<br>&amp;LnL(\theta) = tLn(\theta) + (n-t)Ln(1-\theta) \<br>&amp;\frac{dLnL(\theta)}{d\theta} = \frac{t}{\theta} + \frac{-(n-t)}{1 - \theta} = 0 \<br>&amp;\hat\theta = \frac{t}{n}<br>\end{aligned}<br>$$<br>即： $P(Y=c_k) = \frac{t}{n}$<br>同理可知：<br>$P(X^{(i)} = x^{(i)}/ Y = c_k ) = \frac{t_{ni}}{n_k}$, 其中 $n_k$ 为类别为 $c_k$的数量，$t_{ni}$为在类别为$c_k$的数据中，$X^{(i)} = x^{(i)}$的数量<br>由于，对于任意类别 $P(X = x)$ 的值是相同的，因此可以省略…</p>
+<h2 id="3-贝叶斯的参数估计"><a href="#3-贝叶斯的参数估计" class="headerlink" title="3. 贝叶斯的参数估计"></a>3. 贝叶斯的参数估计</h2><p>前面提到问题：但是 $P(Y &#x3D; c_k ) , , P(X^{(i)} &#x3D; x^{(i)}&#x2F; Y &#x3D; c_k )$ 如何确定呢？<br>对于离散变量，一个直观的概念是使用其统计学方法来近似估计概率。<br>对于连续变量，采用一个概率分布拟合其变量分布，如高斯分布</p>
+<h3 id="3-1-离散型变量估计"><a href="#3-1-离散型变量估计" class="headerlink" title="3.1 离散型变量估计"></a>3.1 离散型变量估计</h3><p>令 $\theta &#x3D; P(Y &#x3D; c_k)$ 参与极大似然概率来估计 $\theta$, 设变量个数为n,其中类别为$c_k$的有t个，则有：</p>
+<p>$$<br>\begin{aligned}<br>&amp;L(\theta) &#x3D; (\theta)^{t}(1 - \theta)^{(n-t)} \<br>&amp;LnL(\theta) &#x3D; tLn(\theta) + (n-t)Ln(1-\theta) \<br>&amp;\frac{dLnL(\theta)}{d\theta} &#x3D; \frac{t}{\theta} + \frac{-(n-t)}{1 - \theta} &#x3D; 0 \<br>&amp;\hat\theta &#x3D; \frac{t}{n}<br>\end{aligned}<br>$$<br>即： $P(Y&#x3D;c_k) &#x3D; \frac{t}{n}$<br>同理可知：<br>$P(X^{(i)} &#x3D; x^{(i)}&#x2F; Y &#x3D; c_k ) &#x3D; \frac{t_{ni}}{n_k}$, 其中 $n_k$ 为类别为 $c_k$的数量，$t_{ni}$为在类别为$c_k$的数据中，$X^{(i)} &#x3D; x^{(i)}$的数量<br>由于，对于任意类别 $P(X &#x3D; x)$ 的值是相同的，因此可以省略…</p>
 <h3 id="3-2-连续性变量估计"><a href="#3-2-连续性变量估计" class="headerlink" title="3.2 连续性变量估计"></a>3.2 连续性变量估计</h3><p>如果X的各个特征是连续的，这是可以采用某种具体的分布函数来拟合X各个特征的分布，比如采用 <code>Normal Distribution</code> 等等。通常在确定分布函数类型之前，先对数据进行可视化处理，观察其数字特征等，在确定采用哪种分布函数来拟合。</p>
 <p>以高斯分布为例，此时 $X_i \sim (\mu\sigma)$：</p>
-<p>$$<br>\begin{aligned}<br>&amp;\mu_i = Ex_i = \bar{x} \<br>&amp;\sigma_i^2 = E((X_i-\mu_i)^2)<br>\end{aligned}<br>$$</p>
+<p>$$<br>\begin{aligned}<br>&amp;\mu_i &#x3D; Ex_i &#x3D; \bar{x} \<br>&amp;\sigma_i^2 &#x3D; E((X_i-\mu_i)^2)<br>\end{aligned}<br>$$</p>
 <blockquote>
 <p>这里其实要使用最大似然来估计一下变量 $\mu$和 $\sigma$</p>
 </blockquote>
-<p>$$<br>L(\mu,\sigma) = \prod_i^mf(x_i)\<br>LnL = \sum_i^m\ln{f(x_i)}<br>$$<br>对上式分别对 $\mu$和 $\sigma$求偏导数，并令其为0即可</p>
+<p>$$<br>L(\mu,\sigma) &#x3D; \prod_i^mf(x_i)\<br>LnL &#x3D; \sum_i^m\ln{f(x_i)}<br>$$<br>对上式分别对 $\mu$和 $\sigma$求偏导数，并令其为0即可</p>
 <p>更简化，由于变量的各个维度都是独立的，因此可以联合分布为各个分布函数的乘积，如果都是符合高斯分布，即有：</p>
-<p>$$<br>\begin{aligned}<br>f(x_1,x_2…x_m) &amp;= \prod_i^mf(x_i) \<br>&amp;= \prod_i^m \frac{1}{(2\pi\sigma_i^2)^{1/2}} \exp{\frac{-(x_i - \mu_i)^2}{2\sigma_i^2}} \<br>&amp;= \frac{1}{(2\pi)^m||\Sigma||}^{1/2} \exp{-\frac{1}{2}(X - \mu)^T\Sigma^{-1}(X - \mu)} \<br>\end{aligned}<br>$$</p>
+<p>$$<br>\begin{aligned}<br>f(x_1,x_2…x_m) &amp;&#x3D; \prod_i^mf(x_i) \<br>&amp;&#x3D; \prod_i^m \frac{1}{(2\pi\sigma_i^2)^{1&#x2F;2}} \exp{\frac{-(x_i - \mu_i)^2}{2\sigma_i^2}} \<br>&amp;&#x3D; \frac{1}{(2\pi)^m||\Sigma||}^{1&#x2F;2} \exp{-\frac{1}{2}(X - \mu)^T\Sigma^{-1}(X - \mu)} \<br>\end{aligned}<br>$$</p>
 <p>只需要计算 <code>X</code> 的方差和均值即可。</p>
 <p>另外，如果 <code>X</code> 得来源于一个公共得资源，可以假设各个特征得方差均相同 </p>
 <blockquote>
@@ -247,42 +259,42 @@
 </blockquote>
 <h3 id="贝叶斯模型存在的问题"><a href="#贝叶斯模型存在的问题" class="headerlink" title="贝叶斯模型存在的问题"></a>贝叶斯模型存在的问题</h3><ol>
 <li>无偏差的贝叶斯模型是不现实的？</li>
-<li> 思考一下，如果变量的特征一个离散型的，一个是连续性的，如何设计和求解模型呢？<h2 id="逻辑回归模型"><a href="#逻辑回归模型" class="headerlink" title="逻辑回归模型"></a>逻辑回归模型</h2></li>
+<li>思考一下，如果变量的特征一个离散型的，一个是连续性的，如何设计和求解模型呢？</li>
 </ol>
-<h3 id="2-从朴素贝叶斯到逻辑回归"><a href="#2-从朴素贝叶斯到逻辑回归" class="headerlink" title="2. 从朴素贝叶斯到逻辑回归"></a>2. 从朴素贝叶斯到逻辑回归</h3><p>首先在了解逻辑回归模型的之前，我们以二分类为例，使用朴素贝叶斯的方法来判别分类。</p>
-<p>$$<br>\begin{aligned}<br>P(Y = c_1/X = x)  &amp;= \frac{P(Y = c_1)P(X =x/ Y =c_1)}{P(X = x)} \<br>&amp;=\frac{P(Y = c_1) P(X =x/Y=c_1)}{\sum_i^2 P(Y = c_1) P(X =x/Y=c_1)} \<br>&amp;=\frac{1}{1 + \frac{P(Y=c_2)P(X =x/Y=c_2)}{P(Y =c_1)P(X =x/Y=c_1)}} , (3) \<br>\end{aligned}<br>$$</p>
-<p>由于 $P(X = x/ Y= c_1 ) = f(x) = \frac{1}{(2\pi)^m||\Sigma||}^{1/2} \exp{-\frac{1}{2}(x - \mu)^T\Sigma^{-1}(x - \mu)}$</p>
+<h2 id="逻辑回归模型"><a href="#逻辑回归模型" class="headerlink" title="逻辑回归模型"></a>逻辑回归模型</h2><h3 id="2-从朴素贝叶斯到逻辑回归"><a href="#2-从朴素贝叶斯到逻辑回归" class="headerlink" title="2. 从朴素贝叶斯到逻辑回归"></a>2. 从朴素贝叶斯到逻辑回归</h3><p>首先在了解逻辑回归模型的之前，我们以二分类为例，使用朴素贝叶斯的方法来判别分类。</p>
+<p>$$<br>\begin{aligned}<br>P(Y &#x3D; c_1&#x2F;X &#x3D; x)  &amp;&#x3D; \frac{P(Y &#x3D; c_1)P(X &#x3D;x&#x2F; Y &#x3D;c_1)}{P(X &#x3D; x)} \<br>&amp;&#x3D;\frac{P(Y &#x3D; c_1) P(X &#x3D;x&#x2F;Y&#x3D;c_1)}{\sum_i^2 P(Y &#x3D; c_1) P(X &#x3D;x&#x2F;Y&#x3D;c_1)} \<br>&amp;&#x3D;\frac{1}{1 + \frac{P(Y&#x3D;c_2)P(X &#x3D;x&#x2F;Y&#x3D;c_2)}{P(Y &#x3D;c_1)P(X &#x3D;x&#x2F;Y&#x3D;c_1)}} , (3) \<br>\end{aligned}<br>$$</p>
+<p>由于 $P(X &#x3D; x&#x2F; Y&#x3D; c_1 ) &#x3D; f(x) &#x3D; \frac{1}{(2\pi)^m||\Sigma||}^{1&#x2F;2} \exp{-\frac{1}{2}(x - \mu)^T\Sigma^{-1}(x - \mu)}$</p>
 <p>带入到式（3） 中，可得：</p>
-<p>$P(Y=c_1/X= x) = \frac{1}{1 + \exp(-z)}  = \sigma(z)$</p>
+<p>$P(Y&#x3D;c_1&#x2F;X&#x3D; x) &#x3D; \frac{1}{1 + \exp(-z)}  &#x3D; \sigma(z)$</p>
 <p>这就是 <code>Sigmoid Function</code></p>
-<p>$z = ln(\frac{P(c1)P(x/c1)}{P(c2)P(x/c2)}) = ln\frac{P(c1)}{P(c2)} + ln\frac{P(x/c1)}{P(x/c2)}$</p>
-<p>其中 $P(Y=c_k) = \frac{t}{n}$，<br>可知 $ln\frac{P(c1)}{P(c2)}$ 是常数</p>
-<p>这里假设 $\Sigma_1 = \Sigma_2 = \Sigma$</p>
-<p>$$<br>ln\frac{P(x/c1)}{P(x/c2)} = \frac{1}{2}(x-\mu_1)^T\Sigma^{-1}(x-\mu_1) -  \frac{1}{2}(x-\mu_2)^T\Sigma^{-1}(x-\mu_2) \<br>= (\mu_1-\mu_2)^T\Sigma^{-1}x - \frac{1}{2}( \mu_1^T\Sigma^{-1}\mu_1 - \mu_2^T\Sigma^{-1}\mu_2 )<br>$$</p>
-<p>令 $b = ln\frac{P(c1)}{P(c2)} + - \frac{1}{2}( \mu_1^T\Sigma^{-1}\mu_1 - \mu_2^T\Sigma^{-1}\mu_2 )$, $w^T = (\mu_1-\mu_2)^T\Sigma^{-1}$</p>
-<p>则有 $z = w^Tx + b$</p>
+<p>$z &#x3D; ln(\frac{P(c1)P(x&#x2F;c1)}{P(c2)P(x&#x2F;c2)}) &#x3D; ln\frac{P(c1)}{P(c2)} + ln\frac{P(x&#x2F;c1)}{P(x&#x2F;c2)}$</p>
+<p>其中 $P(Y&#x3D;c_k) &#x3D; \frac{t}{n}$，<br>可知 $ln\frac{P(c1)}{P(c2)}$ 是常数</p>
+<p>这里假设 $\Sigma_1 &#x3D; \Sigma_2 &#x3D; \Sigma$</p>
+<p>$$<br>ln\frac{P(x&#x2F;c1)}{P(x&#x2F;c2)} &#x3D; \frac{1}{2}(x-\mu_1)^T\Sigma^{-1}(x-\mu_1) -  \frac{1}{2}(x-\mu_2)^T\Sigma^{-1}(x-\mu_2) \<br>&#x3D; (\mu_1-\mu_2)^T\Sigma^{-1}x - \frac{1}{2}( \mu_1^T\Sigma^{-1}\mu_1 - \mu_2^T\Sigma^{-1}\mu_2 )<br>$$</p>
+<p>令 $b &#x3D; ln\frac{P(c1)}{P(c2)} + - \frac{1}{2}( \mu_1^T\Sigma^{-1}\mu_1 - \mu_2^T\Sigma^{-1}\mu_2 )$, $w^T &#x3D; (\mu_1-\mu_2)^T\Sigma^{-1}$</p>
+<p>则有 $z &#x3D; w^Tx + b$</p>
 <p>这里其实是有一个差异，因为 <code>w</code> 和 <code>b</code> 之间是有某种依赖关系的，但是如果只看作是 <code>w</code> 和 <code>b</code>变量，则<code>w</code>和<code>b</code>之间相互独立，这样子大大减少了训练的参数，这也就是逻辑回归。</p>
 <h3 id="3-从回归模型到逻辑回归"><a href="#3-从回归模型到逻辑回归" class="headerlink" title="3. 从回归模型到逻辑回归"></a>3. 从回归模型到逻辑回归</h3><blockquote>
 <p>还是以二分类为例</p>
 </blockquote>
-<p>回归模型为 $y(x) = W^Tx + b$ ， 这里我们想要找到一种模型使：$P_{w,b}(c/x)$</p>
-<p>$$<br>\begin{cases}<br>   output , c1 ,, P_{w,b}(c/x) &gt;= 0.5 \<br>   otherwise ,, output ,c2<br>\end{cases}<br>$$</p>
+<p>回归模型为 $y(x) &#x3D; W^Tx + b$ ， 这里我们想要找到一种模型使：$P_{w,b}(c&#x2F;x)$</p>
+<p>$$<br>\begin{cases}<br>   output , c1 ,, P_{w,b}(c&#x2F;x) &gt;&#x3D; 0.5 \<br>   otherwise ,, output ,c2<br>\end{cases}<br>$$</p>
 <p>这里我们考虑是有 <code>sigmoid funcion</code></p>
-<p>$\sigma(z) = \frac{1}{1 + \exp{(-z)}}$<br>其取值范围为 (0 , 1 )，自变量取值为$( -\infty，+\infty)$, $z = w^Tx + b$<br>其图形如下：</p>
+<p>$\sigma(z) &#x3D; \frac{1}{1 + \exp{(-z)}}$<br>其取值范围为 (0 , 1 )，自变量取值为$( -\infty，+\infty)$, $z &#x3D; w^Tx + b$<br>其图形如下：</p>
 <p>其实就是使用 <code>sigmoid function</code> 来替代 <code>p(y/x)</code>的概率，因此这种模型与前文看到模型不同。前文（贝叶斯）是使用间接计算，即由 <code>P(y)</code> 和 <code>P(x/y)</code>  来间接求的 <code>p(y/c)</code>的概率，这种模型叫做生成模型（<code>Generative model</code>）。而逻辑回归，是直接采用一个函数来模拟 <code>p(y/x)</code>的分布，成为判别模型(<code>discriminative model</code>)</p>
 <h4 id="3-1-策略"><a href="#3-1-策略" class="headerlink" title="3.1 策略"></a>3.1 策略</h4><p>逻辑回归的损失函数可以分为两种，一种为 <code>maximum likelihood estimation</code> ，另外一种为  <code>the least squares</code> , 一般采用最大似然概率。</p>
 <blockquote>
 <p>想一下为什么？</p>
 </blockquote>
-<p>其损失函数为：假设 $z_1,z_2 … z_m 为 c_1, z_{m+1}… z_n 为 c_2$<br>则<br>$$<br>L(w,b) = \prod_i^{m} \sigma(z_i) \prod_{i = m+1}^n (1- \sigma(z_i))\<br>\ln{L} = \sum_i^m \ln{(<br>\sigma(z_i))} +  \sum_{m+1}^{n} \ln{(<br>\sigma(z_i))} \<br>= E_{x\sim c_1} \ln{\sigma(z)} +  E_{x\sim c_2} \ln{\sigma(z)}\<br>= \sum_i^n\hat{y_i}\ln{\sigma(z_i)} + (1 - \hat{y_i} )ln{(1 - \sigma(z_i))}<br>$$</p>
-<p>对于每一个给定的x, 使 $f = \sigma(z_i)ln{\sigma(z_i)} + (1 - \sigma(z_i) )ln{(1 - \sigma(z_i))}$ 最大。这里直接对w,b 求偏导数，使用随机梯度下降法即可。</p>
-<p>$$<br>\frac{df}{dw} = \frac{df}{dz} \frac{dz}{dw} \<br> \frac{d\sigma}{dz} = \frac{\exp{(-z)}}{(1 + \exp{(-z)})^2} = \sigma(1 - \sigma) \<br>\frac{dz}{dw} = x\<br>\frac{df}{dw} = (y(1-\sigma) - (1-y)\sigma)x = (y - \sigma)x \<br>\frac{df}{db} = (y(1-\sigma) - (1-y)\sigma)x = y - \sigma<br>$$</p>
+<p>其损失函数为：假设 $z_1,z_2 … z_m 为 c_1, z_{m+1}… z_n 为 c_2$<br>则<br>$$<br>L(w,b) &#x3D; \prod_i^{m} \sigma(z_i) \prod_{i &#x3D; m+1}^n (1- \sigma(z_i))\<br>\ln{L} &#x3D; \sum_i^m \ln{(<br>\sigma(z_i))} +  \sum_{m+1}^{n} \ln{(<br>\sigma(z_i))} \<br>&#x3D; E_{x\sim c_1} \ln{\sigma(z)} +  E_{x\sim c_2} \ln{\sigma(z)}\<br>&#x3D; \sum_i^n\hat{y_i}\ln{\sigma(z_i)} + (1 - \hat{y_i} )ln{(1 - \sigma(z_i))}<br>$$</p>
+<p>对于每一个给定的x, 使 $f &#x3D; \sigma(z_i)ln{\sigma(z_i)} + (1 - \sigma(z_i) )ln{(1 - \sigma(z_i))}$ 最大。这里直接对w,b 求偏导数，使用随机梯度下降法即可。</p>
+<p>$$<br>\frac{df}{dw} &#x3D; \frac{df}{dz} \frac{dz}{dw} \<br> \frac{d\sigma}{dz} &#x3D; \frac{\exp{(-z)}}{(1 + \exp{(-z)})^2} &#x3D; \sigma(1 - \sigma) \<br>\frac{dz}{dw} &#x3D; x\<br>\frac{df}{dw} &#x3D; (y(1-\sigma) - (1-y)\sigma)x &#x3D; (y - \sigma)x \<br>\frac{df}{db} &#x3D; (y(1-\sigma) - (1-y)\sigma)x &#x3D; y - \sigma<br>$$</p>
 <h4 id=""><a href="#" class="headerlink" title=""></a></h4><h3 id="4-思考一下"><a href="#4-思考一下" class="headerlink" title="4. 思考一下"></a>4. 思考一下</h3><ol>
 <li>朴素贝叶斯法和逻辑回归做分类问题的时候，有什么区别？各自有什么优势？</li>
 <li>逻辑回归的损失函数使用 <code>cross entropy</code> 和 <code>square error</code> 用什么优劣？</li>
 </ol>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
-<li> 《统计学习方法》 李航， chapter 4 </li>
+<li>《统计学习方法》 李航， chapter 4 </li>
 <li><a class="link"   target="_blank" rel="noopener" href="https://www.cs.cmu.edu/~tom/mlbook/NBayesLogReg.pdf" >Machine Learning<i class="fas fa-external-link-alt"></i></a> , Tom M. Mitchell , chapter 3</li>
 <li><a class="link"   target="_blank" rel="noopener" href="http://speech.ee.ntu.edu.tw/~tlkagk/courses/ML_2016/Lecture/Classification%20(v3).pdf" >Classification<i class="fas fa-external-link-alt"></i></a> 李宏毅</li>
 </ol>
@@ -439,7 +451,7 @@
               <span>2020</span>
               -
             
-            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">codeflysafe</a>
+            2023&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">codeflysafe</a>
         </div>
         
             <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>

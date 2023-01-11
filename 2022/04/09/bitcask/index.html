@@ -24,7 +24,7 @@
     KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/logo.jpeg","favicon":"/images/logo.jpeg","article_img_align":"center","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
     KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
   </script>
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.2"></head>
 
 
 <body>
@@ -44,7 +44,13 @@
     <div class="page-main-content">
 
         <div class="page-main-content-top">
-            <header class="header-wrapper">
+            <!--
+ * @Author: sjhuang
+ * @Date: 2022-04-08 09:47:24
+ * @LastEditTime: 2023-01-01 11:00:04
+ * @FilePath: /notes/themes/keep/layout/_partial/header.ejs
+-->
+<header class="header-wrapper">
 
     <div class="header-content">
         <div class="left">
@@ -122,7 +128,13 @@
     </div>
 
     <div class="window-mask"></div>
-
+    <script>
+        window.MathJax = {
+            tex: {
+                tags: 'ams'
+            }
+        };
+    </script>
 </header>
 
 
@@ -178,18 +190,18 @@
         
 
         <div class="article-content markdown-body">
-            <h1 id="Bitcask-存储模型"><a href="#Bitcask-存储模型" class="headerlink" title="Bitcask 存储模型"></a>Bitcask 存储模型</h1><p>Paper: Log-Structured Hash Table for Fast Key/Value Data</p>
+            <h1 id="Bitcask-存储模型"><a href="#Bitcask-存储模型" class="headerlink" title="Bitcask 存储模型"></a>Bitcask 存储模型</h1><p>Paper: Log-Structured Hash Table for Fast Key&#x2F;Value Data</p>
 <p>Achieving some of these is easy. Achieving them all is less so.</p>
 <p><code>Bitcask</code> 原来是用于记录<code>Riak distributed database</code>的历史。在<code>Risk</code>的集群中，每个<code>node</code>使用插件式的存储引擎，几乎所有<code>key-value</code>类型的存储引擎都可以作为单个node节点的存储引擎。这种内嵌式的存储引擎可以在不影响其它<code>codebase</code>的情况下提升和测试。</p>
 <p>BitCask 的设计目标是：</p>
 <ol>
 <li>读写低延迟 low latency per item read or written</li>
 <li>高吞吐量，high throughput, especially when writing an incoming stream of random items</li>
-<li>处理更大的数据  ability to handle datasets much larger than RAM w/o degradation</li>
+<li>处理更大的数据  ability to handle datasets much larger than RAM w&#x2F;o degradation</li>
 <li>崩溃恢复容易并且不会丢失数据: crash friendliness, both in terms of fast recovery and not losing data</li>
 <li>容易备份和存储 ease of backup and restore</li>
 <li>一个相当简单并且容易理解的数据形式 a relatively simple, understandable (and thus supportable) code structure and data format</li>
-<li> predictable behavior under heavy access load or large volume</li>
+<li>predictable behavior under heavy access load or large volume</li>
 </ol>
 <p>采用 <code>hash table log merging</code>， 有可能比 <code>LSM-trees</code> 更快</p>
 <p><img  
@@ -385,7 +397,7 @@
               <span>2020</span>
               -
             
-            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">codeflysafe</a>
+            2023&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">codeflysafe</a>
         </div>
         
             <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>

@@ -22,7 +22,7 @@
     KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/logo.jpeg","favicon":"/images/logo.jpeg","article_img_align":"center","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
     KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
   </script>
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.2"></head>
 
 
 <body>
@@ -42,7 +42,13 @@
     <div class="page-main-content">
 
         <div class="page-main-content-top">
-            <header class="header-wrapper">
+            <!--
+ * @Author: sjhuang
+ * @Date: 2022-04-08 09:47:24
+ * @LastEditTime: 2023-01-01 11:00:04
+ * @FilePath: /notes/themes/keep/layout/_partial/header.ejs
+-->
+<header class="header-wrapper">
 
     <div class="header-content">
         <div class="left">
@@ -120,7 +126,13 @@
     </div>
 
     <div class="window-mask"></div>
-
+    <script>
+        window.MathJax = {
+            tex: {
+                tags: 'ams'
+            }
+        };
+    </script>
 </header>
 
 
@@ -185,15 +197,15 @@
 <h1 id="socket编程中write、read和send、recv之间的区别"><a href="#socket编程中write、read和send、recv之间的区别" class="headerlink" title="socket编程中write、read和send、recv之间的区别"></a>socket编程中write、read和send、recv之间的区别</h1><blockquote>
 <p>from <a class="link"   target="_blank" rel="noopener" href="https://www.cnblogs.com/George1994/p/6731091.html" >https://www.cnblogs.com/George1994/p/6731091.html<i class="fas fa-external-link-alt"></i></a></p>
 </blockquote>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">read/<span class="function">write</span></span><br><span class="line"><span class="function"><span class="keyword">ssize_t</span> <span class="title">read</span><span class="params">(<span class="keyword">int</span> fd,<span class="keyword">void</span> *buf,<span class="keyword">size_t</span> nbyte)</span></span></span><br><span class="line"><span class="function"><span class="keyword">ssize_t</span> <span class="title">write</span><span class="params">(<span class="keyword">int</span> fd, <span class="keyword">const</span> <span class="keyword">void</span>*buf,<span class="keyword">size_t</span> nbytes)</span></span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">read/<span class="function">write</span></span><br><span class="line"><span class="function"><span class="type">ssize_t</span> <span class="title">read</span><span class="params">(<span class="type">int</span> fd,<span class="type">void</span> *buf,<span class="type">size_t</span> nbyte)</span></span></span><br><span class="line"><span class="function"><span class="type">ssize_t</span> <span class="title">write</span><span class="params">(<span class="type">int</span> fd, <span class="type">const</span> <span class="type">void</span>*buf,<span class="type">size_t</span> nbytes)</span></span>;</span><br></pre></td></tr></table></figure>
 <span id="more"></span>
 <p>read：负责从描述符fd中读取内容，当读取成功时，read返回实际所读的字节数（大于0）；如果返回的值为0，表示已经读到文件结束了；如果返回的值小于0，则出现错误，如果错误为EINTR，说明错误是由中断引起的，如果是ECONNREST表示网络连接出了问题。</p>
 <p>write：将buf中的nbytes字节内容写入到文件描述符fd，成功时返回写的字节数，失败的时候返回-1；在实际的程序中，写入有两种可能：</p>
 <p>write的返回值大于0,表示写了部分或者是全部的数据。这样我们用一个while循环来不停的写入，但是循环过程中的buf参数和nbyte参数得由我们来更新。也就是说，网络写函数是不负责将全部数据写完之后在返回的。<br>返回的值小于0,此时出现了错误。我们要根据错误类型来处理.如果错误为EINTR表示在写的时候出现了中断错误。如果为EPIPE表示网络连接出现了问题(对方已经关闭了连接).</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">recv/<span class="function">send</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">recv</span><span class="params">(<span class="keyword">int</span> sockfd,<span class="keyword">void</span> *buf,<span class="keyword">int</span> len,<span class="keyword">int</span> flags)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">send</span><span class="params">(<span class="keyword">int</span> sockfd,<span class="keyword">void</span> *buf,<span class="keyword">int</span> len,<span class="keyword">int</span> flags)</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">recv/<span class="function">send</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">recv</span><span class="params">(<span class="type">int</span> sockfd,<span class="type">void</span> *buf,<span class="type">int</span> len,<span class="type">int</span> flags)</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">send</span><span class="params">(<span class="type">int</span> sockfd,<span class="type">void</span> *buf,<span class="type">int</span> len,<span class="type">int</span> flags)</span></span></span><br></pre></td></tr></table></figure>
 <p>第四个参数可以是0或者是下面的组合</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">flags	描述</span><br><span class="line">MSG_DONTROUTE	不查找表</span><br><span class="line">MSG_OOB	接受或者发送带外数据</span><br><span class="line">MSG_PEEK	查看数据,并不从系统缓冲区移走数据</span><br><span class="line">MSG_WAITALL	等待所有数据</span><br><span class="line">读取／接收	写入／发送</span><br><span class="line">read	write</span><br><span class="line">recv	send</span><br></pre></td></tr></table></figure>
-<p>当recv/send的flag参数设置为0时，则和read/write是一样的。<br>如果有如下几种需求，则read/write无法满足，必须使用recv/send:</p>
+<p>当recv&#x2F;send的flag参数设置为0时，则和read&#x2F;write是一样的。<br>如果有如下几种需求，则read&#x2F;write无法满足，必须使用recv&#x2F;send:</p>
 <p>为接收和发送进行一些选项设置<br>从多个客户端中接收报文<br>发送带外数据（out-of-band data)<br>参考文章：<br>socket编程中write、read和send、recv之间的区别</p>
 
         </div>
@@ -332,7 +344,7 @@
               <span>2020</span>
               -
             
-            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">codeflysafe</a>
+            2023&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">codeflysafe</a>
         </div>
         
             <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>

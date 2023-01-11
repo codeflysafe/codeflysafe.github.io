@@ -22,7 +22,7 @@
     KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/logo.jpeg","favicon":"/images/logo.jpeg","article_img_align":"center","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
     KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
   </script>
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.2"></head>
 
 
 <body>
@@ -42,7 +42,13 @@
     <div class="page-main-content">
 
         <div class="page-main-content-top">
-            <header class="header-wrapper">
+            <!--
+ * @Author: sjhuang
+ * @Date: 2022-04-08 09:47:24
+ * @LastEditTime: 2023-01-01 11:00:04
+ * @FilePath: /notes/themes/keep/layout/_partial/header.ejs
+-->
+<header class="header-wrapper">
 
     <div class="header-content">
         <div class="left">
@@ -120,7 +126,13 @@
     </div>
 
     <div class="window-mask"></div>
-
+    <script>
+        window.MathJax = {
+            tex: {
+                tags: 'ams'
+            }
+        };
+    </script>
 </header>
 
 
@@ -133,6 +145,68 @@
                 
                     <div class="home-content-container fade-in-down-animation">
     <ul class="home-article-list">
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/2020/04/30/2020-04-30-%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/">
+                        每日一题
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                         
+
+高清大图
+
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Thu Apr 30 2020 09:00:20 GMT+0800">2020-04-30</span></span>
+        
+        
+    </div>
+
+    <a href="/2020/04/30/2020-04-30-%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/2020/04/26/2020-04-26-Is-China-Winning-0/">
+                        Is China Winning ?
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        
+The geopolitical consequences of covid-19 will be long-lasting and unfortunate
+
+
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Sun Apr 26 2020 08:50:29 GMT+0800">2020-04-26</span></span>
+        
+        
+    </div>
+
+    <a href="/2020/04/26/2020-04-26-Is-China-Winning-0/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
         
             <li class="home-article-item">
 
@@ -257,7 +331,7 @@
 
                 <div class="home-article-content markdown-body">
                     
-                        有 n 个城市，按从 0 到 n-1 编号。给你一个边数组 edges，其中 edges[i] = [fromi, toi, weighti] 代表 fromi 和 toi 两个城市之间的双向加权边，距离阈值是一个整数 distanceThresho...
+                        有 n 个城市，按从 0 到 n-1 编号。给你一个边数组 edges，其中 edges[i] &#x3D; [fromi, toi, weighti] 代表 fromi 和 toi 两个城市之间的双向加权边，距离阈值是一个整数 distanceTh...
                     
                 </div>
 
@@ -356,12 +430,12 @@
                     
                         <li>
                             
-                            <a href="/tags/graph/">graph</a>&nbsp;
+                            <a href="/tags/algorithm/">algorithm</a>&nbsp;
                         </li>
                     
                         <li>
                             | 
-                            <a href="/tags/algorithm/">algorithm</a>&nbsp;
+                            <a href="/tags/graph/">graph</a>&nbsp;
                         </li>
                     
                         <li>
@@ -460,8 +534,7 @@
                 <div class="home-article-content markdown-body">
                     
                         给定一个单词列表，我们将这个列表编码成一个索引字符串 S 与一个索引列表 A。
-例如，如果这个列表是 [“time”, “me”, “bell”]，我们就可以将其表示为 S = “time#bell#” 和 indexes = [0, 2, 5]。
-...
+例如，如果这个列表是 [“time”, “me”, “bell”]，我们就可以将其表示为 S &#x3D; “time#bell#” 和 indexes &#x3D; [...
                     
                 </div>
 
@@ -485,127 +558,6 @@
     </div>
 
     <a href="/2020/03/28/2020-03-28-820.-%E5%8D%95%E8%AF%8D%E7%9A%84%E5%8E%8B%E7%BC%A9%E7%BC%96%E7%A0%81/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2020/03/25/2020-03-25-206.-%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/">
-                        206. 反转链表
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        反转一个单链表。
-示例:
-12输入: 1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL输出: 5-&gt;4-&gt;3-&gt;2-&gt;1-&gt;NULL
-
-Solution双指针
-Code1234567891011121...
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Wed Mar 25 2020 14:55:51 GMT+0800">2020-03-25</span></span>
-        
-            <span class="home-article-category"><i class="fas fa-folder"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/categories/leetcode/">leetcode</a>&nbsp;
-                        </li>
-                    
-                    
-                </ul>
-            </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fas fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/leetcode/">leetcode</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/%E4%B8%80%E5%88%B7leetcode/">一刷leetcode</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2020/03/25/2020-03-25-206.-%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2020/03/25/2020-03-25-Weekly-Contest-83/">
-                        Weekly Contest 83
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        830. 较大分组的位置在一个由小写字母构成的字符串 S 中，包含由一些连续的相同字符所构成的分组。
-例如，在字符串 S = “abbxxxxzyy” 中，就含有 “a”, “bb”, “xxxx”, “z” 和 “yy” 这样的一些分组。
-我们称所...
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Wed Mar 25 2020 12:11:07 GMT+0800">2020-03-25</span></span>
-        
-            <span class="home-article-category"><i class="fas fa-folder"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/categories/leetcode/">leetcode</a>&nbsp;
-                        </li>
-                    
-                    
-                </ul>
-            </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fas fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/leetcode/">leetcode</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/%E4%B8%80%E5%88%B7leetcode/">一刷leetcode</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2020/03/25/2020-03-25-Weekly-Contest-83/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
 </div>
 
             </li>
@@ -645,7 +597,7 @@ Code1234567891011121...
               <span>2020</span>
               -
             
-            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">codeflysafe</a>
+            2023&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">codeflysafe</a>
         </div>
         
             <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>

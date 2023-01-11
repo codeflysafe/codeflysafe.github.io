@@ -24,7 +24,7 @@
     KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/logo.jpeg","favicon":"/images/logo.jpeg","article_img_align":"center","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
     KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
   </script>
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.2"></head>
 
 
 <body>
@@ -44,7 +44,13 @@
     <div class="page-main-content">
 
         <div class="page-main-content-top">
-            <header class="header-wrapper">
+            <!--
+ * @Author: sjhuang
+ * @Date: 2022-04-08 09:47:24
+ * @LastEditTime: 2023-01-01 11:00:04
+ * @FilePath: /notes/themes/keep/layout/_partial/header.ejs
+-->
+<header class="header-wrapper">
 
     <div class="header-content">
         <div class="left">
@@ -122,7 +128,13 @@
     </div>
 
     <div class="window-mask"></div>
-
+    <script>
+        window.MathJax = {
+            tex: {
+                tags: 'ams'
+            }
+        };
+    </script>
 </header>
 
 
@@ -177,11 +189,11 @@
             <ul>
                 
                     <li>
-                        <a href="/tags/pat/">pat</a>&nbsp;
+                        <a href="/tags/algorithm/">algorithm</a>&nbsp;
                     </li>
                 
                     <li>
-                        | <a href="/tags/algorithm/">algorithm</a>&nbsp;
+                        | <a href="/tags/pat/">pat</a>&nbsp;
                     </li>
                 
                     <li>
@@ -221,9 +233,9 @@
 <p>7</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## Solution</span><br><span class="line"></span><br><span class="line">题目意思为要求出能够留下的喜欢条纹的最大长度，约束主要是喜欢序列的顺序，即必须按照顺序进行保留。对于目标序列 `2 3 1 5 6`，如果`3` 已经保留，后面的条纹如果出现的`2`则被抛弃掉（优先级一次递减的感觉）。而且，结果的同一种条纹可以连续出现，条纹种类可以不完全都有。</span><br><span class="line"></span><br><span class="line">对于每个最优子结构都有 （F(n) 为当前颜色为`n`的最大长度）</span><br><span class="line"></span><br><span class="line">```latex</span><br><span class="line">F(2) = F(2) + 1 // max(F(2),F(0))+1 </span><br><span class="line">F(3) = max(F(2),F(3)) +1</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 <p>由此可以得到递推公式:</p>
-<p>$$ F(n) = max(F(n),F(n-1)) +1 $$</p>
+<p>$$ F(n) &#x3D; max(F(n),F(n-1)) +1 $$</p>
 <p>这里需要 F(n-1)，F(n) 类似于 F(3) ,F(2)  ，因此需要保留 目标条纹之间的位置关系，这个可以使用 map 实现，也可以使用 空间换时间的 数组实现 （其实也是 map 的思想）</p>
-<h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pat_1045</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n,m,l,color;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    <span class="keyword">int</span> i,wanted[n+<span class="number">1</span>],indexes[n+<span class="number">1</span>];</span><br><span class="line">    wanted[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">fill</span>(indexes,indexes+n+<span class="number">1</span>,<span class="number">0</span>);</span><br><span class="line">    cin &gt;&gt; m;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;= m;i++)&#123;</span><br><span class="line">      cin &gt;&gt; color;</span><br><span class="line">      indexes[color] = i;</span><br><span class="line">      wanted[i] = color;</span><br><span class="line">    &#125;</span><br><span class="line">    cin &gt;&gt; l;</span><br><span class="line">    <span class="keyword">int</span> nums[l+<span class="number">1</span>];</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=l;i++ )</span><br><span class="line">        cin &gt;&gt; nums[i];</span><br><span class="line">    <span class="keyword">int</span> res[n+<span class="number">1</span>];</span><br><span class="line">    <span class="built_in">fill</span>(res,res+n+<span class="number">1</span>,<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">int</span> max_re = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=l;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(indexes[nums[i]]&gt;<span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            res[nums[i]] = <span class="built_in">max</span>(res[nums[i]],res[wanted[indexes[nums[i]]<span class="number">-1</span>]]) + <span class="number">1</span>;</span><br><span class="line">            max_re = <span class="built_in">max</span>(max_re,res[nums[i]]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; max_re;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">pat_1045</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">pat_1045</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> n,m,l,color;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    <span class="type">int</span> i,wanted[n+<span class="number">1</span>],indexes[n+<span class="number">1</span>];</span><br><span class="line">    wanted[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">fill</span>(indexes,indexes+n+<span class="number">1</span>,<span class="number">0</span>);</span><br><span class="line">    cin &gt;&gt; m;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;= m;i++)&#123;</span><br><span class="line">      cin &gt;&gt; color;</span><br><span class="line">      indexes[color] = i;</span><br><span class="line">      wanted[i] = color;</span><br><span class="line">    &#125;</span><br><span class="line">    cin &gt;&gt; l;</span><br><span class="line">    <span class="type">int</span> nums[l+<span class="number">1</span>];</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=l;i++ )</span><br><span class="line">        cin &gt;&gt; nums[i];</span><br><span class="line">    <span class="type">int</span> res[n+<span class="number">1</span>];</span><br><span class="line">    <span class="built_in">fill</span>(res,res+n+<span class="number">1</span>,<span class="number">0</span>);</span><br><span class="line">    <span class="type">int</span> max_re = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=l;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(indexes[nums[i]]&gt;<span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            res[nums[i]] = <span class="built_in">max</span>(res[nums[i]],res[wanted[indexes[nums[i]]<span class="number">-1</span>]]) + <span class="number">1</span>;</span><br><span class="line">            max_re = <span class="built_in">max</span>(max_re,res[nums[i]]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; max_re;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">pat_1045</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
         </div>
 
@@ -250,11 +262,11 @@
             <ul class="post-tags-box">
                 
                     <li class="tag-item">
-                        <a href="/tags/pat/">#pat</a>&nbsp;
+                        <a href="/tags/algorithm/">#algorithm</a>&nbsp;
                     </li>
                 
                     <li class="tag-item">
-                        <a href="/tags/algorithm/">#algorithm</a>&nbsp;
+                        <a href="/tags/pat/">#pat</a>&nbsp;
                     </li>
                 
                     <li class="tag-item">
@@ -381,7 +393,7 @@
               <span>2020</span>
               -
             
-            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">codeflysafe</a>
+            2023&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">codeflysafe</a>
         </div>
         
             <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>

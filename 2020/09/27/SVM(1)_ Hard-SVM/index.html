@@ -24,7 +24,7 @@
     KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/logo.jpeg","favicon":"/images/logo.jpeg","article_img_align":"center","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
     KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
   </script>
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.2"></head>
 
 
 <body>
@@ -44,7 +44,13 @@
     <div class="page-main-content">
 
         <div class="page-main-content-top">
-            <header class="header-wrapper">
+            <!--
+ * @Author: sjhuang
+ * @Date: 2022-04-08 09:47:24
+ * @LastEditTime: 2023-01-01 11:00:04
+ * @FilePath: /notes/themes/keep/layout/_partial/header.ejs
+-->
+<header class="header-wrapper">
 
     <div class="header-content">
         <div class="left">
@@ -122,7 +128,13 @@
     </div>
 
     <div class="window-mask"></div>
-
+    <script>
+        window.MathJax = {
+            tex: {
+                tags: 'ams'
+            }
+        };
+    </script>
 </header>
 
 
@@ -217,9 +229,9 @@
                      data-src="https://s3.bmp.ovh/imgs/2022/02/234ed2712e5b0f2a.png"
                      
                 ><br><br />但是，这样的超平面不只一个，怎么来从中找到一个最优的超平面呢？ 如何评价超平面的优劣呢？这就是SVM解决分类问题的思想。<br /></p>
-<h2 id="1-Hard-SVM"><a href="#1-Hard-SVM" class="headerlink" title="1. Hard-SVM"></a>1. Hard-SVM</h2><h3 id="1-1-模型"><a href="#1-1-模型" class="headerlink" title="1.1 模型"></a>1.1 模型</h3><p><br />SVM的思想，通俗来讲是，最大化 Margin(x), Margin(x)代表为，所有点到超平面距离中的最小距， 即 $\min{Distance(x_i)}$ i = 1,2,3…,n<br />化为最优化的标准型为：<br /><br><br /></p>
-<p>$$\max_{w,b}Margin(x) = \max_{w,b} \min_{x_i}Distance(x_i) \<br>= \max_{w,b}\min_{x_i} \frac{|w^Tx_i + b|}{||w||} \<br>s.t. \quad  y_i(w^Tx_i + b) &gt; 0$$</p>
-<p><br />由于 y = 1 or -1， 且分类正确时 $y（w^x + b）&gt; 0$, 因此 $｜w^T + b｜ = y(w^T + b)$<br />这里假设，$y(w^Tx +b ) &gt;= \sigma &gt; 0$, 此时问题改写为：<br />$\max_{w,b} \frac{\sigma}{||w||} \<br>s.t. \quad y_i(w^Tx_i + b) &gt;= \sigma$</p>
+<h2 id="1-Hard-SVM"><a href="#1-Hard-SVM" class="headerlink" title="1. Hard-SVM"></a>1. Hard-SVM</h2><h3 id="1-1-模型"><a href="#1-1-模型" class="headerlink" title="1.1 模型"></a>1.1 模型</h3><p><br />SVM的思想，通俗来讲是，最大化 Margin(x), Margin(x)代表为，所有点到超平面距离中的最小距， 即 $\min{Distance(x_i)}$ i &#x3D; 1,2,3…,n<br />化为最优化的标准型为：<br /><br><br /></p>
+<p>$$\max_{w,b}Margin(x) &#x3D; \max_{w,b} \min_{x_i}Distance(x_i) \<br>&#x3D; \max_{w,b}\min_{x_i} \frac{|w^Tx_i + b|}{||w||} \<br>s.t. \quad  y_i(w^Tx_i + b) &gt; 0$$</p>
+<p><br />由于 y &#x3D; 1 or -1， 且分类正确时 $y（w^x + b）&gt; 0$, 因此 $｜w^T + b｜ &#x3D; y(w^T + b)$<br />这里假设，$y(w^Tx +b ) &gt;&#x3D; \sigma &gt; 0$, 此时问题改写为：<br />$\max_{w,b} \frac{\sigma}{||w||} \<br>s.t. \quad y_i(w^Tx_i + b) &gt;&#x3D; \sigma$</p>
 <p>由于我们可以等比例的修改 w和b是的，$\sigma$ 变为 1， 这样做并不改变问题的解。同时，$\frac{1}{||w||}$等同于$\frac{w^Tw}{2}$，此时问题修改为：</p>
 
 $$
@@ -235,13 +247,13 @@ $$
 <h3 id="2-策略"><a href="#2-策略" class="headerlink" title="2. 策略"></a>2. 策略</h3><p>如何求解式（1）中的二次优化问题，这里可以采用拉格朗日乘法来解决。采用拉格朗日乘法有一个前提，即该问题满足 KKT 条件<br /></p>
 <p><a name="To4uv"></a></p>
 <h4 id="2-1-Dual-Problem"><a href="#2-1-Dual-Problem" class="headerlink" title="2.1  Dual Problem"></a>2.1  Dual Problem</h4><p><br />优化问题的标准形式为:<br /></p>
-<p>$\max_{x} f(x) \<br>s.t. \quad h(x_i) = 0 \<br>\quad g(x_i) &gt;= 0  \quad(2)\<br>$</p>
+<p>$\max_{x} f(x) \<br>s.t. \quad h(x_i) &#x3D; 0 \<br>\quad g(x_i) &gt;&#x3D; 0  \quad(2)\<br>$</p>
 <p><br />这里引入广义拉格朗日乘法:</p>
-<p>$$<br>L(x,\lambda,\eta) = f(x) - \sum_i \lambda_ih(x_i) - \sum_i\eta_ig(x_i)<br> \quad(3) \<br>\eta_i &gt;= 0<br>$$</p>
-<p><br />考虑x的函数<br>$\theta_p(x) = \max_{\lambda,\eta,\eta &gt;= 0} L(x,\lambda,\eta)$<br><br />如果x不满足式（2）中的约束条件，即存在 $h(x) \neq 0$ 或者 $g(x) &lt; 0$, 此时总存在 一个$\lambda$ 或者$\eta$ 使得， <br />$\eta g(x) \rightarrow +\infty \<br>\lambda h(x) \rightarrow +\infty$<br />而当 x符合（2）中条件时，$\theta_P(x) = f(x)$。<br /><br><br />因此考虑极小化问题，</p>
-<p>$$<br>\begin{aligned}<br>&amp;\min_{x}{f(x)} = \min_{x}{\theta_p(x)} = \min_{x} \max_{\lambda,\eta,\eta &gt;= 0}{L(x,\eta,\lambda)} \<br>&amp;\text{Dual Problem} \max_{\lambda, \eta; \eta &gt;= 0} \min_{x L(x,\eta,\lambda)}<br>\end{aligned}<br>$$</p>
-<p>设：<br />$p^{\star} = \min_{x}\theta_p(x) \<br>d^{\star} = \max_{\lambda, \eta;\eta &gt;= 0} \min_{x} L(x,\eta,\lambda)$<br />则有：</p>
-<p>$$<br>\min_{x}L(x,\eta,\lambda) &lt;= L(x,\eta,\lambda)  &lt;= \max_{\lambda,\eta,\eta &gt;= 0}{L(x,\eta,\lambda)} \<br>\rightarrow \quad d^{\star} &lt;= p^{\star}<br>$$ <br>当 优化问题的解满足 KKT条件时， $d^{\star} = p^{\star}$<br /></p>
+<p>$$<br>L(x,\lambda,\eta) &#x3D; f(x) - \sum_i \lambda_ih(x_i) - \sum_i\eta_ig(x_i)<br> \quad(3) \<br>\eta_i &gt;&#x3D; 0<br>$$</p>
+<p><br />考虑x的函数<br>$\theta_p(x) &#x3D; \max_{\lambda,\eta,\eta &gt;&#x3D; 0} L(x,\lambda,\eta)$<br><br />如果x不满足式（2）中的约束条件，即存在 $h(x) \neq 0$ 或者 $g(x) &lt; 0$, 此时总存在 一个$\lambda$ 或者$\eta$ 使得， <br />$\eta g(x) \rightarrow +\infty \<br>\lambda h(x) \rightarrow +\infty$<br />而当 x符合（2）中条件时，$\theta_P(x) &#x3D; f(x)$。<br /><br><br />因此考虑极小化问题，</p>
+<p>$$<br>\begin{aligned}<br>&amp;\min_{x}{f(x)} &#x3D; \min_{x}{\theta_p(x)} &#x3D; \min_{x} \max_{\lambda,\eta,\eta &gt;&#x3D; 0}{L(x,\eta,\lambda)} \<br>&amp;\text{Dual Problem} \max_{\lambda, \eta; \eta &gt;&#x3D; 0} \min_{x L(x,\eta,\lambda)}<br>\end{aligned}<br>$$</p>
+<p>设：<br />$p^{\star} &#x3D; \min_{x}\theta_p(x) \<br>d^{\star} &#x3D; \max_{\lambda, \eta;\eta &gt;&#x3D; 0} \min_{x} L(x,\eta,\lambda)$<br />则有：</p>
+<p>$$<br>\min_{x}L(x,\eta,\lambda) &lt;&#x3D; L(x,\eta,\lambda)  &lt;&#x3D; \max_{\lambda,\eta,\eta &gt;&#x3D; 0}{L(x,\eta,\lambda)} \<br>\rightarrow \quad d^{\star} &lt;&#x3D; p^{\star}<br>$$ <br>当 优化问题的解满足 KKT条件时， $d^{\star} &#x3D; p^{\star}$<br /></p>
 <p><a name="gkZSn"></a></p>
 <h4 id="2-2-KKT条件"><a href="#2-2-KKT条件" class="headerlink" title="2.2 KKT条件"></a>2.2 KKT条件</h4><p><br />把下面的条件记作 KKT 条件：</p>
 
@@ -258,8 +270,8 @@ $$
 
 <p>证明：</p>
 <ol>
-<li>$当g(x_i) &gt; 0 时，此时条件 g(x_i) 不起作用，为等式约束，此时 \eta_i = 0$</li>
-<li>$当 g(x_i) = 0时，此时 \eta_ig(x_i) = 0$</li>
+<li>$当g(x_i) &gt; 0 时，此时条件 g(x_i) 不起作用，为等式约束，此时 \eta_i &#x3D; 0$</li>
+<li>$当 g(x_i) &#x3D; 0时，此时 \eta_ig(x_i) &#x3D; 0$</li>
 </ol>
 <p><a name="QnBQv"></a></p>
 <h4 id="2-3-模型求解"><a href="#2-3-模型求解" class="headerlink" title="2.3 模型求解"></a>2.3 模型求解</h4><p><br />因此，原问题可以转化为对偶问题</p>
@@ -311,13 +323,13 @@ $$
 
 
 <ol>
-<li>对G函数求极大值，即可得到解 $\lambda^{\star}$， 带入到 (4),(5) 可以求解出 $w^{\star} = \sum_i^n \lambda^{\star}_iy_ix_i$。 </li>
-</ol>
-<ol start="2">
-<li>求解b, 易知存在 $\lambda_j \neq 0$（可以使用反证法证明，若全部$\lambda$均为0，则 w为0，而w=0不是原始优化问题的解）。此时，有$y_i(w^{\star} \cdot x_i + b ) - 1 = 0$,可得 $b^{\star} = y_i^2 - w^{\star} \cdot x_i$ 。</li>
+<li><p>对G函数求极大值，即可得到解 $\lambda^{\star}$， 带入到 (4),(5) 可以求解出 $w^{\star} &#x3D; \sum_i^n \lambda^{\star}_iy_ix_i$。 </p>
+</li>
+<li><p>求解b, 易知存在 $\lambda_j \neq 0$（可以使用反证法证明，若全部$\lambda$均为0，则 w为0，而w&#x3D;0不是原始优化问题的解）。此时，有$y_i(w^{\star} \cdot x_i + b ) - 1 &#x3D; 0$,可得 $b^{\star} &#x3D; y_i^2 - w^{\star} \cdot x_i$ 。</p>
+</li>
 </ol>
 <p><a name="swkyj"></a></p>
-<h4 id="2-4-支撑向量"><a href="#2-4-支撑向量" class="headerlink" title="2.4 支撑向量"></a>2.4 支撑向量</h4><p><br />由2.3 第3、4步可知，如果只保留 $\lambda \neq 0, \quad y(w^Tx + b) - 1 = 0$ 对应的x,y，求得的结果w和b不变。 因此把这些向量称之为支撑向量，即 <code>support vector</code>。</p>
+<h4 id="2-4-支撑向量"><a href="#2-4-支撑向量" class="headerlink" title="2.4 支撑向量"></a>2.4 支撑向量</h4><p><br />由2.3 第3、4步可知，如果只保留 $\lambda \neq 0, \quad y(w^Tx + b) - 1 &#x3D; 0$ 对应的x,y，求得的结果w和b不变。 因此把这些向量称之为支撑向量，即 <code>support vector</code>。</p>
 <p><a name="L1qaJ"></a></p>
 <h2 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h2><ol>
 <li>统计学习方法. 李航. chapter 7</li>
@@ -476,7 +488,7 @@ $$
               <span>2020</span>
               -
             
-            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">codeflysafe</a>
+            2023&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">codeflysafe</a>
         </div>
         
             <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>

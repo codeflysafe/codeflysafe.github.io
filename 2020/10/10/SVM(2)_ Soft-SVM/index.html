@@ -24,7 +24,7 @@
     KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/logo.jpeg","favicon":"/images/logo.jpeg","article_img_align":"center","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
     KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
   </script>
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.2"></head>
 
 
 <body>
@@ -44,7 +44,13 @@
     <div class="page-main-content">
 
         <div class="page-main-content-top">
-            <header class="header-wrapper">
+            <!--
+ * @Author: sjhuang
+ * @Date: 2022-04-08 09:47:24
+ * @LastEditTime: 2023-01-01 11:00:04
+ * @FilePath: /notes/themes/keep/layout/_partial/header.ejs
+-->
+<header class="header-wrapper">
 
     <div class="header-content">
         <div class="left">
@@ -122,7 +128,13 @@
     </div>
 
     <div class="window-mask"></div>
-
+    <script>
+        window.MathJax = {
+            tex: {
+                tags: 'ams'
+            }
+        };
+    </script>
 </header>
 
 
@@ -211,24 +223,24 @@
             <p>由于随机噪声或者误差等问题，因此允许一些点不符合不等式约束条件。<br /><br><br />理想条件下(hard-svm), 优化问题如下:</p>
 <span id="more"></span>
 
-<p>$$<br>\begin{aligned}<br>&amp;\min_{w,b} \frac{w^Tw}{2} \<br>s.t.\quad &amp; y_i(w^Tx_i + b) - 1 &gt;= 0 \quad i = 1,2,…,n \<br>\end{aligned}\tag{1}<br>$$</p>
-<p><br />我们允许其存在一定的违规量，这里引入松弛变量 $\eta &gt;= 0$, 优化问题变为:</p>
-<p>$$<br>\begin{aligned}<br>&amp; \min_{w,b} \frac{w^Tw}{2} + C\sum_i^n \eta_i \<br>s.t. \quad &amp; y_i(w^Tx_i + b) - 1 + \eta_i &gt;= 0\<br>&amp; \eta_i &gt;= 0\ \tag{2}</p>
+<p>$$<br>\begin{aligned}<br>&amp;\min_{w,b} \frac{w^Tw}{2} \<br>s.t.\quad &amp; y_i(w^Tx_i + b) - 1 &gt;&#x3D; 0 \quad i &#x3D; 1,2,…,n \<br>\end{aligned}\tag{1}<br>$$</p>
+<p><br />我们允许其存在一定的违规量，这里引入松弛变量 $\eta &gt;&#x3D; 0$, 优化问题变为:</p>
+<p>$$<br>\begin{aligned}<br>&amp; \min_{w,b} \frac{w^Tw}{2} + C\sum_i^n \eta_i \<br>s.t. \quad &amp; y_i(w^Tx_i + b) - 1 + \eta_i &gt;&#x3D; 0\<br>&amp; \eta_i &gt;&#x3D; 0\ \tag{2}</p>
 <p>\end{aligned}$$</p>
 <p>其中 C &gt; 0 ,成为惩罚参数，当C比较大时对误分类的惩罚较大，C较小时对误分类的惩罚较小，其值通常由应用决定。<br /><br><br />优化问题 (2) 其实也是个凸二次规划问题，其求解与<a class="link"   target="_blank" rel="noopener" href="https://www.yuque.com/hsjfans/hdu6yd/gmb750" >Hard-SVM<i class="fas fa-external-link-alt"></i></a>一样<br /></p>
 <p><a name="Q2pZi"></a></p>
 <h2 id="1-Lagrange-Multiplier"><a href="#1-Lagrange-Multiplier" class="headerlink" title="1. Lagrange Multiplier"></a>1. Lagrange Multiplier</h2><p><br />对应的拉格朗日乘法公式为<br /></p>
-<p>$$\begin{aligned}<br>L(w,b,\eta,\delta) &amp;= \frac{w^Tw}{2} + C\sum_i^n \eta_i - \sum_i^n \alpha_i( y_i(w^Tx_i + b) - 1 + \eta_i) - \sum_i^n \delta_i\eta_i \<br>\alpha_i &amp;&gt;= 0 \quad \delta_i &gt;=0 \<br>\end{aligned} \tag{3}<br>$$</p>
-<p>$\theta_p(w,b) = \max_{\eta,\delta}L(w,b,\eta,\delta)<br>$</p>
+<p>$$\begin{aligned}<br>L(w,b,\eta,\delta) &amp;&#x3D; \frac{w^Tw}{2} + C\sum_i^n \eta_i - \sum_i^n \alpha_i( y_i(w^Tx_i + b) - 1 + \eta_i) - \sum_i^n \delta_i\eta_i \<br>\alpha_i &amp;&gt;&#x3D; 0 \quad \delta_i &gt;&#x3D;0 \<br>\end{aligned} \tag{3}<br>$$</p>
+<p>$\theta_p(w,b) &#x3D; \max_{\eta,\delta}L(w,b,\eta,\delta)<br>$</p>
 <p><br />则优化问题（2）可以写作：<br /><br><br /></p>
-<p>$$\begin{aligned}<br>&amp; \min_{w,b} \theta_p(w,b) = \min_{w,b} \max_{\eta,\delta} L(w,b,\eta,\delta)  \<br>s.t.\quad &amp; \alpha_i &gt;= 0 \quad \delta_i &gt;=0 \<br> &amp; y_i(w^Tx_i + b) - 1 + \eta_i &gt;= 0\<br>&amp; \eta_i &gt;= 0\<br>\end{aligned} \tag{4}<br>$$</p>
+<p>$$\begin{aligned}<br>&amp; \min_{w,b} \theta_p(w,b) &#x3D; \min_{w,b} \max_{\eta,\delta} L(w,b,\eta,\delta)  \<br>s.t.\quad &amp; \alpha_i &gt;&#x3D; 0 \quad \delta_i &gt;&#x3D;0 \<br> &amp; y_i(w^Tx_i + b) - 1 + \eta_i &gt;&#x3D; 0\<br>&amp; \eta_i &gt;&#x3D; 0\<br>\end{aligned} \tag{4}<br>$$</p>
 <p><br />其对偶问题为：<br /></p>
-<p>$$\begin{aligned}<br>&amp;\max_{\eta,\delta} \min_{w,b} L(w,b,\eta,\delta)\<br>s.t. \quad &amp; \eta_i &gt;=0 \quad \delta_i &gt;=0 \<br> &amp; y_i(w^Tx_i + b) - 1 + \eta_i &gt;= 0\<br>&amp; \eta_i &gt;= 0\<br>\end{aligned}<br>\tag{5}<br>$$</p>
+<p>$$\begin{aligned}<br>&amp;\max_{\eta,\delta} \min_{w,b} L(w,b,\eta,\delta)\<br>s.t. \quad &amp; \eta_i &gt;&#x3D;0 \quad \delta_i &gt;&#x3D;0 \<br> &amp; y_i(w^Tx_i + b) - 1 + \eta_i &gt;&#x3D; 0\<br>&amp; \eta_i &gt;&#x3D; 0\<br>\end{aligned}<br>\tag{5}<br>$$</p>
 <p><br />证明见<a class="link"   target="_blank" rel="noopener" href="https://www.yuque.com/hsjfans/hdu6yd/gmb750" >Hard-SVM<i class="fas fa-external-link-alt"></i></a><br /><br><br />求解过程<br /></p>
 <ol>
 <li>求解 $\min_{w,b} L(w,b,\eta,\del)$, 分别对w和b求导，并令其偏导数为0</li>
 </ol>
-<p>$$\begin{aligned}<br>\frac{dL}{dw} &amp;=  w - \sum_i^n\alpha_iy_ix_i = 0\<br>\frac{dL}{db} &amp;= -\sum_i^n\alpha_iy_i = 0\<br>\end{aligned}\tag{6}<br>$$</p>
+<p>$$\begin{aligned}<br>\frac{dL}{dw} &amp;&#x3D;  w - \sum_i^n\alpha_iy_ix_i &#x3D; 0\<br>\frac{dL}{db} &amp;&#x3D; -\sum_i^n\alpha_iy_i &#x3D; 0\<br>\end{aligned}\tag{6}<br>$$</p>
 <ol start="2">
 <li>将(6)带入到 L 中，得到 G</li>
 </ol>
@@ -385,7 +397,7 @@
               <span>2020</span>
               -
             
-            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">codeflysafe</a>
+            2023&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">codeflysafe</a>
         </div>
         
             <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>

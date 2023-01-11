@@ -24,7 +24,7 @@
     KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/logo.jpeg","favicon":"/images/logo.jpeg","article_img_align":"center","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
     KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
   </script>
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.2"></head>
 
 
 <body>
@@ -44,7 +44,13 @@
     <div class="page-main-content">
 
         <div class="page-main-content-top">
-            <header class="header-wrapper">
+            <!--
+ * @Author: sjhuang
+ * @Date: 2022-04-08 09:47:24
+ * @LastEditTime: 2023-01-01 11:00:04
+ * @FilePath: /notes/themes/keep/layout/_partial/header.ejs
+-->
+<header class="header-wrapper">
 
     <div class="header-content">
         <div class="left">
@@ -122,7 +128,13 @@
     </div>
 
     <div class="window-mask"></div>
-
+    <script>
+        window.MathJax = {
+            tex: {
+                tags: 'ams'
+            }
+        };
+    </script>
 </header>
 
 
@@ -211,7 +223,7 @@
                      data-src="https://raw.githubusercontent.com/codeflysafe/gitalk/main/img/20220409154644.png"
                      
                 ></p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Entry <span class="keyword">struct</span> &#123;</span><br><span class="line">	Key       []<span class="keyword">byte</span></span><br><span class="line">	KeySize   <span class="keyword">uint32</span> <span class="comment">// key 的长度</span></span><br><span class="line">	Value     []<span class="keyword">byte</span></span><br><span class="line">	ValueSize <span class="keyword">uint32</span> <span class="comment">// value 长度</span></span><br><span class="line">	Mark      <span class="keyword">uint16</span> <span class="comment">// 标记，是否删除</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Entry <span class="keyword">struct</span> &#123;</span><br><span class="line">	Key       []<span class="type">byte</span></span><br><span class="line">	KeySize   <span class="type">uint32</span> <span class="comment">// key 的长度</span></span><br><span class="line">	Value     []<span class="type">byte</span></span><br><span class="line">	ValueSize <span class="type">uint32</span> <span class="comment">// value 长度</span></span><br><span class="line">	Mark      <span class="type">uint16</span> <span class="comment">// 标记，是否删除</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>固定大小为 4 + 4 + 2</p>
 <p><img  
@@ -221,13 +233,13 @@
                      
                 ></p>
 <h3 id="db-file"><a href="#db-file" class="headerlink" title="db_file"></a>db_file</h3><p>将一个文件作为持久化存储介质</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> DBFile <span class="keyword">struct</span> &#123;</span><br><span class="line">	File   *os.File <span class="comment">// 存储的文件∏</span></span><br><span class="line">	OffSet <span class="keyword">int64</span>    <span class="comment">// 当前的偏移量</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> DBFile <span class="keyword">struct</span> &#123;</span><br><span class="line">	File   *os.File <span class="comment">// 存储的文件∏</span></span><br><span class="line">	OffSet <span class="type">int64</span>    <span class="comment">// 当前的偏移量</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="DB"><a href="#DB" class="headerlink" title="DB"></a>DB</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 数据库的定义</span></span><br><span class="line"><span class="keyword">type</span> BitcaskDB <span class="keyword">struct</span> &#123;</span><br><span class="line">	io.Closer</span><br><span class="line">	indexes  <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int64</span> <span class="comment">// key 与 offset 的索引</span></span><br><span class="line">	indexes2 <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int64</span> <span class="comment">// merge 过程中使用的hash 表</span></span><br><span class="line">	dbFile   *DBFile          <span class="comment">// 数据文件</span></span><br><span class="line">	dirPath  <span class="keyword">string</span>           <span class="comment">// 数据位置</span></span><br><span class="line">	mu       sync.RWMutex     <span class="comment">// 采用读写锁</span></span><br><span class="line">	ratio    <span class="keyword">int64</span>            <span class="comment">// indexes2， 新建时的大小</span></span><br><span class="line">	count    <span class="keyword">int64</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="DB"><a href="#DB" class="headerlink" title="DB"></a>DB</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 数据库的定义</span></span><br><span class="line"><span class="keyword">type</span> BitcaskDB <span class="keyword">struct</span> &#123;</span><br><span class="line">	io.Closer</span><br><span class="line">	indexes  <span class="keyword">map</span>[<span class="type">string</span>]<span class="type">int64</span> <span class="comment">// key 与 offset 的索引</span></span><br><span class="line">	indexes2 <span class="keyword">map</span>[<span class="type">string</span>]<span class="type">int64</span> <span class="comment">// merge 过程中使用的hash 表</span></span><br><span class="line">	dbFile   *DBFile          <span class="comment">// 数据文件</span></span><br><span class="line">	dirPath  <span class="type">string</span>           <span class="comment">// 数据位置</span></span><br><span class="line">	mu       sync.RWMutex     <span class="comment">// 采用读写锁</span></span><br><span class="line">	ratio    <span class="type">int64</span>            <span class="comment">// indexes2， 新建时的大小</span></span><br><span class="line">	count    <span class="type">int64</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h4 id="Get"><a href="#Get" class="headerlink" title="Get"></a>Get</h4><p>首先从内存的<code>indexes</code>中根据<code>key</code>获取<code>offset</code>，即指向<code>value</code>的地址,然后去文件中读取</p>
 <h4 id="Write"><a href="#Write" class="headerlink" title="Write"></a>Write</h4><p>采用文件的追加写即可</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 顺序写，写入Entry</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *DBFile)</span> <span class="title">Write</span><span class="params">(e *Entry)</span> <span class="params">(offset <span class="keyword">int64</span>, err error)</span></span> &#123;</span><br><span class="line">	buf, err := e.Encode()</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	_, err = f.File.WriteAt(buf, f.OffSet)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	offset = f.OffSet</span><br><span class="line">	f.OffSet += e.GetSize()</span><br><span class="line">	<span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 顺序写，写入Entry</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *DBFile)</span></span> Write(e *Entry) (offset <span class="type">int64</span>, err <span class="type">error</span>) &#123;</span><br><span class="line">	buf, err := e.Encode()</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	_, err = f.File.WriteAt(buf, f.OffSet)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	offset = f.OffSet</span><br><span class="line">	f.OffSet += e.GetSize()</span><br><span class="line">	<span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="DEL"><a href="#DEL" class="headerlink" title="DEL"></a>DEL</h4><p><code>del</code> 操作是一种特殊的读写，实现采用的是写入一条特殊的删除记录</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_, err = db.dbFile.Write(NewEntry(key, <span class="literal">nil</span>, DEL))</span><br></pre></td></tr></table></figure>
 
@@ -386,7 +398,7 @@
               <span>2020</span>
               -
             
-            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">codeflysafe</a>
+            2023&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">codeflysafe</a>
         </div>
         
             <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>

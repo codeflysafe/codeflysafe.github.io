@@ -24,7 +24,7 @@
     KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/logo.jpeg","favicon":"/images/logo.jpeg","article_img_align":"center","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
     KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
   </script>
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.2"></head>
 
 
 <body>
@@ -44,7 +44,13 @@
     <div class="page-main-content">
 
         <div class="page-main-content-top">
-            <header class="header-wrapper">
+            <!--
+ * @Author: sjhuang
+ * @Date: 2022-04-08 09:47:24
+ * @LastEditTime: 2023-01-01 11:00:04
+ * @FilePath: /notes/themes/keep/layout/_partial/header.ejs
+-->
+<header class="header-wrapper">
 
     <div class="header-content">
         <div class="left">
@@ -122,7 +128,13 @@
     </div>
 
     <div class="window-mask"></div>
-
+    <script>
+        window.MathJax = {
+            tex: {
+                tags: 'ams'
+            }
+        };
+    </script>
 </header>
 
 
@@ -227,12 +239,12 @@
 <li>Find $\theta^*$ maximizing the Object Function</li>
 </ul>
 <p><strong>Object Function</strong>：<code>Maximum Likelihood Estimation</code> (最大似然估计)</p>
-<p>$$<br>\begin{aligned}<br>F(\theta) &amp;= \prod_{x=1}^{m} P_G(x^i;\theta)\tag{1}<br>\end{aligned}<br>$$</p>
+<p>$$<br>\begin{aligned}<br>F(\theta) &amp;&#x3D; \prod_{x&#x3D;1}^{m} P_G(x^i;\theta)\tag{1}<br>\end{aligned}<br>$$</p>
 <p>要使 $F(\theta)$ 达到最大，即求 $\theta^*$ 使$F(\theta)$取得最值</p>
-<p>$$\begin{aligned}<br> \theta^* &amp;= \arg\mathop{\max}\limits_{\theta}F(\theta) \tag{2} \<br>          &amp;= \arg\mathop{\max}\limits_{\theta}\sum_{x=1}^mlog(P_G(x^i;\theta)) \<br>          &amp;\approx \color{red}\arg\mathop{\max}\limits_{\theta}E_x\sim_{P_{data}(x)}(log(P_G(x;\theta)))\<br>          &amp;= \color{red}\arg\mathop{\max}\limits_{\theta} (\int_x P_{data}(x)log(P_G(x;\theta))dx - \int_x P_{data}(x)log(P_{data}(x))dx) \<br>          &amp;= \arg\mathop{\max}\limits_{\theta}\int_xP_{data}(x)log(P_G(x;\theta)/P_{data}(x))dx \<br>          &amp;= \arg\mathop{\min}\limits_{\theta} KL Div(P_{data}||P_G)</p>
+<p>$$\begin{aligned}<br> \theta^* &amp;&#x3D; \arg\mathop{\max}\limits_{\theta}F(\theta) \tag{2} \<br>          &amp;&#x3D; \arg\mathop{\max}\limits_{\theta}\sum_{x&#x3D;1}^mlog(P_G(x^i;\theta)) \<br>          &amp;\approx \color{red}\arg\mathop{\max}\limits_{\theta}E_x\sim_{P_{data}(x)}(log(P_G(x;\theta)))\<br>          &amp;&#x3D; \color{red}\arg\mathop{\max}\limits_{\theta} (\int_x P_{data}(x)log(P_G(x;\theta))dx - \int_x P_{data}(x)log(P_{data}(x))dx) \<br>          &amp;&#x3D; \arg\mathop{\max}\limits_{\theta}\int_xP_{data}(x)log(P_G(x;\theta)&#x2F;P_{data}(x))dx \<br>          &amp;&#x3D; \arg\mathop{\min}\limits_{\theta} KL Div(P_{data}||P_G)</p>
 <p>\end{aligned}$$</p>
 <p>即： Maximum Likelihood Estimation $\approx$ KL Divergence</p>
-<p>因此 对于 <code>Generator</code> 的目的就是 $G^* = \arg\mathop{\min}\limits_{G}Div(P_G,P_{data})$,即使 $P_G 和 P_{data}$ 之间的散度最小。</p>
+<p>因此 对于 <code>Generator</code> 的目的就是 $G^* &#x3D; \arg\mathop{\min}\limits_{G}Div(P_G,P_{data})$,即使 $P_G 和 P_{data}$ 之间的散度最小。</p>
 <h4 id="这里存在一个问题-How-to-define-general-P-G-x"><a href="#这里存在一个问题-How-to-define-general-P-G-x" class="headerlink" title="这里存在一个问题: How to define general $P_G(x)$ ?"></a>这里存在一个问题: How to define general $P_G(x)$ ?</h4><p>  对于 $P_G(x)$分布(更加 general distribution),它可能无法进行计算(如 <code>Nerual Network</code>),即 $logP_G(x;\theta)$无法计算.</p>
 <h2 id="Using-GAN"><a href="#Using-GAN" class="headerlink" title="Using GAN"></a>Using GAN</h2><h3 id="GAN-是如何处理这个问题的呢？-Generator"><a href="#GAN-是如何处理这个问题的呢？-Generator" class="headerlink" title="GAN 是如何处理这个问题的呢？ (Generator)"></a>GAN 是如何处理这个问题的呢？ (Generator)</h3><p>GAN 采用了一个 <code>NN</code> 来拟合 $P_G(x)$，即 Generator 是一个 network, 使用它来定义分布 $P_G$</p>
 <blockquote>
@@ -247,7 +259,7 @@
 <blockquote>
 <p>prior distribution $P_z(z) 一般可以选取任意分布，如 Gussian Mixture Distribution$</p>
 </blockquote>
-<p>根据上面可知，它的 Object Function (loss) 是某种 <code>Divergence</code>, 即 $Div(P_G,P_{data})$,<br>而且目的为是这种散度最小，即 $G^* = \arg\mathop{\min}\limits_G Div({P_G,P_{data}})$.<br>关键就是<strong>如何计算这种 Divergence？</strong></p>
+<p>根据上面可知，它的 Object Function (loss) 是某种 <code>Divergence</code>, 即 $Div(P_G,P_{data})$,<br>而且目的为是这种散度最小，即 $G^* &#x3D; \arg\mathop{\min}\limits_G Div({P_G,P_{data}})$.<br>关键就是<strong>如何计算这种 Divergence？</strong></p>
 <h3 id="How-to-Compute-Divergence-Discriminator"><a href="#How-to-Compute-Divergence-Discriminator" class="headerlink" title="How to Compute Divergence (Discriminator) ?"></a>How to Compute Divergence (Discriminator) ?</h3><p>对于 $P_G$或者$P_{data}$ 因为是未知的，我们无法计算，但是可以 Sample from them.</p>
 <blockquote>
 <p>We alse define a second multilayer perceptron $D(x;\theta_d)$ that outputs a single scalar. D(x) represents the probability that x came from the data rather that $P_g$. We train D to maximize the probability of assigning the correct label to both training examples and samples from G.</p>
@@ -258,35 +270,31 @@
                      data-src="https://raw.githubusercontent.com/hsjfans/git_resource/master/img/20200615094212.png"
                      
                 ></p>
-<h4 id="Object-Function-For-D"><a href="#Object-Function-For-D" class="headerlink" title="Object Function For D"></a>Object Function For D</h4><p>When train <code>D</code>, <code>G</code>is fixed:<br>   $$\begin{aligned}<br>     V(G,D) &amp;= E_x \sim_{P_{data}(x)}[log(D(x))] + E_z \sim_{P_z(z)}[log(1-D(G(z)))]  \<br>       &amp; = E_x \sim_{P_{data}(x)}[log(D(x))] + E_x \sim_{P_G(x)}[log(1-D(x))]  \tag{3}<br>   \end{aligned}<br>   $$</p>
+<h4 id="Object-Function-For-D"><a href="#Object-Function-For-D" class="headerlink" title="Object Function For D"></a>Object Function For D</h4><p>When train <code>D</code>, <code>G</code>is fixed:<br>   $$\begin{aligned}<br>     V(G,D) &amp;&#x3D; E_x \sim_{P_{data}(x)}[log(D(x))] + E_z \sim_{P_z(z)}[log(1-D(G(z)))]  \<br>       &amp; &#x3D; E_x \sim_{P_{data}(x)}[log(D(x))] + E_x \sim_{P_G(x)}[log(1-D(x))]  \tag{3}<br>   \end{aligned}<br>   $$</p>
 <p>即 </p>
-<p>   $$D^* = \arg\mathop{\max}\limits_DV(D,G) \tag{4}$$</p>
+<p>   $$D^* &#x3D; \arg\mathop{\max}\limits_DV(D,G) \tag{4}$$</p>
 <h4 id="式-3-如何解释呢？"><a href="#式-3-如何解释呢？" class="headerlink" title="式(3)如何解释呢？"></a>式(3)如何解释呢？</h4><ol>
 <li>当 x 从 $P_data(x)$ sample 出来的时，那就使 <code>scalar</code>(D(x)) 越大越好（因为它是真实的）</li>
 <li>当 x 从 $P_G(x)$ sample 出来时，<code>saclar</code>(D(x))越小越好，即<code>1-D(x)</code> 越大越好（因为它是Generator出来的的）</li>
 </ol>
 <p>上面我们讲到，generator的目的使 $P_G$ 和 $P_{data}$ 的某种 Divergence 越小越好,其实对于式(3)它就等同于某种 Divergence</p>
 <h4 id="证明-V-G-D-等同于-JS-Divergence"><a href="#证明-V-G-D-等同于-JS-Divergence" class="headerlink" title="证明 V(G,D) 等同于 JS-Divergence"></a>证明 V(G,D) 等同于 JS-Divergence</h4><ol>
-<li>fixed G, 求解 $D^*$<br>$$<br> \begin{aligned}<br> D^* &amp;= \arg\mathop{\max}\limits_DV(D,G) \<pre><code> &amp;= \arg\mathop&#123;\max&#125;\limits_D[\int_xP_&#123;data&#125;(x)log(D(x))dx + \int_xP_G(x)log(1-D(x))dx ]\\
- &amp;= \arg\mathop&#123;\max&#125;\limits_D\int_x[P_&#123;data&#125;(x)log(D(x)) + P_G(x)log(1-D(x))]dx \tag&#123;5&#125;
-</code></pre>
- \end{aligned}<br>$$</li>
-</ol>
-<ol start="2">
-<li><p>Given x, $D^*$使 $P_{data}(x)log(D(x)) + P_G(x)log(1-D(x))$ maximum<br>简化为 $L(D) = alogD + blog(1-D)$ </p>
-<p>Assumed: $a = P_{data}(x)$ and  $b = P_G(x)$ </p>
-<p>$$\begin{aligned}<br>   &amp;L(D) = alogD + blog(1-D) \<br>   &amp;\frac{dL(D)}{dD} = a/D + b/(1-D)<em>(-1) = 0\<br>   &amp; D^</em> = a/(a+b) \tag{6}</p>
+<li><p>fixed G, 求解 $D^*$<br>  $$<br> \begin{aligned}<br> D^* &amp;&#x3D; \arg\mathop{\max}\limits_DV(D,G) \<br> &amp;&#x3D; \arg\mathop{\max}\limits_D[\int_xP_{data}(x)log(D(x))dx + \int_xP_G(x)log(1-D(x))dx ]\<br> &amp;&#x3D; \arg\mathop{\max}\limits_D\int_x[P_{data}(x)log(D(x)) + P_G(x)log(1-D(x))]dx \tag{5}<br> \end{aligned}<br>  $$</p>
+</li>
+<li><p>Given x, $D^*$使 $P_{data}(x)log(D(x)) + P_G(x)log(1-D(x))$ maximum<br>简化为 $L(D) &#x3D; alogD + blog(1-D)$ </p>
+<p>Assumed: $a &#x3D; P_{data}(x)$ and  $b &#x3D; P_G(x)$ </p>
+<p>$$\begin{aligned}<br>   &amp;L(D) &#x3D; alogD + blog(1-D) \<br>   &amp;\frac{dL(D)}{dD} &#x3D; a&#x2F;D + b&#x2F;(1-D)<em>(-1) &#x3D; 0\<br>   &amp; D^</em> &#x3D; a&#x2F;(a+b) \tag{6}</p>
 <p>\end{aligned}$$</p>
 <blockquote>
 <p>For any (a,b) $\in R^2$, function $y\to alog(y) + blog(1-y)$ achieves its maximum in [0,1] at $\frac{a}{a+b}$</p>
 </blockquote>
 </li>
-<li><p>将 $D^* = a/(a+b)$ 带入到式（3）中，有:</p>
-<p>$$\begin{aligned}<br>  V(G,D) &amp;= E_x \sim_{P_{data}(x)}[log(\frac{P_{data}(x)}{(P_{data}(x)+P_G(x))})] + E_x \sim_{P_G(x)}[log(\frac{P_G(x)}{(P_{data}(x)+P_G(x))})] \<br>  &amp;= \int_x[P_{data}(x)log(\frac{P_{data}(x)}{(P_{data}(x)+P_G(x))}) + P_G(x)log(\frac{P_G(x)}{(P_{data}(x)+P_G(x))})]dx \<br>  &amp;= \int_x[P_{data}(x)log(\frac{P_{data}(x)/2}{(P_{data}(x)+P_G(x))/2}) + P_G(x)log(\frac{P_G(x)/2}{(P_{data}(x)+P_G(x))/2})]dx \<br>  &amp;= -\int_x[P_{data}(x)log2 + P_G(x)log2]dx + \int_x[P_{data}(x)log(\frac{P_{data}(x)}{(P_{data}(x)+P_G(x))/2}) + P_G(x)log(\frac{P_G(x)}{(P_{data}(x)+P_G(x))/2})]dx \<br>  &amp;= -log4 + KLDiv(P_{data}(x)||(P_{data}(x)+P_G(x))/2) + KLDiv(P_G(x)||(P_{data}(x)+P_G(x))/2) \<br>  &amp;= -log4 + 2*\color{red}JSDiv(P_{data}||P_G)<br>\end{aligned}$$</p>
+<li><p>将 $D^* &#x3D; a&#x2F;(a+b)$ 带入到式（3）中，有:</p>
+<p>$$\begin{aligned}<br>  V(G,D) &amp;&#x3D; E_x \sim_{P_{data}(x)}[log(\frac{P_{data}(x)}{(P_{data}(x)+P_G(x))})] + E_x \sim_{P_G(x)}[log(\frac{P_G(x)}{(P_{data}(x)+P_G(x))})] \<br>  &amp;&#x3D; \int_x[P_{data}(x)log(\frac{P_{data}(x)}{(P_{data}(x)+P_G(x))}) + P_G(x)log(\frac{P_G(x)}{(P_{data}(x)+P_G(x))})]dx \<br>  &amp;&#x3D; \int_x[P_{data}(x)log(\frac{P_{data}(x)&#x2F;2}{(P_{data}(x)+P_G(x))&#x2F;2}) + P_G(x)log(\frac{P_G(x)&#x2F;2}{(P_{data}(x)+P_G(x))&#x2F;2})]dx \<br>  &amp;&#x3D; -\int_x[P_{data}(x)log2 + P_G(x)log2]dx + \int_x[P_{data}(x)log(\frac{P_{data}(x)}{(P_{data}(x)+P_G(x))&#x2F;2}) + P_G(x)log(\frac{P_G(x)}{(P_{data}(x)+P_G(x))&#x2F;2})]dx \<br>  &amp;&#x3D; -log4 + KLDiv(P_{data}(x)||(P_{data}(x)+P_G(x))&#x2F;2) + KLDiv(P_G(x)||(P_{data}(x)+P_G(x))&#x2F;2) \<br>  &amp;&#x3D; -log4 + 2*\color{red}JSDiv(P_{data}||P_G)<br>\end{aligned}$$</p>
 </li>
 </ol>
-<h4 id="计算-G-mathop-arg-min-limits-GDiv-P-data-P-G"><a href="#计算-G-mathop-arg-min-limits-GDiv-P-data-P-G" class="headerlink" title="计算 $G^* = \mathop{\arg\min}\limits_GDiv(P_{data},P_G)$"></a>计算 $G^* = \mathop{\arg\min}\limits_GDiv(P_{data},P_G)$</h4><p>上式就等同于:<br>  $$\begin{aligned}<br>      G^* &amp;= \arg\mathop{\min}\limits_GDiv(P_{data},P_G) \<br>          &amp;= \arg\mathop{\min}\limits_G\mathop{\max}\limits_DV(G,D) \<br>          &amp;= \arg\mathop{\min}\limits_GC(G)<br>  \end{aligned}$$</p>
-<p>  其中 $C(G)= \arg\mathop{\max}\limits_DV(G,D)$</p>
+<h4 id="计算-G-x3D-mathop-arg-min-limits-GDiv-P-data-P-G"><a href="#计算-G-x3D-mathop-arg-min-limits-GDiv-P-data-P-G" class="headerlink" title="计算 $G^* &#x3D; \mathop{\arg\min}\limits_GDiv(P_{data},P_G)$"></a>计算 $G^* &#x3D; \mathop{\arg\min}\limits_GDiv(P_{data},P_G)$</h4><p>上式就等同于:<br>  $$\begin{aligned}<br>      G^* &amp;&#x3D; \arg\mathop{\min}\limits_GDiv(P_{data},P_G) \<br>          &amp;&#x3D; \arg\mathop{\min}\limits_G\mathop{\max}\limits_DV(G,D) \<br>          &amp;&#x3D; \arg\mathop{\min}\limits_GC(G)<br>  \end{aligned}$$</p>
+<p>  其中 $C(G)&#x3D; \arg\mathop{\max}\limits_DV(G,D)$</p>
 <p>  <img  
                      lazyload
                      src="/images/loading.svg"
@@ -301,7 +309,7 @@
 </ol>
 </li>
 </ol>
-<h3 id="Procerss"><a href="#Procerss" class="headerlink" title="Procerss"></a>Procerss</h3><p>实际上：<br> $$\begin{aligned}<br>      V(G,D) &amp;= E_x \sim_{P_{data}(x)}[log(D(x))] + E_x \sim_{P_G(x)}[log(1-D(x))] \<br>             &amp;\approx \frac{1}{m}\sum_{i=1}^{m}logD(x^i) + \frac{1}{m}\sum_{i=1}^{m}log(1-D(\hat{x}^i))<br>  \end{aligned}$$ </p>
+<h3 id="Procerss"><a href="#Procerss" class="headerlink" title="Procerss"></a>Procerss</h3><p>实际上：<br> $$\begin{aligned}<br>      V(G,D) &amp;&#x3D; E_x \sim_{P_{data}(x)}[log(D(x))] + E_x \sim_{P_G(x)}[log(1-D(x))] \<br>             &amp;\approx \frac{1}{m}\sum_{i&#x3D;1}^{m}logD(x^i) + \frac{1}{m}\sum_{i&#x3D;1}^{m}log(1-D(\hat{x}^i))<br>  \end{aligned}$$ </p>
 <p>initialize $\theta_d$ for D and $\theta_g$ for G</p>
 <ul>
 <li><p>In each training iteration</p>
@@ -311,18 +319,18 @@
 <li>sample m examples{$x^1,x^2,…x^m$} from database $P_{data}(x)$ </li>
 <li>sample m examples{$z^1,z^2,…z^m$} from prior distribution $P_z(z)$</li>
 <li>get generated data {$\hat{x}^1,\hat{x}^2,…\hat{x}^m$} via $G(z^i)$</li>
-<li>fixed $\theta_g$,update $\theta_d$ to maximize:<br>$$\begin{aligned}<br>  \hat{V} &amp;= \frac{1}{m}\sum_{i=1}^{m}logD(x^i) + \frac{1}{m}\sum_{i=1}^{m}log(1-D(\hat{x}^i)) \<br>  \theta_d &amp;\gets \theta_d + \eta\bigtriangledown\hat{V}(\theta_d)<br>\end{aligned}$$ </li>
+<li>fixed $\theta_g$,update $\theta_d$ to maximize:<br>$$\begin{aligned}<br>  \hat{V} &amp;&#x3D; \frac{1}{m}\sum_{i&#x3D;1}^{m}logD(x^i) + \frac{1}{m}\sum_{i&#x3D;1}^{m}log(1-D(\hat{x}^i)) \<br>  \theta_d &amp;\gets \theta_d + \eta\bigtriangledown\hat{V}(\theta_d)<br>\end{aligned}$$</li>
 </ul>
 </li>
 <li><p>Training G, only once</p>
 <ul>
 <li>sample m examples{$z^1,z^2,…z^m$} from prior distribution $P_z(z)$</li>
-<li>fixed $\theta_d$,update $\theta_g$ to minimize:<br>$$\begin{aligned}<br> \hat{V} &amp;= \frac{1}{m}\sum_{i=1}^{m}logD(x^i) + \frac{1}{m}\sum_{i=1}^{m}log(1-D(G(z^i))) \<br> &amp;\approx\frac{1}{m}\sum_{i=1}^{m}log(1-D(G(z^i))) \<br>  \theta_g &amp;\gets \theta_g - \eta\bigtriangledown\hat{V}(\theta_g)<br>\end{aligned}$$</li>
+<li>fixed $\theta_d$,update $\theta_g$ to minimize:<br>$$\begin{aligned}<br> \hat{V} &amp;&#x3D; \frac{1}{m}\sum_{i&#x3D;1}^{m}logD(x^i) + \frac{1}{m}\sum_{i&#x3D;1}^{m}log(1-D(G(z^i))) \<br> &amp;\approx\frac{1}{m}\sum_{i&#x3D;1}^{m}log(1-D(G(z^i))) \<br>  \theta_g &amp;\gets \theta_g - \eta\bigtriangledown\hat{V}(\theta_g)<br>\end{aligned}$$</li>
 </ul>
 </li>
 </ul>
 <p>实际上，在 Training G 时，采用的是：</p>
-<p>$$\begin{aligned}<br>     \hat{V} &amp;=  -\frac{1}{m}\sum_{i=1}^{m}log(D(G(z^i))) \<br>      \theta_g &amp;\gets \theta_g - \eta\bigtriangledown\hat{V}(\theta_g)<br>\end{aligned}$$</p>
+<p>$$\begin{aligned}<br>     \hat{V} &amp;&#x3D;  -\frac{1}{m}\sum_{i&#x3D;1}^{m}log(D(G(z^i))) \<br>      \theta_g &amp;\gets \theta_g - \eta\bigtriangledown\hat{V}(\theta_g)<br>\end{aligned}$$</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
@@ -486,7 +494,7 @@
               <span>2020</span>
               -
             
-            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">codeflysafe</a>
+            2023&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">codeflysafe</a>
         </div>
         
             <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
