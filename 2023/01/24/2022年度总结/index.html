@@ -9,7 +9,7 @@
     
     <title>
         
-            1021 Deepest Root (25分) |
+            2022年度总结 |
         
         魔法沉思录
     </title>
@@ -254,7 +254,7 @@ mjx-container[display="true"] + br {
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">1021 Deepest Root (25分)</span>
+            <span class="title-hover-animation">2022年度总结</span>
         </div>
 
         
@@ -273,8 +273,8 @@ mjx-container[display="true"] + br {
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fas fa-edit"></i>&nbsp;
-        <span class="pc">2020-03-08 10:53:14</span>
-        <span class="mobile">2020-03-08 10:53</span>
+        <span class="pc">2023-01-24 22:25:04</span>
+        <span class="mobile">2023-01-24 22:25</span>
     </span>
     
         <span class="article-categories article-meta-item">
@@ -282,7 +282,7 @@ mjx-container[display="true"] + br {
             <ul>
                 
                     <li>
-                        <a href="/categories/PAT/">PAT</a>&nbsp;
+                        <a href="/categories/%E5%8F%8D%E6%80%9D/">反思</a>&nbsp;
                     </li>
                 
             </ul>
@@ -294,11 +294,11 @@ mjx-container[display="true"] + br {
             <ul>
                 
                     <li>
-                        <a href="/tags/pat/">pat</a>&nbsp;
+                        <a href="/tags/%E7%94%9F%E6%B4%BB/">生活</a>&nbsp;
                     </li>
                 
                     <li>
-                        | <a href="/tags/algorithm/">algorithm</a>&nbsp;
+                        | <a href="/tags/%E9%9A%8F%E7%AC%94/">随笔</a>&nbsp;
                     </li>
                 
             </ul>
@@ -321,15 +321,29 @@ mjx-container[display="true"] + br {
         
 
         <div class="article-content markdown-body">
-            <p>A graph which is connected and acyclic can be considered a tree. The height of the tree depends on the selected root. Now you are supposed to find the root that results in a highest tree. Such a root is called the deepest root.</p>
-<h3 id="Input-Specification"><a href="#Input-Specification" class="headerlink" title="Input Specification:"></a>Input Specification:</h3><p>Each input file contains one test case. For each case, the first line contains a positive integer N (&lt;=10000) which is the number of nodes, and hence the nodes are numbered from 1 to N. Then N-1 lines follow, each describes an edge by given the two adjacent nodes’ numbers.</p>
-<h3 id="Output-Specification"><a href="#Output-Specification" class="headerlink" title="Output Specification:"></a>Output Specification:</h3><p>For each test case, print each of the deepest roots in a line. If such a root is not unique, print them in increasing order of their numbers. In case that the given graph is not a tree, print “Error: K components” where K is the number of connected components in the graph.</p>
-<h3 id="Sample-Input-1"><a href="#Sample-Input-1" class="headerlink" title="Sample Input 1:"></a>Sample Input 1:</h3><p>5<br>1 2<br>1 3<br>1 4<br>2 5</p>
-<h3 id="Sample-Output-1"><a href="#Sample-Output-1" class="headerlink" title="Sample Output 1:"></a>Sample Output 1:</h3><p>3<br>4<br>5</p>
-<h3 id="Sample-Input-2"><a href="#Sample-Input-2" class="headerlink" title="Sample Input 2:"></a>Sample Input 2:</h3><p>5<br>1 3<br>1 4<br>2 5<br>3 4</p>
-<h3 id="Sample-Output-2"><a href="#Sample-Output-2" class="headerlink" title="Sample Output 2:"></a>Sample Output 2:</h3><p>Error: 2 components</p>
-<h3 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h3><p>本题很关键的一个点是： 有 n 个顶点，但是只有 n-1 条边。由于构成一个连通图的无向图要求，n个顶点最少有n个边，因此本题可以看作为求 一个图的连通分量数目 以及 图的遍历。 对于图的遍历，可以采用 DFS 或者 BFS，求图的连通分量个数，可以采用并查集或者整合到图的遍历过程中</p>
-<h3 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs_1021</span><span class="params">(vector&lt;<span class="type">int</span>&gt; *graph,<span class="type">int</span> *visited,<span class="type">int</span> node,<span class="type">int</span> height,<span class="type">int</span> &amp;maxheight,vector&lt;<span class="type">int</span>&gt; &amp;res)</span></span>{</span><br><span class="line"></span><br><span class="line">    visited[node] = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span>(height &gt; maxheight){</span><br><span class="line">        maxheight = height;</span><br><span class="line">        res.<span class="built_in">clear</span>();</span><br><span class="line">        res.<span class="built_in">push_back</span>(node);</span><br><span class="line">    } <span class="keyword">else</span> <span class="keyword">if</span>(height == maxheight)</span><br><span class="line">        res.<span class="built_in">push_back</span>(node);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;graph[node].<span class="built_in">size</span>();i++){</span><br><span class="line">        <span class="keyword">if</span>( !visited[graph[node][i]] )</span><br><span class="line">            <span class="built_in">dfs_1021</span>(graph,visited,graph[node][i],height+<span class="number">1</span>,maxheight,res);</span><br><span class="line">        </span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">pat_1021</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">  <span class="type">int</span> n,i;</span><br><span class="line">  cin &gt;&gt; n;</span><br><span class="line">  <span class="comment">// 采用邻接表的来存储无向图</span></span><br><span class="line">  vector&lt;<span class="type">int</span>&gt; graph[n+<span class="number">1</span>];</span><br><span class="line">  <span class="type">int</span> x,y,visited[n+<span class="number">1</span>];</span><br><span class="line">  <span class="comment">// 标记为未访问过</span></span><br><span class="line">  <span class="built_in">fill</span>(visited,visited+n+<span class="number">1</span>,<span class="number">0</span>);</span><br><span class="line">  <span class="keyword">for</span>(i= <span class="number">0</span>;i&lt;n<span class="number">-1</span>;i++){</span><br><span class="line">      cin &gt;&gt; x &gt;&gt; y;</span><br><span class="line">      graph[x].<span class="built_in">push_back</span>(y);</span><br><span class="line">      graph[y].<span class="built_in">push_back</span>(x);</span><br><span class="line">  }</span><br><span class="line">  vector&lt;<span class="type">int</span>&gt; res;</span><br><span class="line">  <span class="type">int</span> maxheight  = <span class="number">0</span>;</span><br><span class="line">  <span class="type">int</span> k =<span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=n;j++){</span><br><span class="line">      <span class="keyword">if</span>(visited[j]==<span class="number">0</span>){</span><br><span class="line">          <span class="built_in">dfs_1021</span>(graph,visited,j,<span class="number">1</span>,maxheight,res);</span><br><span class="line">          k++;</span><br><span class="line">      }</span><br><span class="line">  }</span><br><span class="line">  <span class="keyword">if</span>(k&gt;<span class="number">1</span>) <span class="built_in">printf</span>(<span class="string">"Error: %d components\n"</span>,k);</span><br><span class="line">  <span class="keyword">else</span> {</span><br><span class="line">      <span class="type">int</span> nodes[n+<span class="number">1</span>],node = res[<span class="number">0</span>];</span><br><span class="line">      <span class="built_in">fill</span>(nodes,nodes+n+<span class="number">1</span>,<span class="number">0</span>);</span><br><span class="line">      <span class="keyword">for</span>(i =<span class="number">0</span>;i&lt;res.<span class="built_in">size</span>();i++)</span><br><span class="line">          nodes[res[i]]++;</span><br><span class="line">     </span><br><span class="line">     <span class="keyword">if</span>(n&gt;<span class="number">1</span>){</span><br><span class="line">       res.<span class="built_in">clear</span>();</span><br><span class="line">       <span class="built_in">fill</span>(visited,visited+n+<span class="number">1</span>,<span class="number">0</span>);</span><br><span class="line">       maxheight = <span class="number">0</span>;</span><br><span class="line">       <span class="built_in">dfs_1021</span>(graph,visited,node,<span class="number">1</span>,maxheight,res);</span><br><span class="line">       <span class="keyword">for</span>(i =<span class="number">0</span>;i&lt;res.<span class="built_in">size</span>();i++)</span><br><span class="line">           nodes[res[i]]++;</span><br><span class="line">      }</span><br><span class="line">      <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=n;i++){</span><br><span class="line">          <span class="keyword">if</span>(nodes[i] &gt; <span class="number">0</span>) cout &lt;&lt; i &lt;&lt; endl;</span><br><span class="line">      }</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="built_in">pat_1021</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+            <p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/codeflysafe/gitalk/main/img/WechatIMG29829.jpeg"></p>
+<p>2022 年已经结束了，今年是曲折但是总体可以接受的一年。2022年我完成了以下内容：</p>
+<ul>
+<li>工作<ul>
+<li>实习</li>
+<li>秋招之旅</li>
+<li>职业发展</li>
+</ul>
+</li>
+<li>学习<ul>
+<li>论文</li>
+</ul>
+</li>
+<li>生活<ul>
+<li>感情</li>
+<li>思考</li>
+</ul>
+</li>
+</ul>
+<h2 id="工作"><a href="#工作" class="headerlink" title="工作"></a>工作</h2><p>恍恍惚惚研究生生涯也接近尾声，又一次到了找工作的日子【💧上一次的秋招应该还是4年之前】。</p>
+<h3 id="暑期实习求职-2022-04-2022-05"><a href="#暑期实习求职-2022-04-2022-05" class="headerlink" title="暑期实习求职 [2022.04~2022.05]"></a>暑期实习求职 [2022.04~2022.05]</h3><p>今年的暑期实习风声鹤唳、草木皆兵，再加上并不明朗的实习时间，我的暑期实习之旅可以说是颗粒无收。<br>暑期实习从4月份开始，边准备边面试。总共报了20余家，除了有pdd走完了整个流程之外，其它公司基本上在二面、三面就终止了。眼看着，暑期实习一无所获，幸好科大讯飞投来了橄榄枝。此时已经5月份，我也结束了我的暑期实习求职阶段，入职了科大讯飞开启了实习之旅。</p>
+<h3 id="科大讯飞实习-2022-05-至今"><a href="#科大讯飞实习-2022-05-至今" class="headerlink" title="科大讯飞实习 [2022.05~至今]"></a>科大讯飞实习 [2022.05~至今]</h3><p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/codeflysafe/gitalk/main/img/%E6%88%AA%E5%B1%8F2023-01-24%20%E4%B8%8B%E5%8D%8810.55.49.png"><br>在科大讯飞期间，非常有幸的碰到了目前的导师殷博（虽然他比我还小了一岁），但是在研究生阶段放养了1年左右的时间内，他真的是将我带入了科研的大门，体验到了科研的快乐和趣味。</p>
+<h4 id="实例分割比赛-2022-05-2022-08"><a href="#实例分割比赛-2022-05-2022-08" class="headerlink" title="实例分割比赛 [2022.05~2022.08]"></a>实例分割比赛 [2022.05~2022.08]</h4><p>这一段时间无疑是最忙的，不仅要看论文、打比赛还要准备秋招😓，真的是忙成狗。晚上精神有时候会崩溃，</p>
 
         </div>
 
@@ -337,11 +351,11 @@ mjx-container[display="true"] + br {
             <div class="post-copyright-info">
                 <div class="article-copyright-info-container">
     <ul>
-        <li>本文标题：1021 Deepest Root (25分)</li>
+        <li>本文标题：2022年度总结</li>
         <li>本文作者：codeflysafe</li>
-        <li>创建时间：2020-03-08 10:53:14</li>
+        <li>创建时间：2023-01-24 22:25:04</li>
         <li>
-            本文链接：https://codeflysafe.github.io/2020/03/08/2020-03-08-1021-Deepest-Root-(25分)/
+            本文链接：https://codeflysafe.github.io/2023/01/24/2022年度总结/
         </li>
         <li>
             版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -356,11 +370,11 @@ mjx-container[display="true"] + br {
             <ul class="post-tags-box">
                 
                     <li class="tag-item">
-                        <a href="/tags/pat/">#pat</a>&nbsp;
+                        <a href="/tags/%E7%94%9F%E6%B4%BB/">#生活</a>&nbsp;
                     </li>
                 
                     <li class="tag-item">
-                        <a href="/tags/algorithm/">#algorithm</a>&nbsp;
+                        <a href="/tags/%E9%9A%8F%E7%AC%94/">#随笔</a>&nbsp;
                     </li>
                 
             </ul>
@@ -369,21 +383,21 @@ mjx-container[display="true"] + br {
         
             <div class="article-nav">
                 
-                    <div class="article-prev">
-                        <a class="prev"
-                           rel="prev"
-                           href="/2020/03/10/2020-03-10-1090-Highest-Price-in-Supply-Chain-(25%E5%88%86)/"
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2023/01/11/Temporal-shift-module/"
                         >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">1090 Highest Price in Supply Chain (25分)</span>
-                                <span class="post-nav-item">上一篇</span>
+                                <span class="post-nav-title-item">Temporal shift module</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
                             </span>
                         </a>
                     </div>
-                
                 
             </div>
         
